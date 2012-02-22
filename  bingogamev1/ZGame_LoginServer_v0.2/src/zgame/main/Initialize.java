@@ -89,15 +89,16 @@ public class Initialize {
 		File folder = new File(path);
 		File[] files = folder.listFiles();
 		for (File file : files) {
+		  String fileName = file.getName();
+		  if (fileName.equals("Thumbs.db") || fileName.equals(".svn")) {
+        continue;
+      }
+		  
 			FileInputStream fis = null;
 			try {
 				fis = new FileInputStream(file);
 				byte[] data = new byte[fis.available()];
 				fis.read(data);
-				String fileName = file.getName();
-				if (fileName.equals("Thumbs.db")) {
-					continue;
-				}
 				Global.imagesMap.put(fileName, new ImageInfo(fileName, data));
 			} catch (IOException e) {
 				log.warn("Can not load image " + file.getAbsolutePath(), e);
@@ -120,15 +121,22 @@ public class Initialize {
 		for (File category : files) {
 			List<ImageInfo> imageInfos = new ArrayList<ImageInfo>();
 			String categoryName = category.getName();
+			if (categoryName.equals("Thumbs.db") || categoryName.equals(".svn")) {
+        continue;
+      }
 			
 			File[] avatarArray = category.listFiles();
 			for (File avatar : avatarArray) {
+			  String fileName = avatar.getName();
+        if (fileName.equals("Thumbs.db") || fileName.equals(".svn")) {
+          continue;
+        }
+			  
 				FileInputStream fis = null;
 				try {
 					fis = new FileInputStream(avatar);
 					byte[] data = new byte[fis.available()];
 					fis.read(data);
-					String fileName = avatar.getName();
 					imageInfos.add(new ImageInfo(fileName, data));
 				} catch (IOException e) {
 					log.warn("Can not load the avatar " + avatar.getAbsolutePath(), e);
