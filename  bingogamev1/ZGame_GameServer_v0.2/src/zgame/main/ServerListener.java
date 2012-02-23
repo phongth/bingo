@@ -7,7 +7,7 @@ import java.net.Socket;
 import org.apache.log4j.Logger;
 
 import zgame.socket.handle.SocketServerHandle;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 import zgame.utils.Control;
 
 public class ServerListener extends Control {
@@ -31,7 +31,7 @@ public class ServerListener extends Control {
     while (isRunning) {
       try {
         Socket clientSocket = servSock.accept();
-        Server server = new Server(clientSocket);
+        ServerConnection server = new ServerConnection(clientSocket);
         new SocketServerHandle(server);
       } catch (IOException e) {
         log.warn("Exception on accept client", e);

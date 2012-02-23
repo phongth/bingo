@@ -11,12 +11,12 @@ import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.DataReceiveListener;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class SocketServerHandle implements DataReceiveListener {
-  private Server server;
+  private ServerConnection server;
 
-  public SocketServerHandle(Server server) {
+  public SocketServerHandle(ServerConnection server) {
     this.server = server;
     server.setListener(this);
   }

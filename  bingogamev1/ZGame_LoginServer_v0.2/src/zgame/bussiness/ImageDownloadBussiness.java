@@ -7,12 +7,12 @@ import java.util.Set;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class ImageDownloadBussiness {
   public static final int NUMBER_OF_RESOURCE_PER_PACKAGE = 10;
 
-  public static void downloadedResourceList(Server server, DataPackage inputDataPackage) {
+  public static void downloadedResourceList(ServerConnection server, DataPackage inputDataPackage) {
 
     // Lấy ra danh sách những resource mà người dùng đã download
     int numberOfDownloadedResource = inputDataPackage.nextInt();

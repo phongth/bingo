@@ -1,6 +1,6 @@
 package zgame.bean;
 
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class User {
   private String name;
@@ -9,9 +9,9 @@ public class User {
   private int avatarId;
 
   public Entity entity;
-  public Server server;
+  public ServerConnection server;
 
-  public User(String name, Server server) {
+  public User(String name, ServerConnection server) {
     this.name = name;
     this.server = server;
   }

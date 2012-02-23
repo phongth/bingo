@@ -16,9 +16,9 @@ public class ReaderThread extends Control {
   private long lastTimeReveive;
   private boolean isRunning = true;
   private DataReceiveListener listener;
-  private Client client;
+  private ClientConnection client;
 
-  public ReaderThread(DataInputStream is, DataReceiveListener listener, Client client) {
+  public ReaderThread(DataInputStream is, DataReceiveListener listener, ClientConnection client) {
     this.is = is;
     this.listener = listener;
     this.client = client;

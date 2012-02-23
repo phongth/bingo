@@ -8,8 +8,8 @@ import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.client.Client;
-import zgame.socket.server.Server;
+import zgame.socket.client.ClientConnection;
+import zgame.socket.server.ServerConnection;
 import zgame.utils.SaltUtil;
 
 public class AuthenticateBussiness {
@@ -18,7 +18,7 @@ public class AuthenticateBussiness {
   public static void disconnect(String username) {
   }
 
-  public static void requestSalt(Server server, DataPackage inputDataPackage) {
+  public static void requestSalt(ServerConnection server, DataPackage inputDataPackage) {
     // Lấy username do client gửi lên
     String username = inputDataPackage.nextString();
 
@@ -39,14 +39,14 @@ public class AuthenticateBussiness {
     log.info(">>>>> Request sessionId from Default Service for user: " + username);
   }
 
-  public static void sessionNotFound(Client client, DataPackage inputDataPackage) {
+  public static void sessionNotFound(ClientConnection client, DataPackage inputDataPackage) {
     String username = inputDataPackage.nextString();
     Session session = new Session(null);
     Global.sessionMapTmp.put(username, session);
     checkUserSession(username);
   }
 
-  public static void sessionIdResponse(Client client, DataPackage inputDataPackage) {
+  public static void sessionIdResponse(ClientConnection client, DataPackage inputDataPackage) {
     String username = inputDataPackage.nextString();
     String encodedData = inputDataPackage.nextString();
 
@@ -57,7 +57,7 @@ public class AuthenticateBussiness {
     checkUserSession(username);
   }
 
-  public static void authenticateBySessionId(Server server, DataPackage inputDataPackage) {
+  public static void authenticateBySessionId(ServerConnection server, DataPackage inputDataPackage) {
     String username = inputDataPackage.nextString();
     String encodedData = inputDataPackage.nextString();
 
@@ -77,9 +77,9 @@ public class AuthenticateBussiness {
     checkUserSession(username);
   }
 
-  public static void onUserInfoReceive(Client client, DataPackage inputDataPackage) {
+  public static void onUserInfoReceive(ClientConnection client, DataPackage inputDataPackage) {
     String userName = inputDataPackage.nextString();
-    Server server = Global.serverMap.get(userName);
+    ServerConnection server = Global.serverMap.get(userName);
     if (server == null) {
       return;
     }
@@ -110,7 +110,7 @@ public class AuthenticateBussiness {
     Global.sessionMapTmp.remove(username);
     Global.encodedSessionFromClient.remove(username);
 
-    Server server = store.server;
+    ServerConnection server = store.server;
 
     // User này chưa có session bên default service
     if (session.getId() == null) {

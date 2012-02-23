@@ -16,12 +16,12 @@ import zgame.dao.FriendDao;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class FriendBussiness {
   private static final Logger log = Logger.getLogger(FriendBussiness.class);
 
-  public static void onAddFriendRequest(Server server, DataPackage dataPackage) throws SQLException {
+  public static void onAddFriendRequest(ServerConnection server, DataPackage dataPackage) throws SQLException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
     FriendDao friendDao = FriendDao.createInstance();
 
@@ -69,7 +69,7 @@ public class FriendBussiness {
     Session toUserSession = Global.sessionMap.get(toUser);
     if (toUserSession != null) {
       if (toUserSession.getCurrentGameService() != null) {
-        Server toUserServer = toUserSession.getCurrentGameService().getServer();
+        ServerConnection toUserServer = toUserSession.getCurrentGameService().getServer();
         DataPackage addFriendDataPackage = new DataPackage(ProtocolConstants.RequestHeader.ADD_FRIEND_REQUEST);
         addFriendDataPackage.putString(fromUser);
         addFriendDataPackage.putString(toUser);
@@ -81,7 +81,7 @@ public class FriendBussiness {
     friendDao.close();
   }
 
-  public static void onAddFriendAgreeRequest(Server server, DataPackage dataPackage) throws SQLException {
+  public static void onAddFriendAgreeRequest(ServerConnection server, DataPackage dataPackage) throws SQLException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
     FriendDao friendDao = FriendDao.createInstance();
 
@@ -144,7 +144,7 @@ public class FriendBussiness {
     Session fromUserSession = Global.sessionMap.get(fromUser);
     if (fromUserSession != null) {
       if (fromUserSession.getCurrentGameService() != null) {
-        Server fromUserServer = fromUserSession.getCurrentGameService().getServer();
+        ServerConnection fromUserServer = fromUserSession.getCurrentGameService().getServer();
         DataPackage addFriendAgreeDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_SUCCESS_RESPONSE);
         addFriendAgreeDataPackage.putString(fromUser);
         addFriendAgreeDataPackage.putString(toUser);
@@ -159,7 +159,7 @@ public class FriendBussiness {
     Session toUserSession = Global.sessionMap.get(toUser);
     if (toUserSession != null) {
       if (toUserSession.getCurrentGameService() != null) {
-        Server toUserServer = toUserSession.getCurrentGameService().getServer();
+        ServerConnection toUserServer = toUserSession.getCurrentGameService().getServer();
         toUserServer.write(createFriendListDataPackageOfUser(toUser));
       }
     }
@@ -168,7 +168,7 @@ public class FriendBussiness {
     friendDao.close();
   }
 
-  public static void onAddFriendDenyRequest(Server server, DataPackage dataPackage) throws SQLException {
+  public static void onAddFriendDenyRequest(ServerConnection server, DataPackage dataPackage) throws SQLException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
 
     String fromUser = dataPackage.nextString();
@@ -200,7 +200,7 @@ public class FriendBussiness {
     Session fromUserSession = Global.sessionMap.get(fromUser);
     if (fromUserSession != null) {
       if (fromUserSession.getCurrentGameService() != null) {
-        Server fromUserServer = fromUserSession.getCurrentGameService().getServer();
+        ServerConnection fromUserServer = fromUserSession.getCurrentGameService().getServer();
         DataPackage addFriendAgreeDataPackage = new DataPackage(ProtocolConstants.RequestHeader.ADD_FRIEND_DENY_REQUEST);
         addFriendAgreeDataPackage.putString(fromUser);
         addFriendAgreeDataPackage.putString(toUser);
@@ -211,7 +211,7 @@ public class FriendBussiness {
     authenticateDao.close();
   }
 
-  public static void onGetFriendListRequest(Server server, DataPackage dataPackage) throws SQLException {
+  public static void onGetFriendListRequest(ServerConnection server, DataPackage dataPackage) throws SQLException {
     String username = dataPackage.nextString();
 
     if (log.isDebugEnabled()) {
@@ -222,7 +222,7 @@ public class FriendBussiness {
 
   }
 
-  public static void onUserJoinToGameService(String username, Server server) throws SQLException {
+  public static void onUserJoinToGameService(String username, ServerConnection server) throws SQLException {
     // Update user friend list to gameService
     server.write(createFriendListDataPackageOfUser(username));
 

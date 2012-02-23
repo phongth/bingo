@@ -8,7 +8,7 @@ import zgame.bean.Table;
 import zgame.bean.User;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public abstract class GameComponent {
   private static final Logger log = Logger.getLogger(GameComponent.class);
@@ -25,7 +25,7 @@ public abstract class GameComponent {
     return dataPackage;
   }
 
-  public final void onActionPerform(Server server, DataPackage dataPackage) {
+  public final void onActionPerform(ServerConnection server, DataPackage dataPackage) {
     try {
       dataPackage.setHeader(dataPackage.nextInt()); // Lấy data thứ 2 làm header
     } catch (ArrayIndexOutOfBoundsException ex) {

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import zgame.socket.client.Client;
+import zgame.socket.client.ClientConnection;
 
 public class Main {
   private static final Logger log = Logger.getLogger(Main.class);
@@ -20,6 +20,6 @@ public class Main {
 
     // Connect to DefaultService to regist GameService
     log.info("Connect to DEFAULT SERVICE at " + Global.DEFAULT_SERVICE_URL + ":" + Global.DEFAULT_SERVICE_PORT);
-    Global.client = new Client(Global.DEFAULT_SERVICE_URL, Global.DEFAULT_SERVICE_PORT, Global.socketClientHandle);
+    Global.client = new ClientConnection(Global.DEFAULT_SERVICE_URL, Global.DEFAULT_SERVICE_PORT, Global.socketClientHandle);
   }
 }

@@ -8,14 +8,14 @@ import zgame.main.GameServiceController;
 import zgame.socket.DataPackage;
 import zgame.socket.DataReceiveListener;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class GameServiceHandle implements DataReceiveListener {
   private static final Logger log = Logger.getLogger(GameServiceHandle.class);
   private GameServiceController controller;
-  private Server server;
+  private ServerConnection server;
 
-  public GameServiceHandle(Server server, GameServiceController controller) {
+  public GameServiceHandle(ServerConnection server, GameServiceController controller) {
     this.server = server;
     this.controller = controller;
 
@@ -89,7 +89,7 @@ public class GameServiceHandle implements DataReceiveListener {
     controller.removeGameService(server.name);
   }
 
-  public Server getServer() {
+  public ServerConnection getServer() {
     return server;
   }
 }

@@ -16,7 +16,7 @@ import zgame.main.Global;
 import zgame.main.Main;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 import zgame.utils.MD5;
 import zgame.utils.SaltUtil;
 
@@ -30,7 +30,7 @@ public class AuthenticateBussiness {
     }
   }
 
-  public static void registerUser(Server server, DataPackage inputDataPackage) throws SQLException {
+  public static void registerUser(ServerConnection server, DataPackage inputDataPackage) throws SQLException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
     String username = inputDataPackage.nextString();
     String md5Pass = inputDataPackage.nextString();
@@ -57,8 +57,7 @@ public class AuthenticateBussiness {
     }
 
     try {
-      int defaultMoney = 5000; // TODO: đang cho mỗi user khi tạo tài
-      // khoản là 5000
+      int defaultMoney = 5000; // TODO: đang cho mỗi user khi tạo tài khoản là 5000
       authenticateDao.createUser(username, md5Pass, defaultMoney, providerId);
       authenticateDao.commit();
 
@@ -79,7 +78,7 @@ public class AuthenticateBussiness {
     authenticateDao.close();
   }
 
-  public static void changePassword(Server server, DataPackage inputDataPackage) throws SQLException {
+  public static void changePassword(ServerConnection server, DataPackage inputDataPackage) throws SQLException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
 
     String username = inputDataPackage.nextString();
@@ -119,7 +118,7 @@ public class AuthenticateBussiness {
     authenticateDao.close();
   }
 
-  public static void signOut(Server server, DataPackage inputDataPackage) {
+  public static void signOut(ServerConnection server, DataPackage inputDataPackage) {
     String username = inputDataPackage.nextString();
     String encodedData = inputDataPackage.nextString();
 
@@ -133,7 +132,7 @@ public class AuthenticateBussiness {
     Global.sessionMap.remove(username);
   }
 
-  public static void checkAuthenticate(Server server, DataPackage inputDataPackage) throws SQLException {
+  public static void checkAuthenticate(ServerConnection server, DataPackage inputDataPackage) throws SQLException {
     int userId = -1;
     String username = inputDataPackage.nextString();
     String encodedData = inputDataPackage.nextString();
@@ -161,13 +160,12 @@ public class AuthenticateBussiness {
       Session session1 = new Session(userId, username);
       Global.sessionMap.put(session1.getUsername(), session1);
       server.name = session1.getUsername();
-      Global.serverMap.put(server.name, server); // Đưa kết nối với client
-      // đã authen thành công
-      // vào map để phục vụ
-      // cho việc tìm kiếm
+      
+      // Đưa kết nối với client đã authen thành công vào map để phục vụ cho việc tìm kiếm
+      Global.connectionMap.put(server.name, server);
+      Global.notAuthenConnectionList.remove(server);
 
-      // Cấu trúc data: sessionId + sessionTimeout +
-      // HEART_BREATH_SEQUENCE_TIME
+      // Cấu trúc data: sessionId + sessionTimeout + HEART_BREATH_SEQUENCE_TIME
       DataPackage dataPackage = new DataPackage(ProtocolConstants.ResponseHeader.AUTHENTICATE_SUCCESS_RESPONSE);
       dataPackage.putString(username);
       dataPackage.putString(session1.getId());
@@ -189,8 +187,7 @@ public class AuthenticateBussiness {
     } else {
       DataPackage dataPackage = new DataPackage(ProtocolConstants.ResponseHeader.AUTHENTICATE_FAIL_RESPONSE);
       dataPackage.putString(username);
-      dataPackage.putInt(userId); // Đưa mã lỗi vào thông báo trả về
-      // (userId chính là mã lỗi)
+      dataPackage.putInt(userId); // Đưa mã lỗi vào thông báo trả về (userId chính là mã lỗi)
       server.write(dataPackage);
     }
   }
@@ -202,8 +199,7 @@ public class AuthenticateBussiness {
     }
 
     User user = getUserInfo(username, authenticateDao);
-    String salt = SaltUtil.getSaltByUsername(username); // Nếu user authen
-    // mà chưa có salt
+    String salt = SaltUtil.getSaltByUsername(username); // Nếu user authen mà chưa có salt
     if (salt == null) {
       log.warn("User " + username + " authen with no salt cached in server.");
       return -1;
@@ -222,7 +218,7 @@ public class AuthenticateBussiness {
     return user.getUserId();
   }
 
-  public static void gameServiceListRequest(Server server, DataPackage inputDataPackage) {
+  public static void gameServiceListRequest(ServerConnection server, DataPackage inputDataPackage) {
     DataPackage dataPackage = new DataPackage(ProtocolConstants.ResponseHeader.GAME_SERVICE_LIST_RESPONSE);
 
     // Đưa thêm danh sách GameService vào data trả về
@@ -236,7 +232,7 @@ public class AuthenticateBussiness {
     server.write(dataPackage);
   }
 
-  public static void requestSalt(Server server, DataPackage inputDataPackage) {
+  public static void requestSalt(ServerConnection server, DataPackage inputDataPackage) {
     // Lấy username do client gửi lên
     String username = inputDataPackage.nextString();
 

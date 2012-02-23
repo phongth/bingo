@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Image;
 
-import state.socket.Client;
+import state.socket.ClientConnection;
 import state.socket.DataReceiveListener;
 import development.bean.Game;
 import development.bean.LoginInfo;
@@ -69,8 +69,8 @@ public class Global {
 
 	public static int HEART_BREATH_SEQUENCE_TIME = 15000;
 
-	public static Client authenClient;
-	public static Client gameActionClient;
+	public static ClientConnection authenClient;
+	public static ClientConnection gameActionClient;
 
 	public static Provider provider = Rms.loadProvider();
 	public static LoginInfo loginInfo = Rms.loadLoginInfo();

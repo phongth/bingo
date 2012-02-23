@@ -10,12 +10,12 @@ import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class ChooseGameBussiness {
   private static final Logger log = Logger.getLogger(ChooseGameBussiness.class);
 
-  public static void joinGame(Server server, DataPackage inputDataPackage) {
+  public static void joinGame(ServerConnection server, DataPackage inputDataPackage) {
     String gameId = inputDataPackage.nextString();
     User user = server.user;
     int errorCode = 0;
@@ -42,12 +42,12 @@ public class ChooseGameBussiness {
     }
   }
 
-  public static void getRoomList(Server server, DataPackage inputDataPackage) {
+  public static void getRoomList(ServerConnection server, DataPackage inputDataPackage) {
     String gameId = inputDataPackage.nextString();
     getRoomList(server, gameId, ProtocolConstants.ResponseHeader.ROOM_LIST_RESPONSE);
   }
 
-  public static void getRoomList(Server server, String gameId, int responseHeader) {
+  public static void getRoomList(ServerConnection server, String gameId, int responseHeader) {
     Entity game = Global.lobby.getChild(gameId);
     Collection<Entity> rooms = game.getChilds();
 

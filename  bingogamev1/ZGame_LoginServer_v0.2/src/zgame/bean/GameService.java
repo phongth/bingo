@@ -3,7 +3,7 @@ package zgame.bean;
 import java.util.HashMap;
 import java.util.Map;
 
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class GameService {
   private String id;
@@ -12,7 +12,7 @@ public class GameService {
   private int port;
   private int cocurrentUser;
   private int maxUser;
-  private Server server;
+  private ServerConnection server;
   private Map<String, User> users = new HashMap<String, User>();
 
   public GameService(String id, String name) {
@@ -77,11 +77,11 @@ public class GameService {
     return port;
   }
 
-  public Server getServer() {
+  public ServerConnection getServer() {
     return server;
   }
 
-  public GameService setServer(Server server) {
+  public GameService setServer(ServerConnection server) {
     this.server = server;
     return this;
   }

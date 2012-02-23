@@ -13,8 +13,8 @@ import zgame.socket.DataReceiveListener;
 import zgame.socket.ProtocolConstants;
 import zgame.utils.Control;
 
-public class Client extends Control implements DataReceiveListener {
-  private static final Logger log = Logger.getLogger(Client.class);
+public class ClientConnection extends Control implements DataReceiveListener {
+  private static final Logger log = Logger.getLogger(ClientConnection.class);
 
   private Socket sock;
   private DataInputStream is;
@@ -29,7 +29,7 @@ public class Client extends Control implements DataReceiveListener {
   private boolean isConnectSuccess;
   private boolean isRunning = true;
 
-  public Client(String serverUrl, int port, DataReceiveListener listener) {
+  public ClientConnection(String serverUrl, int port, DataReceiveListener listener) {
     this.listener = listener;
     this.serverUrl = serverUrl;
     this.port = port;

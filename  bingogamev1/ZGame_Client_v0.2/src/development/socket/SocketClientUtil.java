@@ -8,7 +8,7 @@ import state.AlertListener;
 import state.GameGlobal;
 import state.Transformer;
 import state.md5.MD5;
-import state.socket.Client;
+import state.socket.ClientConnection;
 import state.socket.DataPackage;
 import development.Constants;
 import development.Global;
@@ -45,7 +45,7 @@ public class SocketClientUtil implements AlertListener {
 		if (Global.authenClient != null) {
 			Global.authenClient.detroy();
 		}
-		Global.authenClient = new Client(Constants.LOGIN_SERVER,
+		Global.authenClient = new ClientConnection(Constants.LOGIN_SERVER,
 				Constants.PORT, authenticateHandle,
 				Global.HEART_BREATH_SEQUENCE_TIME);
 	}
@@ -57,7 +57,7 @@ public class SocketClientUtil implements AlertListener {
 		}
 		Alert.instance().showAlert(instance, Alert.LOADING_WITH_NO_BUTTON_TYPE,
 				"Đang kết nối", 99).setAlertTimeOut(TIME_OUT);
-		Global.gameActionClient = new Client(url, port, gameActionHandle,
+		Global.gameActionClient = new ClientConnection(url, port, gameActionHandle,
 				Global.HEART_BREATH_SEQUENCE_TIME);
 	}
 

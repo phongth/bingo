@@ -14,12 +14,12 @@ import zgame.bean.Table;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class FriendBussiness {
   private static final Logger log = Logger.getLogger(FriendBussiness.class);
 
-  public static void onAddFriendRequest(Server server, DataPackage dataPackage) {
+  public static void onAddFriendRequest(ServerConnection server, DataPackage dataPackage) {
     String fromUser = server.user.getName();
     String toUser = dataPackage.nextString();
 
@@ -50,7 +50,7 @@ public class FriendBussiness {
     Global.client.write(addFriendRequestDataPackage);
   }
 
-  public static void onAddFriendAgreeRequest(Server server, DataPackage dataPackage) {
+  public static void onAddFriendAgreeRequest(ServerConnection server, DataPackage dataPackage) {
     String fromUser = dataPackage.nextString();
     String toUser = server.user.getName();
 
@@ -65,7 +65,7 @@ public class FriendBussiness {
     Global.client.write(addFriendAgreeDataPackage);
   }
 
-  public static void onAddFriendDenyRequest(Server server, DataPackage dataPackage) {
+  public static void onAddFriendDenyRequest(ServerConnection server, DataPackage dataPackage) {
     String fromUser = dataPackage.nextString();
     String toUser = server.user.getName();
 
@@ -80,7 +80,7 @@ public class FriendBussiness {
     Global.client.write(addFriendAgreeDataPackage);
   }
 
-  public static void onFriendListRequest(Server server, DataPackage dataPackage) {
+  public static void onFriendListRequest(ServerConnection server, DataPackage dataPackage) {
     if (log.isDebugEnabled()) {
       log.debug("onFriendListRequest : fromUser " + server.user.getName());
     }
@@ -99,7 +99,7 @@ public class FriendBussiness {
     if (friends != null) {
       for (String friendName : friends.keySet()) {
         Friend friend = friends.get(friendName);
-        Server friendServer = Global.serverMap.get(friend.getUsername());
+        ServerConnection friendServer = Global.serverMap.get(friend.getUsername());
         if (friendServer != null) {
           String locationInfo = getUserLocation(friendServer.user.entity);
           friend.setOnline(true);
@@ -146,7 +146,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    Server fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendSuccessDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_SUCCESS_RESPONSE);
       addFriendSuccessDataPackage.putString(toUser);
@@ -159,7 +159,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    Server fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendFailDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_FAIL_USER_DENY_RESPONSE);
       addFriendFailDataPackage.putString(toUser);
@@ -172,7 +172,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    Server fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendFailDataPackage = new DataPackage(
           ProtocolConstants.ResponseHeader.ADD_FRIEND_FAIL_USER_NOT_EXIST_RESPONSE);
@@ -186,7 +186,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if toUser online in this server, then forward the message
-    Server toUserServer = Global.serverMap.get(toUser);
+    ServerConnection toUserServer = Global.serverMap.get(toUser);
     if (toUserServer != null) {
       DataPackage addFriendNotifyDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_NOTIFY_RESPONSE);
       addFriendNotifyDataPackage.putString(fromUser);
@@ -199,7 +199,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if toUser online in this server, then forward the message
-    Server fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage alreadyFriendDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ALREADY_FRIEND_RESPONSE);
       alreadyFriendDataPackage.putString(toUser);
@@ -219,7 +219,7 @@ public class FriendBussiness {
       String locationInfo = dataPackage.nextString();
 
       Friend friend = new Friend().setUsername(username).setOnline(isOnline).setLocationInfo(locationInfo);
-      Server friendServer = Global.serverMap.get(username);
+      ServerConnection friendServer = Global.serverMap.get(username);
       if (friendServer != null) {
         friend.setLocationInfo(getUserLocation(friendServer.user.entity));
       }
@@ -227,7 +227,7 @@ public class FriendBussiness {
     }
 
     // Find owner connection
-    Server ownerServer = Global.serverMap.get(owner);
+    ServerConnection ownerServer = Global.serverMap.get(owner);
     if (ownerServer == null) {
       return;
     }

@@ -10,12 +10,12 @@ import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class ChatBussiness {
   private static final Logger log = Logger.getLogger(ChatBussiness.class);
 
-  public static void onSendMessage(Server server, DataPackage dataPackage) {
+  public static void onSendMessage(ServerConnection server, DataPackage dataPackage) {
     String fromUser = server.user.getName();
     String toId = dataPackage.nextString();
     String message = dataPackage.nextString(); // TODO: Cần lọc message (loại
@@ -23,14 +23,14 @@ public class ChatBussiness {
 
     Table table = Global.tableMap.get(toId);
     GroupChat groupChat = Global.groupChatMap.get(toId);
-    Server toUserServer = Global.serverMap.get(toId);
+    ServerConnection toUserServer = Global.serverMap.get(toId);
 
     if (table != null) { // Gửi cho table
       log.info(">>>> User " + fromUser + " send mesage to table " + table.getId() + ": \"" + message + "\"");
 
       Collection<User> users = table.getUsers();
       for (User toUser : users) {
-        Server toServer = Global.serverMap.get(toUser.getName());
+        ServerConnection toServer = Global.serverMap.get(toUser.getName());
         if (toServer != null) {
           DataPackage sendMessageDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.MESSAGE_RESPONSE);
           sendMessageDataPackage.putString(fromUser);
@@ -43,7 +43,7 @@ public class ChatBussiness {
       log.info(">>>> User " + fromUser + " send mesage to group " + groupChat.getId() + ": \"" + message + "\"");
 
       for (User toUser : groupChat.values()) {
-        Server toServer = Global.serverMap.get(toUser.getName());
+        ServerConnection toServer = Global.serverMap.get(toUser.getName());
         if (toServer != null) {
           DataPackage sendMessageDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.MESSAGE_RESPONSE);
           sendMessageDataPackage.putString(fromUser);
@@ -66,12 +66,12 @@ public class ChatBussiness {
     }
   }
 
-  public static void onInviteToGroup(Server server, DataPackage dataPackage) {
+  public static void onInviteToGroup(ServerConnection server, DataPackage dataPackage) {
   }
 
-  public static void onAcceptJoinToGroup(Server server, DataPackage dataPackage) {
+  public static void onAcceptJoinToGroup(ServerConnection server, DataPackage dataPackage) {
   }
 
-  public static void onDenyJoinToGroup(Server server, DataPackage dataPackage) {
+  public static void onDenyJoinToGroup(ServerConnection server, DataPackage dataPackage) {
   }
 }

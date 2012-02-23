@@ -13,12 +13,12 @@ import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class TableBussiness {
   private static final Logger log = Logger.getLogger(TableBussiness.class);
 
-  public static void onGameAction(Server server, DataPackage inputDataPackage) {
+  public static void onGameAction(ServerConnection server, DataPackage inputDataPackage) {
     User user = server.user;
 
     if (user == null) {
@@ -45,7 +45,7 @@ public class TableBussiness {
     table.getGameComponent().onActionPerform(server, inputDataPackage);
   }
 
-  public static void joinTable(Server server, DataPackage inputDataPackage) {
+  public static void joinTable(ServerConnection server, DataPackage inputDataPackage) {
     String tableId = inputDataPackage.nextString();
     Table table = Global.tableMap.get(tableId);
     User user = server.user;
@@ -115,7 +115,7 @@ public class TableBussiness {
     }
   }
 
-  public static void leaveTable(Server server, DataPackage inputDataPackage) {
+  public static void leaveTable(ServerConnection server, DataPackage inputDataPackage) {
     leaveTable(server.user);
   }
 
@@ -137,7 +137,7 @@ public class TableBussiness {
     }
   }
 
-  public static void sendReady(Server server, DataPackage inputDataPackage) {
+  public static void sendReady(ServerConnection server, DataPackage inputDataPackage) {
     User user = server.user;
 
     if (user == null) {
@@ -159,7 +159,7 @@ public class TableBussiness {
     notifyNewMemberListToAllUserInTable(user.entity.getId());
   }
 
-  public static void startGame(Server server, DataPackage inputDataPackage) {
+  public static void startGame(ServerConnection server, DataPackage inputDataPackage) {
     User user = server.user;
     int errorCode = 0;
 
@@ -212,7 +212,7 @@ public class TableBussiness {
     }
   }
 
-  public static void configTable(Server server, DataPackage inputDataPackage) {
+  public static void configTable(ServerConnection server, DataPackage inputDataPackage) {
     int errorCode = 0;
     User user = server.user;
     int bid = inputDataPackage.nextInt();
@@ -267,7 +267,7 @@ public class TableBussiness {
     }
   }
 
-  public static void listWantToPlayUserList(Server server, DataPackage inputDataPackage) {
+  public static void listWantToPlayUserList(ServerConnection server, DataPackage inputDataPackage) {
     int numberOfUserInPage = 10; // TODO: have to load this setting from config
                                  // file
     int pageNumber = inputDataPackage.nextInt();
@@ -275,7 +275,7 @@ public class TableBussiness {
     System.out.println(">>>>>>Receive listWantToPlayUserList request");
 
     List<User> freeUser = new ArrayList<User>();
-    for (Server server1 : Global.serverMap.values()) {
+    for (ServerConnection server1 : Global.serverMap.values()) {
       if (!(server1.user.entity instanceof Table)) {
         freeUser.add(server1.user);
       }

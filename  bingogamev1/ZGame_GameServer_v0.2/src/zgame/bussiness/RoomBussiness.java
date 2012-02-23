@@ -11,12 +11,12 @@ import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class RoomBussiness {
   private static final Logger log = Logger.getLogger(RoomBussiness.class);
 
-  public static void joinRoom(Server server, DataPackage inputDataPackage) {
+  public static void joinRoom(ServerConnection server, DataPackage inputDataPackage) {
     String roomId = inputDataPackage.nextString();
     Room room = Global.roomMap.get(roomId);
     User user = server.user;
@@ -54,19 +54,19 @@ public class RoomBussiness {
     }
   }
 
-  public static void leaveRoom(Server server, DataPackage inputDataPackage) {
+  public static void leaveRoom(ServerConnection server, DataPackage inputDataPackage) {
     User user = server.user;
     if (user.entity instanceof Room) {
       user.entity.removeUser(user);
     }
   }
 
-  public static void getTableList(Server server, DataPackage inputDataPackage) {
+  public static void getTableList(ServerConnection server, DataPackage inputDataPackage) {
     String roomId = inputDataPackage.nextString();
     getTableList(server, roomId, ProtocolConstants.ResponseHeader.TABLE_LIST_RESPONSE);
   }
 
-  public static void getTableList(Server server, String roomId, int responseHeader) {
+  public static void getTableList(ServerConnection server, String roomId, int responseHeader) {
     Entity room = Global.roomMap.get(roomId);
 
     if (room == null) {

@@ -1,5 +1,6 @@
 package zgame.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import zgame.jobs.CheckToReleaseTimeOutDBConnectionJob;
 import zgame.jobs.CommitPaymentDataJob;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class Global {
   public static boolean DEBUG_MODE;
@@ -41,50 +42,40 @@ public class Global {
 
   public static int PASSWORD_MAX_LEN;
   public static int PASSWORD_MIN_LEN;
-
+  
+  // Constant for RequestManager
+  public static int REQUEST_MANAGER_CORE_POLL_SIZE = 10;
+  public static int REQUEST_MANAGER_MAX_POLL_SIZE = 20;
+  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME = 15; // Minutes
+  public static int REQUEST_MANAGER_INTERVAL = 10;
+  
   public static CommitPaymentDataJob commitPaymentDataJob = new CommitPaymentDataJob();
   public static CheckToReleaseTimeOutDBConnectionJob checkToReleaseTimeOutDBConnectionJob = new CheckToReleaseTimeOutDBConnectionJob();
 
-  public static Map<String, Server> serverMap = new HashMap<String, Server>(); // Lưu
-                                                                               // các
-                                                                               // game
-                                                                               // service
-                                                                               // theo
-                                                                               // id
-  public static Map<String, Session> sessionMap = new HashMap<String, Session>(); // Store
-                                                                                  // user
-                                                                                  // session
-                                                                                  // by
-                                                                                  // username
+  // Danh sách các connection chưa xác nhận user
+  public static List<ServerConnection> notAuthenConnectionList = new ArrayList<ServerConnection>();
+  
+  // Lưu các connection đến client theo username
+  public static Map<String, ServerConnection> connectionMap = new HashMap<String, ServerConnection>();
+  
+  //Store user session by username
+  public static Map<String, Session> sessionMap = new HashMap<String, Session>(); 
 
-  public static Map<String, User> userInfoCache = new HashMap<String, User>(); // Cache
-                                                                               // thông
-                                                                               // tin
-                                                                               // user
-                                                                               // by
-                                                                               // username
-  public static Map<String, String> userNameByUserIdMap = new HashMap<String, String>(); // Map
-                                                                                         // username
-                                                                                         // by
-                                                                                         // userId
-  public static Map<String, Map<String, String>> friendListCache = new HashMap<String, Map<String, String>>(); // Cache
-                                                                                                               // user
-                                                                                                               // friend
-                                                                                                               // list
-                                                                                                               // by
-                                                                                                               // username
-  public static Map<String, Map<String, String>> requestAddFriendCache = new HashMap<String, Map<String, String>>(); // cache
-                                                                                                                     // requestAddFriend
-                                                                                                                     // by
-                                                                                                                     // user
+  //Cache thông tin user by username
+  public static Map<String, User> userInfoCache = new HashMap<String, User>(); 
+  
+  //Map username by userId
+  public static Map<String, String> userNameByUserIdMap = new HashMap<String, String>(); 
+  
+  //Cache user friend list by username
+  public static Map<String, Map<String, String>> friendListCache = new HashMap<String, Map<String, String>>(); 
+  
+  // Cache requestAddFriend by user
+  public static Map<String, Map<String, String>> requestAddFriendCache = new HashMap<String, Map<String, String>>(); 
 
-  public static Map<String, ImageInfo> imagesMap = new HashMap<String, ImageInfo>(); // Lưu
-                                                                                     // danh
-                                                                                     // sách
-                                                                                     // resource
-                                                                                     // client
-                                                                                     // cần
-
+  // Lưu danh sách resource client cần
+  public static Map<String, ImageInfo> imagesMap = new HashMap<String, ImageInfo>(); 
+  
   public static Map<String, List<ImageInfo>> avatarMap = new HashMap<String, List<ImageInfo>>();
   public static DataPackage categoryListDataPackage = new DataPackage(
       ProtocolConstants.ResponseHeader.AVATAR_CATEGORY_LIST_RESPONSE);

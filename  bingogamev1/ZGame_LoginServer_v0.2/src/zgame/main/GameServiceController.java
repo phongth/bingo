@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import zgame.bean.GameService;
 import zgame.dao.GameServiceDao;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 import zgame.socket.handle.GameServiceHandle;
 import zgame.utils.Control;
 
@@ -39,7 +39,7 @@ public class GameServiceController extends Control {
         Socket clientSock = servSock.accept();
         log.info("GameServiceController : new GameService accept: " + clientSock.getInetAddress().getHostAddress() + ":"
             + clientSock.getPort());
-        new GameServiceHandle(new Server(clientSock), this);
+        new GameServiceHandle(new ServerConnection(clientSock), this);
       } catch (IOException e) {
         log.warn("Game Service Controller accept client fail", e);
       }

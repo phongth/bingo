@@ -6,8 +6,7 @@ import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
-import zgame.socket.Server;
-import zgame.socket.handle.SocketServerHandle;
+import zgame.socket.ServerConnection;
 
 public class Main {
   private static Logger log = Logger.getLogger(Main.class);
@@ -29,9 +28,6 @@ public class Main {
       gameServiceController = new GameServiceController();
       gameServiceController.start();
 
-      // Create executor to manage threat pool
-      // service = Executors.newFixedThreadPool(Global.MAX_POOL);
-
       log.info("-------------------------------------------------------");
       log.info("AUTHENTICATE SERVER WAS STARTED AT PORT " + Global.PORT);
       log.info("-------------------------------------------------------");
@@ -45,9 +41,9 @@ public class Main {
     while (isRunning) {
       try {
         Socket clientSocket = servSock.accept();
-        Server server = new Server(clientSocket);
-        new SocketServerHandle(server);
-        // service.execute(server);
+        
+        // Đưa vào danh sách các connection chưa được xác nhận user
+        Global.notAuthenConnectionList.add(new ServerConnection(clientSocket));
       } catch (IOException e) {
         log.warn("Accept client fail", e);
       }

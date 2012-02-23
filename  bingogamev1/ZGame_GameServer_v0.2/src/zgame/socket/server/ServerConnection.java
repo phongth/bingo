@@ -11,8 +11,8 @@ import zgame.bean.User;
 import zgame.socket.DataPackage;
 import zgame.socket.DataReceiveListener;
 
-public class Server implements Runnable, DataReceiveListener {
-  private static final Logger log = Logger.getLogger(Server.class);
+public class ServerConnection implements Runnable, DataReceiveListener {
+  private static final Logger log = Logger.getLogger(ServerConnection.class);
 
   private Socket clientSocket;
 
@@ -26,10 +26,10 @@ public class Server implements Runnable, DataReceiveListener {
   public User user;
   protected boolean isRunning = true;
 
-  public Server() {
+  public ServerConnection() {
   }
 
-  public Server(Socket clientSocket) throws IOException {
+  public ServerConnection(Socket clientSocket) throws IOException {
     this.clientSocket = clientSocket;
     is = new DataInputStream(this.clientSocket.getInputStream());
     os = new DataOutputStream(this.clientSocket.getOutputStream());

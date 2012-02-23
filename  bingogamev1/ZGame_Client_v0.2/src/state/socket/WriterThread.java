@@ -11,9 +11,9 @@ public class WriterThread extends Control {
 	private Vector dataStack = new Vector();
 	private boolean isRunning = true;
 	private long lastTimeSend;
-	private Client client;
+	private ClientConnection client;
 
-	public WriterThread(DataOutputStream os, Client client) {
+	public WriterThread(DataOutputStream os, ClientConnection client) {
 		this.os = os;
 		this.client = client;
 		start();

@@ -9,7 +9,7 @@ import javax.microedition.io.SocketConnection;
 
 import state.Control;
 
-public class Client extends Control implements DataReceiveListener {
+public class ClientConnection extends Control implements DataReceiveListener {
 	private SocketConnection sc;
 	private DataInputStream is;
 	private DataOutputStream os;
@@ -25,11 +25,11 @@ public class Client extends Control implements DataReceiveListener {
 	public boolean isRunning = true;
 	private int heartBreathSequenceTime;
 
-	public Client(String serverUrl, int port, int heartBreathSequenceTime) {
+	public ClientConnection(String serverUrl, int port, int heartBreathSequenceTime) {
 		this(serverUrl, port, null, heartBreathSequenceTime);
 	}
 
-	public Client(String serverUrl, int port, DataReceiveListener listener,
+	public ClientConnection(String serverUrl, int port, DataReceiveListener listener,
 			int heartBreathSequenceTime) {
 		this.heartBreathSequenceTime = heartBreathSequenceTime;
 		this.serverUrl = serverUrl;

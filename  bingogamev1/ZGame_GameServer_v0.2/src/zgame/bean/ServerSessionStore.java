@@ -1,8 +1,8 @@
 package zgame.bean;
 
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class ServerSessionStore {
-  public Server server;
+  public ServerConnection server;
   public String encodedSessionId;
 }

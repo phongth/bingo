@@ -10,9 +10,9 @@ import zgame.bean.Room;
 import zgame.bean.ServerSessionStore;
 import zgame.bean.Session;
 import zgame.bean.Table;
-import zgame.socket.client.Client;
+import zgame.socket.client.ClientConnection;
 import zgame.socket.handle.SocketClientHandle;
-import zgame.socket.server.Server;
+import zgame.socket.server.ServerConnection;
 
 public class Global {
   public static String GAME_SERVICE_ID;
@@ -28,7 +28,7 @@ public class Global {
   public static int MAX_POOL;
 
   /** Lưu trữ các connection theo username */
-  public static Map<String, Server> serverMap = new HashMap<String, Server>(); // Key
+  public static Map<String, ServerConnection> serverMap = new HashMap<String, ServerConnection>(); // Key
                                                                                // is
                                                                                // username
 
@@ -46,7 +46,7 @@ public class Global {
   public static Map<String, GroupChat> groupChatMap = new HashMap<String, GroupChat>();
 
   public static Lobby lobby = new Lobby("");
-  public static Client client;
+  public static ClientConnection client;
   public static SocketClientHandle socketClientHandle = new SocketClientHandle();
   public static ServerListener serverListener = new ServerListener();
 

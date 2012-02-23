@@ -6,11 +6,11 @@ import zgame.dao.ProviderDao;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 import zgame.utils.CacheUtil;
 
 public class CheckForUpdateBussiness {
-  public static void checkToUpdate(Server server, DataPackage inputDataPackage) {
+  public static void checkToUpdate(ServerConnection server, DataPackage inputDataPackage) {
     String version = inputDataPackage.nextString();
     int providerId = inputDataPackage.nextInt();
 

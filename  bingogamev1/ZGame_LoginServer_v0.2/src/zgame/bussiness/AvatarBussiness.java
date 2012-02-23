@@ -6,14 +6,14 @@ import zgame.bean.ImageInfo;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
 import zgame.socket.ProtocolConstants;
-import zgame.socket.Server;
+import zgame.socket.ServerConnection;
 
 public class AvatarBussiness {
-  public static void getCategoryList(Server server, DataPackage inputDataPackage) {
+  public static void getCategoryList(ServerConnection server, DataPackage inputDataPackage) {
     server.write(Global.categoryListDataPackage);
   }
 
-  public static void getAvatarListByCategory(Server server, DataPackage inputDataPackage) {
+  public static void getAvatarListByCategory(ServerConnection server, DataPackage inputDataPackage) {
     String category = inputDataPackage.nextString();
     int index = inputDataPackage.nextInt();
 
