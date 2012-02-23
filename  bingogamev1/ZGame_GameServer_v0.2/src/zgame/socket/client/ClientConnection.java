@@ -48,7 +48,7 @@ public class ClientConnection extends Control implements DataReceiveListener {
       long tmp = writerThread.getLastTimeSend() + Global.DATA_UPDATE_SEQUENCE_TIME - System.currentTimeMillis();
       if (tmp <= 0) {
         DataPackage updateInfoDataPackage = new DataPackage(ProtocolConstants.RequestHeader.UPDATE_GAME_SERVER_INFO_REQUEST);
-        updateInfoDataPackage.putInt(Global.serverMap.size());
+        updateInfoDataPackage.putInt(Global.connectionMap.size());
         writerThread.write(updateInfoDataPackage);
         try {
           sleep(Global.DATA_UPDATE_SEQUENCE_TIME);

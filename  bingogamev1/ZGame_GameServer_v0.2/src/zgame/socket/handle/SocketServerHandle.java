@@ -1,60 +1,25 @@
 package zgame.socket.handle;
 
-import zgame.bean.Entity;
-import zgame.bean.Table;
 import zgame.bussiness.AuthenticateBussiness;
 import zgame.bussiness.ChooseGameBussiness;
 import zgame.bussiness.FriendBussiness;
 import zgame.bussiness.RoomBussiness;
 import zgame.bussiness.TableBussiness;
-import zgame.main.Global;
 import zgame.socket.DataPackage;
-import zgame.socket.DataReceiveListener;
 import zgame.socket.ProtocolConstants;
 import zgame.socket.server.ServerConnection;
 
-public class SocketServerHandle implements DataReceiveListener {
+public class SocketServerHandle implements Runnable {
   private ServerConnection server;
+  private DataPackage dataPackage;
 
-  public SocketServerHandle(ServerConnection server) {
+  public SocketServerHandle(ServerConnection server, DataPackage dataPackage) {
     this.server = server;
-    server.setListener(this);
+    this.dataPackage = dataPackage;
   }
 
   @Override
-  public void onConnectDone() {
-  }
-
-  @Override
-  public void onConnectFail() {
-  }
-
-  @Override
-  public void onDisconnect() {
-    if (server.user != null) {
-      // Báo cho DefaultService biết là user đã out khỏi GameService
-      DataPackage dataPackage = new DataPackage(ProtocolConstants.RequestHeader.USER_OUT_GAME_SERVER_INFORM_REQUEST);
-      dataPackage.putString(server.user.getName());
-      Global.client.write(dataPackage);
-
-      Entity entity = server.user.entity;
-      // Nếu user đang ở trong bàn thì thực hiện sự kiện user thoát ra khỏi bàn
-      if (entity instanceof Table) {
-        TableBussiness.leaveTable(server.user);
-      }
-
-      // Clear thông tin của user trên server và ngắt kết nối với user đó
-      while (entity != null) {
-        entity.removeUser(server.user);
-        entity = entity.getParent();
-      }
-      Global.serverMap.remove(server.user.getName());
-      server.detroy();
-    }
-  }
-
-  @Override
-  public void onRecieveData(DataPackage dataPackage) {
+  public void run() {
     int header = dataPackage.getHeader();
 
     if (header == ProtocolConstants.RequestHeader.HEART_BREATH_REQUEST) {

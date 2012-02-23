@@ -2,8 +2,10 @@ package zgame.bussiness;
 
 import org.apache.log4j.Logger;
 
+import zgame.bean.Entity;
 import zgame.bean.ServerSessionStore;
 import zgame.bean.Session;
+import zgame.bean.Table;
 import zgame.bean.User;
 import zgame.main.Global;
 import zgame.socket.DataPackage;
@@ -79,7 +81,7 @@ public class AuthenticateBussiness {
 
   public static void onUserInfoReceive(ClientConnection client, DataPackage inputDataPackage) {
     String userName = inputDataPackage.nextString();
-    ServerConnection server = Global.serverMap.get(userName);
+    ServerConnection server = Global.connectionMap.get(userName);
     if (server == null) {
       return;
     }
@@ -134,7 +136,8 @@ public class AuthenticateBussiness {
       Global.lobby.addUser(server.user);
 
       // Lưu trữ connection theo username để phục vụ tìm kiếm
-      Global.serverMap.put(username, server);
+      Global.connectionMap.put(username, server);
+      Global.notAuthenConnectionList.remove(server);
 
       // Báo về client là authen thành công
       server.write(new DataPackage(ProtocolConstants.ResponseHeader.AUTHENTICATE_SUCCESS_RESPONSE));
@@ -150,6 +153,29 @@ public class AuthenticateBussiness {
       server.write(new DataPackage(ProtocolConstants.ResponseHeader.AUTHENTICATE_FAIL_RESPONSE));
 
       log.info(">>>>> Authenticate FAIL for user: " + username);
+    }
+  }
+  
+  public static void onDisconnect(ServerConnection server) {
+    if (server.user != null) {
+      // Báo cho DefaultService biết là user đã out khỏi GameService
+      DataPackage dataPackage = new DataPackage(ProtocolConstants.RequestHeader.USER_OUT_GAME_SERVER_INFORM_REQUEST);
+      dataPackage.putString(server.user.getName());
+      Global.client.write(dataPackage);
+
+      Entity entity = server.user.entity;
+      // Nếu user đang ở trong bàn thì thực hiện sự kiện user thoát ra khỏi bàn
+      if (entity instanceof Table) {
+        TableBussiness.leaveTable(server.user);
+      }
+
+      // Clear thông tin của user trên server và ngắt kết nối với user đó
+      while (entity != null) {
+        entity.removeUser(server.user);
+        entity = entity.getParent();
+      }
+      Global.connectionMap.remove(server.user.getName());
+      server.detroy();
     }
   }
 }

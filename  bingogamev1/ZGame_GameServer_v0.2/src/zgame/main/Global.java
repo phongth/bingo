@@ -1,6 +1,8 @@
 package zgame.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import zgame.bean.Friend;
@@ -26,22 +28,21 @@ public class Global {
   public static int DEFAULT_SERVICE_PORT;
   public static String DEFAULT_SERVICE_URL;
   public static int MAX_POOL;
+  
+  //Constant for RequestManager
+  public static int REQUEST_MANAGER_CORE_POLL_SIZE = 10;
+  public static int REQUEST_MANAGER_MAX_POLL_SIZE = 20;
+  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME = 15; // Minutes
+  public static int REQUEST_MANAGER_INTERVAL = 10;
+  
+  //Danh sách các connection chưa xác nhận user
+  public static List<ServerConnection> notAuthenConnectionList = new ArrayList<ServerConnection>();
 
   /** Lưu trữ các connection theo username */
-  public static Map<String, ServerConnection> serverMap = new HashMap<String, ServerConnection>(); // Key
-                                                                               // is
-                                                                               // username
+  public static Map<String, ServerConnection> connectionMap = new HashMap<String, ServerConnection>(); // Key is username
 
-  public static Map<String, Table> tableMap = new HashMap<String, Table>(); // Store
-                                                                            // table
-                                                                            // by
-                                                                            // table
-                                                                            // Id
-  public static Map<String, Room> roomMap = new HashMap<String, Room>(); // Store
-                                                                         // room
-                                                                         // by
-                                                                         // room
-                                                                         // Id
+  public static Map<String, Table> tableMap = new HashMap<String, Table>(); // Store table by table Id
+  public static Map<String, Room> roomMap = new HashMap<String, Room>(); // Store room by room Id
 
   public static Map<String, GroupChat> groupChatMap = new HashMap<String, GroupChat>();
 
@@ -50,9 +51,7 @@ public class Global {
   public static SocketClientHandle socketClientHandle = new SocketClientHandle();
   public static ServerListener serverListener = new ServerListener();
 
-  public static Map<String, Map<String, Friend>> friendListCache = new HashMap<String, Map<String, Friend>>(); // Key
-                                                                                                               // is
-                                                                                                               // username
+  public static Map<String, Map<String, Friend>> friendListCache = new HashMap<String, Map<String, Friend>>(); // Key is username
 
   /**
    * Session map này chỉ dùng tạm để kiểm chứng sessionId của user chứ không để

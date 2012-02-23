@@ -99,7 +99,7 @@ public class FriendBussiness {
     if (friends != null) {
       for (String friendName : friends.keySet()) {
         Friend friend = friends.get(friendName);
-        ServerConnection friendServer = Global.serverMap.get(friend.getUsername());
+        ServerConnection friendServer = Global.connectionMap.get(friend.getUsername());
         if (friendServer != null) {
           String locationInfo = getUserLocation(friendServer.user.entity);
           friend.setOnline(true);
@@ -146,7 +146,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.connectionMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendSuccessDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_SUCCESS_RESPONSE);
       addFriendSuccessDataPackage.putString(toUser);
@@ -159,7 +159,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.connectionMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendFailDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_FAIL_USER_DENY_RESPONSE);
       addFriendFailDataPackage.putString(toUser);
@@ -172,7 +172,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if fromUser online in this server, then forward the message
-    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.connectionMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage addFriendFailDataPackage = new DataPackage(
           ProtocolConstants.ResponseHeader.ADD_FRIEND_FAIL_USER_NOT_EXIST_RESPONSE);
@@ -186,7 +186,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if toUser online in this server, then forward the message
-    ServerConnection toUserServer = Global.serverMap.get(toUser);
+    ServerConnection toUserServer = Global.connectionMap.get(toUser);
     if (toUserServer != null) {
       DataPackage addFriendNotifyDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ADD_FRIEND_NOTIFY_RESPONSE);
       addFriendNotifyDataPackage.putString(fromUser);
@@ -199,7 +199,7 @@ public class FriendBussiness {
     String toUser = dataPackage.nextString();
 
     // if toUser online in this server, then forward the message
-    ServerConnection fromUserServer = Global.serverMap.get(fromUser);
+    ServerConnection fromUserServer = Global.connectionMap.get(fromUser);
     if (fromUserServer != null) {
       DataPackage alreadyFriendDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.ALREADY_FRIEND_RESPONSE);
       alreadyFriendDataPackage.putString(toUser);
@@ -219,7 +219,7 @@ public class FriendBussiness {
       String locationInfo = dataPackage.nextString();
 
       Friend friend = new Friend().setUsername(username).setOnline(isOnline).setLocationInfo(locationInfo);
-      ServerConnection friendServer = Global.serverMap.get(username);
+      ServerConnection friendServer = Global.connectionMap.get(username);
       if (friendServer != null) {
         friend.setLocationInfo(getUserLocation(friendServer.user.entity));
       }
@@ -227,7 +227,7 @@ public class FriendBussiness {
     }
 
     // Find owner connection
-    ServerConnection ownerServer = Global.serverMap.get(owner);
+    ServerConnection ownerServer = Global.connectionMap.get(owner);
     if (ownerServer == null) {
       return;
     }

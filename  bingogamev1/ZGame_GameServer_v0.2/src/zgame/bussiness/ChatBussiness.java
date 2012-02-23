@@ -23,14 +23,14 @@ public class ChatBussiness {
 
     Table table = Global.tableMap.get(toId);
     GroupChat groupChat = Global.groupChatMap.get(toId);
-    ServerConnection toUserServer = Global.serverMap.get(toId);
+    ServerConnection toUserServer = Global.connectionMap.get(toId);
 
     if (table != null) { // Gửi cho table
       log.info(">>>> User " + fromUser + " send mesage to table " + table.getId() + ": \"" + message + "\"");
 
       Collection<User> users = table.getUsers();
       for (User toUser : users) {
-        ServerConnection toServer = Global.serverMap.get(toUser.getName());
+        ServerConnection toServer = Global.connectionMap.get(toUser.getName());
         if (toServer != null) {
           DataPackage sendMessageDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.MESSAGE_RESPONSE);
           sendMessageDataPackage.putString(fromUser);
@@ -43,7 +43,7 @@ public class ChatBussiness {
       log.info(">>>> User " + fromUser + " send mesage to group " + groupChat.getId() + ": \"" + message + "\"");
 
       for (User toUser : groupChat.values()) {
-        ServerConnection toServer = Global.serverMap.get(toUser.getName());
+        ServerConnection toServer = Global.connectionMap.get(toUser.getName());
         if (toServer != null) {
           DataPackage sendMessageDataPackage = new DataPackage(ProtocolConstants.ResponseHeader.MESSAGE_RESPONSE);
           sendMessageDataPackage.putString(fromUser);

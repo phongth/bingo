@@ -275,7 +275,7 @@ public class TableBussiness {
     System.out.println(">>>>>>Receive listWantToPlayUserList request");
 
     List<User> freeUser = new ArrayList<User>();
-    for (ServerConnection server1 : Global.serverMap.values()) {
+    for (ServerConnection server1 : Global.connectionMap.values()) {
       if (!(server1.user.entity instanceof Table)) {
         freeUser.add(server1.user);
       }
