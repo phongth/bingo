@@ -12,19 +12,19 @@ public class SystemCanvas extends Canvas {
 
 	public GameForm frmCurrent;
 	public GameForm lastState;
-	
+
 	private MIDlet mid;
 	protected Transformer transformer;
 	private KeyRepeatHandle keyRepeatHandle;
 	private KeyManagement keyManagement;
 	private GameTimer timer;
 	private Graphics g;
-	
+
 	// =========================== Constructor =============================
 
 	public SystemCanvas() {
 		setFullScreenMode(true);
-		
+
 		new Control() {
 			public void perform() {
 				init();
@@ -39,7 +39,7 @@ public class SystemCanvas extends Canvas {
 			}
 		});
 	}
-	
+
 	// =========================== Init =====================================
 
 	public void init() {
@@ -63,11 +63,16 @@ public class SystemCanvas extends Canvas {
 	// =========================== Next Form ================================
 
 	/**
-	 * Tiến hành chuyển sang State tiếp theo có sử dụng các hiệu ứng Transform Các hiệu ứng transoform có thể sử dụng nằm trong class {@link Transformer} <br>
+	 * Tiến hành chuyển sang State tiếp theo có sử dụng các hiệu ứng Transform
+	 * Các hiệu ứng transoform có thể sử dụng nằm trong class
+	 * {@link Transformer} <br>
 	 * 
-	 * @param state - State tiếp theo
-	 * @param params - Bảng chứa các tham số cần chuyển cho State tiếp theo
-	 * @param transformType - Kiểu transform xử dụng
+	 * @param state
+	 *            - State tiếp theo
+	 * @param params
+	 *            - Bảng chứa các tham số cần chuyển cho State tiếp theo
+	 * @param transformType
+	 *            - Kiểu transform xử dụng
 	 */
 	public void nextState(GameForm state, Hashtable params, int transformType) {
 		try {
@@ -86,8 +91,10 @@ public class SystemCanvas extends Canvas {
 	/**
 	 * Tiến hành chuyển sang State tiếp theo mà không xử dụng hiệu ứng transform
 	 * 
-	 * @param state - State tiếp theo
-	 * @param params - Bảng chứa các tham số cần chuyển cho State tiếp theo
+	 * @param state
+	 *            - State tiếp theo
+	 * @param params
+	 *            - Bảng chứa các tham số cần chuyển cho State tiếp theo
 	 */
 	public void nextState(GameForm state, Hashtable params) {
 		try {
@@ -152,19 +159,19 @@ public class SystemCanvas extends Canvas {
 		GameGlobal.alert.checkToShowQueueAlert();
 		System.gc();
 	}
-	
+
 	public boolean isInTransforming() {
-	  return frmCurrent == transformer;
+		return frmCurrent == transformer;
 	}
-	
+
 	public boolean isAlertShowing() {
-	  return frmCurrent == GameGlobal.alert;
+		return frmCurrent == GameGlobal.alert;
 	}
 
 	public KeyRepeatHandle getKeyRepeatHandle() {
 		return keyRepeatHandle;
 	}
-	
+
 	public KeyManagement getKeyManagement() {
 		return keyManagement;
 	}
@@ -188,7 +195,7 @@ public class SystemCanvas extends Canvas {
 	public MIDlet getMidlet() {
 		return mid;
 	}
-	
+
 	public void setMidlet(MIDlet midlet) {
 		mid = midlet;
 		Display.getDisplay(mid).setCurrent(this);
@@ -235,7 +242,7 @@ public class SystemCanvas extends Canvas {
 		if (this.g == null) {
 			this.g = g;
 		}
-		
+
 		if (frmCurrent == null) {
 			return;
 		}

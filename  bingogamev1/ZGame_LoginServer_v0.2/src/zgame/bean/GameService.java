@@ -6,22 +6,22 @@ import java.util.Map;
 import zgame.socket.Server;
 
 public class GameService {
-	private String id;
-	private String name;
-	private String url;
-	private int port;
-	private int cocurrentUser;
-	private int maxUser;
-	private Server server;
-	private Map<String, User> users = new HashMap<String, User>();
-	
-	public GameService(String id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-	
-	public GameService(String id, String name, String url, int port, int maxUser) {
-	  this.id = id;
+  private String id;
+  private String name;
+  private String url;
+  private int port;
+  private int cocurrentUser;
+  private int maxUser;
+  private Server server;
+  private Map<String, User> users = new HashMap<String, User>();
+
+  public GameService(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public GameService(String id, String name, String url, int port, int maxUser) {
+    this.id = id;
     this.name = name;
     this.url = url;
     this.port = port;
@@ -29,55 +29,55 @@ public class GameService {
   }
 
   public String getName() {
-		return name;
-	}
+    return name;
+  }
 
-	public GameService setName(String name) {
-		this.name = name;
-		return this;
-	}
+  public GameService setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-	public int getCocurrentUser() {
-		return cocurrentUser;
-	}
+  public int getCocurrentUser() {
+    return cocurrentUser;
+  }
 
-	public GameService setCocurrentUser(int cocurrentUser) {
-		this.cocurrentUser = cocurrentUser;
-		return this;
-	}
+  public GameService setCocurrentUser(int cocurrentUser) {
+    this.cocurrentUser = cocurrentUser;
+    return this;
+  }
 
-	public int getMaxUser() {
-		return maxUser;
-	}
+  public int getMaxUser() {
+    return maxUser;
+  }
 
-	public GameService setMaxUser(int maxUser) {
-		this.maxUser = maxUser;
-		return this;
-	}
+  public GameService setMaxUser(int maxUser) {
+    this.maxUser = maxUser;
+    return this;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public GameService setUrl(String url) {
-		this.url = url;
-		return this;
-	}
+  public GameService setUrl(String url) {
+    this.url = url;
+    return this;
+  }
 
-	public String getUrl() {
-		return url;
-	}
+  public String getUrl() {
+    return url;
+  }
 
-	public GameService setPort(int port) {
-		this.port = port;
-		return this;
-	}
+  public GameService setPort(int port) {
+    this.port = port;
+    return this;
+  }
 
-	public int getPort() {
-		return port;
-	}
+  public int getPort() {
+    return port;
+  }
 
-	public Server getServer() {
+  public Server getServer() {
     return server;
   }
 
@@ -85,21 +85,21 @@ public class GameService {
     this.server = server;
     return this;
   }
-  
+
   public void onUserJoinIn(User user) {
-	  users.put(user.getUsername(), user);
+    users.put(user.getUsername(), user);
   }
-  
+
   public void onUserGetOut(String username) {
-	  users.remove(username);
+    users.remove(username);
   }
-  
+
   public Map<String, User> getUserMap() {
-	  return users;
+    return users;
   }
 
   @Override
-	public String toString() {
-		return "GameService [id=" + id + ", name=" + name + ", url=" + url + ", port=" + port  + "]";
-	}
+  public String toString() {
+    return "GameService [id=" + id + ", name=" + name + ", url=" + url + ", port=" + port + "]";
+  }
 }

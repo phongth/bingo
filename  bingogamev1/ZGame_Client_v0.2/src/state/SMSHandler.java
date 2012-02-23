@@ -7,74 +7,75 @@ import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
 public class SMSHandler implements Runnable {
-  private static SMSHandler inst = new SMSHandler();
-  private static SendSMSListener listener;
-  
-  private SMSHandler() {
-  }
+	private static SMSHandler inst = new SMSHandler();
+	private static SendSMSListener listener;
 
-  public static SMSHandler getInstance(SendSMSListener listener) {
-    SMSHandler.listener = listener;
-    return inst;
-  }
+	private SMSHandler() {
+	}
 
-  private String mReceiver = null;
-  private String mPort = null;
-  private String msgString = null;
-  private boolean mSending = false;
+	public static SMSHandler getInstance(SendSMSListener listener) {
+		SMSHandler.listener = listener;
+		return inst;
+	}
 
-  public void sendMsg(String callNumber, String messageText) {
-    sendMsg(callNumber, null, messageText);
-  }
+	private String mReceiver = null;
+	private String mPort = null;
+	private String msgString = null;
+	private boolean mSending = false;
 
-  public void sendMsg(String callNumber, String port, String messageText) {
-    if (mSending) {
-      return;
-    }
-    mReceiver = callNumber;
-    mPort = port;
-    msgString = messageText;
-    Thread th = new Thread(this);
-    th.start();
-  }
+	public void sendMsg(String callNumber, String messageText) {
+		sendMsg(callNumber, null, messageText);
+	}
 
-  public boolean isSending() {
-    return mSending;
-  }
+	public void sendMsg(String callNumber, String port, String messageText) {
+		if (mSending) {
+			return;
+		}
+		mReceiver = callNumber;
+		mPort = port;
+		msgString = messageText;
+		Thread th = new Thread(this);
+		th.start();
+	}
 
-  // Send the color message
-  public void run() {
-    mSending = true;
-    try {
-      sendSMS();
-      if (listener != null) {
-        listener.onSendSMSSuccess();
-      }
-    } catch (IOException e) {
-      if (listener != null) {
-        listener.onSendSMSFail();
-      }
-    }
-    mSending = false;
-  }
+	public boolean isSending() {
+		return mSending;
+	}
 
-  private void sendSMS() throws IOException {
-    StringBuffer address = new StringBuffer();
-    address.append("sms://");
-    address.append(mReceiver);
-    if (mPort != null) {
-      address.append(":");
-      address.append(mPort);
-    }
+	// Send the color message
+	public void run() {
+		mSending = true;
+		try {
+			sendSMS();
+			if (listener != null) {
+				listener.onSendSMSSuccess();
+			}
+		} catch (IOException e) {
+			if (listener != null) {
+				listener.onSendSMSFail();
+			}
+		}
+		mSending = false;
+	}
 
-    MessageConnection conn = null;
-    conn = (MessageConnection) Connector.open(address.toString());
-    TextMessage txtmessage = (TextMessage) conn.newMessage(MessageConnection.TEXT_MESSAGE);
-    txtmessage.setPayloadText(msgString);
-    conn.send(txtmessage);
+	private void sendSMS() throws IOException {
+		StringBuffer address = new StringBuffer();
+		address.append("sms://");
+		address.append(mReceiver);
+		if (mPort != null) {
+			address.append(":");
+			address.append(mPort);
+		}
 
-    if (conn != null) {
-      conn.close();
-    }
-  }
+		MessageConnection conn = null;
+		conn = (MessageConnection) Connector.open(address.toString());
+		TextMessage txtmessage = (TextMessage) conn
+				.newMessage(MessageConnection.TEXT_MESSAGE);
+		txtmessage.setPayloadText(msgString);
+		conn.send(txtmessage);
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
 }

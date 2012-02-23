@@ -6,7 +6,7 @@ public class Session {
 
 	public Session() {
 	}
-	
+
 	public Session(String id, String username) {
 		this.id = id;
 		this.username = username;

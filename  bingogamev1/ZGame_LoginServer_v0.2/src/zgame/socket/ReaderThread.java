@@ -9,53 +9,53 @@ import zgame.utils.Control;
 
 public class ReaderThread extends Control {
   private static Logger log = Logger.getLogger(ReaderThread.class);
-  
-	private DataInputStream is;
-	private long lastTimeReveive;
-	private boolean isRunning = true;
-	private DataReceiveListener listener;
-	private Server server;
 
-	public ReaderThread(DataInputStream is, DataReceiveListener listener, Server protocol) {
-		this.is = is;
-		this.listener = listener;
-		this.server = protocol;
-		start();
-	}
+  private DataInputStream is;
+  private long lastTimeReveive;
+  private boolean isRunning = true;
+  private DataReceiveListener listener;
+  private Server server;
 
-	public void perform() {
-		while (isRunning) {
-			try {
-				int len = is.readInt();
-				if (len < 0) {
-				  log.warn("Len is not valid: " + len + " at connection: " + server.name);
-				  server.detroy();
-				  return;
-				}
-				byte[] data = new byte[len];
-				is.readFully(data);
-				lastTimeReveive = System.currentTimeMillis();
-				listener.onRecieveData(new DataPackage(data));
-			} catch (IOException e) {
-				if (isRunning) {
-					listener.onDisconnect();
-				}
-				log.info("Connection close on IOException: " + server.name);
-				server.detroy();
-				return;
-			} catch (Throwable ex) {
-			  log.warn("Faltal exception", ex);
-			}
-		}
-	}
+  public ReaderThread(DataInputStream is, DataReceiveListener listener, Server protocol) {
+    this.is = is;
+    this.listener = listener;
+    this.server = protocol;
+    start();
+  }
 
-	public long getLastTimeReveive() {
-		return lastTimeReveive;
-	}
+  public void perform() {
+    while (isRunning) {
+      try {
+        int len = is.readInt();
+        if (len < 0) {
+          log.warn("Len is not valid: " + len + " at connection: " + server.name);
+          server.detroy();
+          return;
+        }
+        byte[] data = new byte[len];
+        is.readFully(data);
+        lastTimeReveive = System.currentTimeMillis();
+        listener.onRecieveData(new DataPackage(data));
+      } catch (IOException e) {
+        if (isRunning) {
+          listener.onDisconnect();
+        }
+        log.info("Connection close on IOException: " + server.name);
+        server.detroy();
+        return;
+      } catch (Throwable ex) {
+        log.warn("Faltal exception", ex);
+      }
+    }
+  }
 
-	public void detroy() {
-		isRunning = false;
-		is = null;
-		listener = null;
-	}
+  public long getLastTimeReveive() {
+    return lastTimeReveive;
+  }
+
+  public void detroy() {
+    isRunning = false;
+    is = null;
+    listener = null;
+  }
 }

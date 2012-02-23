@@ -4,13 +4,12 @@ public class Room extends Entity {
 	public static final int ROOM_BASIC = 0;
 	public static final int ROOM_ADVANCE = 1;
 	public static final int ROOM_VIP = 2;
-	
+
 	private Game game;
 	private int type = ROOM_BASIC;
 	private int maxBid;
 	private int minBid;
-	
-	
+
 	public Room(String id) {
 		super(id);
 	}

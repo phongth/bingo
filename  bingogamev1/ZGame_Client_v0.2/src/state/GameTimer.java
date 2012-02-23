@@ -2,7 +2,7 @@ package state;
 
 public class GameTimer extends Control {
 	private static final int POOL_SIZE = 50;
-	
+
 	private int delay;
 	private boolean isRunning;
 	private TimerListener[] timerListeners = new TimerListener[POOL_SIZE];
@@ -30,9 +30,10 @@ public class GameTimer extends Control {
 				break;
 			}
 		}
-		
+
 		if (isNotEnoughSpace) {
-			throw new IllegalArgumentException("GameTimer : addTarget : Not enoungh space in game timer");
+			throw new IllegalArgumentException(
+					"GameTimer : addTarget : Not enoungh space in game timer");
 		}
 	}
 
@@ -53,7 +54,7 @@ public class GameTimer extends Control {
 				continue;
 			}
 			lastTime = System.currentTimeMillis();
-			
+
 			for (int i = 0; i < timerListeners.length; i++) {
 				try {
 					if (timerListeners[i] != null) {
@@ -63,7 +64,7 @@ public class GameTimer extends Control {
 					ex.printStackTrace();
 				}
 			}
-			
+
 			spendTime = System.currentTimeMillis() - lastTime;
 			try {
 				if (delay - spendTime > 0) {
@@ -77,11 +78,11 @@ public class GameTimer extends Control {
 	public void pause() {
 		isPause = true;
 	}
-	
+
 	public void resumeLast() {
 		isPause = false;
 	}
-	
+
 	public void cancel() {
 		isRunning = false;
 	}

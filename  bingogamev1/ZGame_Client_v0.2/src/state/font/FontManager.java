@@ -9,7 +9,7 @@ public class FontManager {
 			MIDP_VERSION = Double.parseDouble(profiles.substring(5));
 		}
 	}
-	
+
 	private static final String FONT_8_FILE = "/vn8.fnt";
 	private static final String FONT_11_FILE = "/vn11.fnt";
 	private static final String FONT_13_FILE = "/vn13.fnt";
@@ -23,11 +23,11 @@ public class FontManager {
 	private static ImageText text13;
 
 	private static int currentCacheSize = ImageTextForMidp2.DEFAULT_TEXT_CACHE_SIZE;
-	
+
 	public static ImageText getFont(int fontSize) {
 		return getFont(fontSize, ImageTextForMidp2.DEFAULT_TEXT_CACHE_SIZE);
 	}
-	
+
 	public static ImageText getFont(int fontSize, int cacheSize) {
 		switch (fontSize) {
 		case FONT_SIZE_8:
@@ -58,7 +58,8 @@ public class FontManager {
 			}
 			return text13;
 		default:
-			throw new IllegalArgumentException("FontManager : getFont : fontSize is wrong");
+			throw new IllegalArgumentException(
+					"FontManager : getFont : fontSize is wrong");
 		}
 	}
 

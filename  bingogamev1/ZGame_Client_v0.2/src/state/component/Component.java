@@ -13,47 +13,55 @@ import state.font.ImageText;
 import state.util.Color;
 import state.util.ImageUtil;
 
-public abstract class Component extends Sprite implements DrawListener, KeyListener, KeySpriteListener {
+public abstract class Component extends Sprite implements DrawListener,
+		KeyListener, KeySpriteListener {
 	protected boolean isFillBackGround = true;
 	protected int backgroundColor = Color.WHITE_CODE;
-	
+
 	protected boolean isEnable = true;
 	protected int forceGroundColor = Color.BLACK_CODE;
-	
+
 	protected boolean hasBorder = true;
 	protected int borderColor = Color.RED2_CODE;
-	
+
 	protected boolean isFocused = false;
 	protected boolean focusable = true;
-	protected int focusBgColor = Color.GREEN_CODE; 
+	protected int focusBgColor = Color.GREEN_CODE;
 	protected int focusFgColor = Color.RED2_CODE;
-	
+
 	private ImageText font;
-	
+
 	public Component() {
 		super(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
 		init();
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
-	 * @param x - Tọa độ x của Component
-	 * @param y - Tọa độ y của Component
-	 * @param width - Chiều rộng của Component
-	 * @param height - Chiều dài của Component
+	 * @param x
+	 *            - Tọa độ x của Component
+	 * @param y
+	 *            - Tọa độ y của Component
+	 * @param width
+	 *            - Chiều rộng của Component
+	 * @param height
+	 *            - Chiều dài của Component
 	 */
 	public Component(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		init();
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
-	 * @param manager - Manager dùng để quản lý việc hiển thị
-	 * @param width - Chiều rộng của Component
-	 * @param height - Chiều dài của Component
+	 * @param manager
+	 *            - Manager dùng để quản lý việc hiển thị
+	 * @param width
+	 *            - Chiều rộng của Component
+	 * @param height
+	 *            - Chiều dài của Component
 	 */
 	public Component(Manager manager, int width, int height) {
 		super(manager, width, height);
@@ -63,28 +71,33 @@ public abstract class Component extends Sprite implements DrawListener, KeyListe
 	/**
 	 * Constructor
 	 * 
-	 * @param manager - Manager dùng để quản lý việc hiển thị
-	 * @param x - Tọa độ x của Component
-	 * @param y - Tọa độ y của Component
-	 * @param width - Chiều rộng của Component
-	 * @param height - Chiều dài của Component
+	 * @param manager
+	 *            - Manager dùng để quản lý việc hiển thị
+	 * @param x
+	 *            - Tọa độ x của Component
+	 * @param y
+	 *            - Tọa độ y của Component
+	 * @param width
+	 *            - Chiều rộng của Component
+	 * @param height
+	 *            - Chiều dài của Component
 	 */
 	public Component(Manager manager, int x, int y, int width, int height) {
 		super(manager, x, y, width, height);
 		init();
 	}
-	
+
 	protected void init() {
 		setDrawListener(this);
 		setKeyListener(this);
 	}
-	
+
 	public abstract void draw(Graphics g);
-	
+
 	public void paint(Sprite source, Graphics g) {
 		draw(g);
 	}
-	
+
 	public void setStyle(Style style) {
 		forceGroundColor = style.forceGroundColor;
 		backgroundColor = style.backgroundColor;
@@ -124,25 +137,24 @@ public abstract class Component extends Sprite implements DrawListener, KeyListe
 
 	public void keyRepeated(int keyCode) {
 	}
-	
 
 	// BEGIN For KeySpriteListener
-	
+
 	public void keyPressed(Sprite source, int keyCode) {
-	  keyPressed(keyCode);
-  }
+		keyPressed(keyCode);
+	}
 
-  public void keyReleased(Sprite source, int keyCode) {
-    keyReleased(keyCode);
-  }
+	public void keyReleased(Sprite source, int keyCode) {
+		keyReleased(keyCode);
+	}
 
-  public void keyRepeated(Sprite source, int keyCode) {
-    keyRepeated(keyCode);
-  }
-  
-  // END For KeySpriteListener 
+	public void keyRepeated(Sprite source, int keyCode) {
+		keyRepeated(keyCode);
+	}
 
-  /** Focus back ground color */
+	// END For KeySpriteListener
+
+	/** Focus back ground color */
 	public int getFocusBgColor() {
 		return focusBgColor;
 	}
@@ -170,7 +182,7 @@ public abstract class Component extends Sprite implements DrawListener, KeyListe
 		isFillBackGround = true;
 		this.backgroundColor = backgroundColor;
 	}
-	
+
 	public boolean isFillBackGround() {
 		return isFillBackGround;
 	}
@@ -232,7 +244,7 @@ public abstract class Component extends Sprite implements DrawListener, KeyListe
 			isFocused = false;
 		}
 	}
-	
+
 	public void detroy() {
 		super.detroy();
 		font = null;

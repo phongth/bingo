@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Image;
 public class UserInfo {
 
 	private String userName;
-	private String point ="";
+	private String point = "";
 	private boolean isOnline;
 	private boolean isChoice;
 	private String dangCap = "Vô đối";
@@ -19,7 +19,8 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param avataImage the avataImage to set
+	 * @param avataImage
+	 *            the avataImage to set
 	 */
 	public void setAvataImage(Image avataImage) {
 		this.avataImage = avataImage;
@@ -33,7 +34,8 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param userName the userName to set
+	 * @param userName
+	 *            the userName to set
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -47,7 +49,8 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param point the point to set
+	 * @param point
+	 *            the point to set
 	 */
 	public void setPoint(String point) {
 		this.point = point;
@@ -61,7 +64,8 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param isOnline the isOnline to set
+	 * @param isOnline
+	 *            the isOnline to set
 	 */
 	public void setOnline(boolean isOnline) {
 		this.isOnline = isOnline;
@@ -75,7 +79,8 @@ public class UserInfo {
 	}
 
 	/**
-	 * @param isChoice the isChoice to set
+	 * @param isChoice
+	 *            the isChoice to set
 	 */
 	public void setChoice(boolean isChoice) {
 		this.isChoice = isChoice;

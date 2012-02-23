@@ -13,7 +13,7 @@ public class PaymentDaoStub extends PaymentDao {
   public void commitUserMoneyToDB(User user) {
     throw new UnsupportedOperationException("The method updateUserMoneyToDB is not supported");
   }
-  
+
   @Override
   public void close() {
   }

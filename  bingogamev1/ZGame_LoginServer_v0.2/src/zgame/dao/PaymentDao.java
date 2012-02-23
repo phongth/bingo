@@ -10,16 +10,16 @@ import zgame.exception.NotFoundException;
 
 public abstract class PaymentDao extends AbstractDao {
   public static final Logger log = Logger.getLogger(PaymentDao.class);
-  
+
   public static PaymentDao createInstance() {
     return new PaymentDaoImpl();
   }
-  
-  public abstract void commitUserMoneyToDB(User user) throws SQLException, NotFoundException ;
-  
+
+  public abstract void commitUserMoneyToDB(User user) throws SQLException, NotFoundException;
+
   public abstract int getUserMoneyFromDB(String username) throws SQLException, NotFoundException;
-  
+
   public abstract void commit();
-  
+
   public abstract void close();
 }

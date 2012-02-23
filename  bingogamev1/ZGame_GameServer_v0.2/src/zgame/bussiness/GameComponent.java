@@ -12,40 +12,40 @@ import zgame.socket.server.Server;
 
 public abstract class GameComponent {
   private static final Logger log = Logger.getLogger(GameComponent.class);
-  
-	protected Table table;
 
-	public GameComponent(Table table) {
-		this.table = table;
-	}
+  protected Table table;
 
-	public static final DataPackage createPackage(int header) {
-		DataPackage dataPackage = new DataPackage(ProtocolConstants.ResponseHeader.GAME_ACTION_RESPONSE);
-		dataPackage.putInt(header);
-		return dataPackage;
-	}
+  public GameComponent(Table table) {
+    this.table = table;
+  }
 
-	public final void onActionPerform(Server server, DataPackage dataPackage) {
-		try {
-			dataPackage.setHeader(dataPackage.nextInt()); // Lấy data thứ 2 làm header
-		} catch (ArrayIndexOutOfBoundsException ex) {
-			log.warn("ERROR : GameComponent : onActionPerform : dataPackage has wrong format");
-		}
-		onActionPerform(server.user, dataPackage);
-	}
+  public static final DataPackage createPackage(int header) {
+    DataPackage dataPackage = new DataPackage(ProtocolConstants.ResponseHeader.GAME_ACTION_RESPONSE);
+    dataPackage.putInt(header);
+    return dataPackage;
+  }
 
-	public final void sendMessageToAllUser(DataPackage dataPackage) {
-		Collection<User> users = table.getUsers();
-		for (User user : users) {
-			user.server.write(dataPackage);
-		}
-	}
-	
-	public abstract void onUserLeaveTable(User user);
+  public final void onActionPerform(Server server, DataPackage dataPackage) {
+    try {
+      dataPackage.setHeader(dataPackage.nextInt()); // Lấy data thứ 2 làm header
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      log.warn("ERROR : GameComponent : onActionPerform : dataPackage has wrong format");
+    }
+    onActionPerform(server.user, dataPackage);
+  }
 
-	public abstract void init();
+  public final void sendMessageToAllUser(DataPackage dataPackage) {
+    Collection<User> users = table.getUsers();
+    for (User user : users) {
+      user.server.write(dataPackage);
+    }
+  }
 
-	protected abstract void onActionPerform(User user, DataPackage inputDataPackage);
+  public abstract void onUserLeaveTable(User user);
 
-	public abstract void detroy();
+  public abstract void init();
+
+  protected abstract void onActionPerform(User user, DataPackage inputDataPackage);
+
+  public abstract void detroy();
 }

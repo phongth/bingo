@@ -2,20 +2,20 @@ package development.bean;
 
 public class User {
 	private String name = "";
-	private int money; 
+	private int money;
 	private String passwordMd5 = "";
 	private boolean isReady = false;
 	private int avatarId;
-	
+
 	public Entity entity;
-	
+
 	public User() {
 	}
-	
+
 	public User(String name) {
 		this.name = name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -43,11 +43,11 @@ public class User {
 	public int getMoney() {
 		return money;
 	}
-	
+
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	
+
 	public int getAvatarId() {
 		return avatarId;
 	}
@@ -60,7 +60,7 @@ public class User {
 		if (obj == null) {
 			return false;
 		}
-		
+
 		if (obj instanceof User) {
 			User user = (User) obj;
 			if (user.getName().equals(name)) {

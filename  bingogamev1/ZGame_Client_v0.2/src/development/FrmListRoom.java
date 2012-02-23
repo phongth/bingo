@@ -37,7 +37,7 @@ public class FrmListRoom extends GameForm implements EventListener {
 	private int[] rowDy;
 	private String[] roomTypeName;
 	private int tabIndex;
-	
+
 	private Menu menu;
 	private String[] MENU;
 
@@ -47,40 +47,56 @@ public class FrmListRoom extends GameForm implements EventListener {
 		tabFocusImage = ImageUtil.getImage("tab_focus.png");
 		muitenImage = ImageUtil.getImage("muiten.png");
 		muitenFocusImage = ImageUtil.getImage("muiten_focus.png");
-		roomTypeName = new String[]{"SƠ CẤP", "TRUNG CẤP", "VIP"};
+		roomTypeName = new String[] { "SƠ CẤP", "TRUNG CẤP", "VIP" };
 		text8 = FontManager.getFont(FontManager.FONT_SIZE_8);
 		tabIndex = 0;
 		currentRow = new int[3];
-		rowDy = new int[] {DY, DY, DY};
-		
-		MENU = new String[] {"Cập nhật danh sách", "Về menu chính", "Thông tin TK"};
-		menu = new Menu(MENU, this, Constants.MENU_STYLE, 0, GameConstants.SCREEN_HEIGHT - 45);
+		rowDy = new int[] { DY, DY, DY };
+
+		MENU = new String[] { "Cập nhật danh sách", "Về menu chính",
+				"Thông tin TK" };
+		menu = new Menu(MENU, this, Constants.MENU_STYLE, 0,
+				GameConstants.SCREEN_HEIGHT - 45);
 	}
 
 	public void draw(Graphics g) {
 		g.setColor(0x440000);
-		g.fillRect(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+		g.fillRect(0, 0, GameConstants.SCREEN_WIDTH,
+				GameConstants.SCREEN_HEIGHT);
 		g.setColor(0xA53A06);
-		g.fillRect(4, 24, GameConstants.SCREEN_WIDTH - 4, GameConstants.SCREEN_HEIGHT - 25);
-		
+		g.fillRect(4, 24, GameConstants.SCREEN_WIDTH - 4,
+				GameConstants.SCREEN_HEIGHT - 25);
+
 		Vector rooms = Global.currentGame.getRoomListByType(tabIndex);
-		
+
 		// draw tab
 		for (int i = 0; i < 3; i++) {
 			if (i == tabIndex) {
-				g.drawImage(tabFocusImage, 4 + i * (tabImage.getWidth() + 4), 4, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(tabFocusImage, 4 + i * (tabImage.getWidth() + 4),
+						4, GameConstants.TOP_LEFT_ANCHOR);
 			}
-			g.drawImage(tabImage, 4 + i * (tabImage.getWidth() + 4), 4, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, roomTypeName[i], Color.WHITE_CODE, 40 + i * (tabImage.getWidth() + 4), 14, GameConstants.CENTER_ANCHOR);
+			g.drawImage(tabImage, 4 + i * (tabImage.getWidth() + 4), 4,
+					GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, roomTypeName[i], Color.WHITE_CODE, 40 + i
+					* (tabImage.getWidth() + 4), 14,
+					GameConstants.CENTER_ANCHOR);
 			if (i == tabIndex && rooms.size() > 0) {
 				Room room = (Room) rooms.elementAt(0);
-				text8.drawString(g, "(" + room.getMinBid() + " - " + room.getMaxBid() + ")", Color.WHITE_CODE, 40 + i * (tabImage.getWidth() + 4), 30, GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, "(" + room.getMinBid() + " - "
+						+ room.getMaxBid() + ")", Color.WHITE_CODE, 40 + i
+						* (tabImage.getWidth() + 4), 30,
+						GameConstants.CENTER_ANCHOR);
 			}
 		}
-		
+
 		if (Global.currentGame.numberOfChilds() == 0) {
-			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2, GameConstants.CENTER_ANCHOR);
-			text8.drawString(g, "Đang cập nhật danh sách phòng", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2, GameConstants.CENTER_ANCHOR);
+			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2,
+					GameConstants.SCREEN_HEIGHT / 2,
+					GameConstants.CENTER_ANCHOR);
+			text8.drawString(g, "Đang cập nhật danh sách phòng",
+					Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2,
+					GameConstants.SCREEN_HEIGHT / 2,
+					GameConstants.CENTER_ANCHOR);
 		} else {
 			// Set clip for draw room list
 			if (GameConstants.IS_240x320_SCREEN) {
@@ -88,39 +104,59 @@ public class FrmListRoom extends GameForm implements EventListener {
 			} else {
 				g.setClip(8, 30, 305, 186);
 			}
-			
+
 			// Draw room list
 			for (int i = 0; i < rooms.size(); i++) {
 				g.setColor(Color.WHITE_CODE);
-				g.drawLine(DX, rowDy[tabIndex] - DISTANCE / 2 + i * DISTANCE, GameConstants.SCREEN_WIDTH - DX, rowDy[tabIndex] - DISTANCE / 2 + i * DISTANCE);
-				
+				g.drawLine(DX, rowDy[tabIndex] - DISTANCE / 2 + i * DISTANCE,
+						GameConstants.SCREEN_WIDTH - DX, rowDy[tabIndex]
+								- DISTANCE / 2 + i * DISTANCE);
+
 				Room room = (Room) rooms.elementAt(i);
-				String roomName = "Phòng " + room.getName() + " (" + room.getConcurrentUser() + "/" + room.getMaxUser() + ")";
+				String roomName = "Phòng " + room.getName() + " ("
+						+ room.getConcurrentUser() + "/" + room.getMaxUser()
+						+ ")";
 				int color = Color.WHITE_CODE;
 				if (i == currentRow[tabIndex]) {
 					g.setColor(0x662221);
-					g.fillRect(DX, rowDy[tabIndex] - DISTANCE / 2  + i * DISTANCE + 2, GameConstants.SCREEN_WIDTH - 2 * DX, DISTANCE - 3);
+					g.fillRect(DX, rowDy[tabIndex] - DISTANCE / 2 + i
+							* DISTANCE + 2,
+							GameConstants.SCREEN_WIDTH - 2 * DX, DISTANCE - 3);
 					color = Color.YELLOW_CODE;
-					g.drawImage(muitenFocusImage, DX + 4, rowDy[tabIndex]  + i * DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
+					g.drawImage(muitenFocusImage, DX + 4, rowDy[tabIndex] + i
+							* DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
 				} else {
-					g.drawImage(muitenImage, DX + 4, rowDy[tabIndex] + i * DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
+					g.drawImage(muitenImage, DX + 4, rowDy[tabIndex] + i
+							* DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
 				}
-				text8.drawString(g, roomName, color, 26, rowDy[tabIndex] + i * DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
+				text8.drawString(g, roomName, color, 26, rowDy[tabIndex] + i
+						* DISTANCE, GameConstants.VCENTER_LEFT_ANCHOR);
 			}
 		}
-		
+
 		// Command
-		g.setClip(0, GameConstants.SCREEN_HEIGHT - 25, GameConstants.SCREEN_WIDTH, 25);
+		g.setClip(0, GameConstants.SCREEN_HEIGHT - 25,
+				GameConstants.SCREEN_WIDTH, 25);
 		g.setColor(0x2B0102);// Màu nền task bar
-		g.fillRect(0, GameConstants.SCREEN_HEIGHT - 25, GameConstants.SCREEN_WIDTH, 25);
+		g.fillRect(0, GameConstants.SCREEN_HEIGHT - 25,
+				GameConstants.SCREEN_WIDTH, 25);
 		if (menu.isShowing()) {
-			text8.drawString(g, "Đóng", Color.WHITE_CODE, 5, GameConstants.SCREEN_HEIGHT - 5, GameConstants.BOTTOM_LEFT_ANCHOR);
+			text8.drawString(g, "Đóng", Color.WHITE_CODE, 5,
+					GameConstants.SCREEN_HEIGHT - 5,
+					GameConstants.BOTTOM_LEFT_ANCHOR);
 		} else {
-			text8.drawString(g, "Menu", Color.WHITE_CODE, 5, GameConstants.SCREEN_HEIGHT - 5, GameConstants.BOTTOM_LEFT_ANCHOR);
-			text8.drawString(g, "Trở về", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH - 8, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_RIGHT_ANCHOR);
+			text8.drawString(g, "Menu", Color.WHITE_CODE, 5,
+					GameConstants.SCREEN_HEIGHT - 5,
+					GameConstants.BOTTOM_LEFT_ANCHOR);
+			text8.drawString(g, "Trở về", Color.WHITE_CODE,
+					GameConstants.SCREEN_WIDTH - 8,
+					GameConstants.SCREEN_HEIGHT - 4,
+					GameConstants.BOTTOM_RIGHT_ANCHOR);
 		}
-		
-		g.setClip(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+
+		g
+				.setClip(0, 0, GameConstants.SCREEN_WIDTH,
+						GameConstants.SCREEN_HEIGHT);
 		menu.draw(g);
 	}
 
@@ -129,7 +165,8 @@ public class FrmListRoom extends GameForm implements EventListener {
 		if (action.equals(MENU[0])) { // Cập nhật danh sách
 			SocketClientUtil.getRoomList(Global.currentGame.getId());
 		} else if (action.equals(MENU[1])) { // Về Menu chính
-			GameGlobal.nextState(Global.frmChooseGame, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
+			GameGlobal.nextState(Global.frmChooseGame, null,
+					Transformer.TRANSFORM_WITH_LOADING_FORM);
 		} else if (action.equals(MENU[2])) { // Thông tin TK
 		}
 	}
@@ -139,7 +176,7 @@ public class FrmListRoom extends GameForm implements EventListener {
 
 	public void keyReleased(int keyCode) {
 		keyCode = Key.getGameKey(keyCode);
-		
+
 		if (keyCode == Key.SOFT_LEFT) {
 			if (menu.isShowing()) {
 				menu.hide();
@@ -152,7 +189,7 @@ public class FrmListRoom extends GameForm implements EventListener {
 		if (menu.isShowing()) {
 			return;
 		}
-		
+
 		switch (keyCode) {
 		case Key.RIGHT:
 			if (Global.currentGame.numberOfChilds() == 0) {
@@ -176,7 +213,8 @@ public class FrmListRoom extends GameForm implements EventListener {
 			if (currentRow[tabIndex] > 0) {
 				currentRow[tabIndex]--;
 			} else {
-				currentRow[tabIndex] = Global.currentGame.getRoomListByType(tabIndex).size() - 1;
+				currentRow[tabIndex] = Global.currentGame.getRoomListByType(
+						tabIndex).size() - 1;
 			}
 			break;
 		case Key.DOWN:
@@ -184,7 +222,8 @@ public class FrmListRoom extends GameForm implements EventListener {
 			if (Global.currentGame.getRoomListByType(tabIndex).size() == 0) {
 				return;
 			}
-			if (currentRow[tabIndex] < Global.currentGame.getRoomListByType(tabIndex).size() - 1) {
+			if (currentRow[tabIndex] < Global.currentGame.getRoomListByType(
+					tabIndex).size() - 1) {
 				currentRow[tabIndex]++;
 			} else {
 				currentRow[tabIndex] = 0;
@@ -195,13 +234,15 @@ public class FrmListRoom extends GameForm implements EventListener {
 			if (Global.currentGame.getRoomListByType(tabIndex).size() == 0) {
 				return;
 			}
-			Global.currentRoom = (Room) Global.currentGame.getChildByType(tabIndex, currentRow[tabIndex]);
+			Global.currentRoom = (Room) Global.currentGame.getChildByType(
+					tabIndex, currentRow[tabIndex]);
 			SocketClientUtil.joinRoomRequest(Global.currentRoom.getId());
 			break;
 		case Key.SOFT_RIGHT:
-		  if (!menu.isShowing()) {
-		    GameGlobal.nextState(Global.frmChooseGame, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
-		  }
+			if (!menu.isShowing()) {
+				GameGlobal.nextState(Global.frmChooseGame, null,
+						Transformer.TRANSFORM_WITH_LOADING_FORM);
+			}
 			break;
 		}
 	}

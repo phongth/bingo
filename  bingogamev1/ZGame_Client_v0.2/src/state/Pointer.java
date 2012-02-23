@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.microedition.lcdui.Image;
 
-
-
 public class Pointer extends Sprite implements KeySpriteListener, TimerListener {
 	private static final Image DEFAULT_ICON = createDefaultIcon();
 	private int activeKeyCode = Key.FIRE;
@@ -15,39 +13,43 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 	private boolean isAllowUseNumberKey = false;
 	private Sprite lastMoveOnItem;
 	private Sprite currentMoveOnItem;
-	
+
 	private int boundX;
 	private int boundY;
 	private int boundWidth = GameConstants.SCREEN_WIDTH;
 	private int boundHeight = GameConstants.SCREEN_HEIGHT;
-	
+
 	/**
 	 * Khởi tạo pointer
 	 * 
-	 * @param manager - Manager quản lý
-	 * @param systemCanvas - SystemCanvas của hệ thống
+	 * @param manager
+	 *            - Manager quản lý
+	 * @param systemCanvas
+	 *            - SystemCanvas của hệ thống
 	 */
 	public Pointer(Manager manager) {
-		super(DEFAULT_ICON, manager, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2);
+		super(DEFAULT_ICON, manager, GameConstants.SCREEN_WIDTH / 2,
+				GameConstants.SCREEN_HEIGHT / 2);
 		setKeyListener(this);
 	}
-	
+
 	private static Image createDefaultIcon() {
 		try {
-			return Image.createImage(GameConstants.CORE_IMAGE_FOLDER + "/p_arrow.png");
+			return Image.createImage(GameConstants.CORE_IMAGE_FOLDER
+					+ "/p_arrow.png");
 		} catch (IOException e) {
 			return null;
 		}
 	}
-	
+
 	public void resetToDefaultImage() {
 		setImage(DEFAULT_ICON);
 	}
-	
+
 	public boolean isUseDefaultImage() {
 		return getImage() == DEFAULT_ICON;
 	}
-	
+
 	/**
 	 * Lấy active code hiện tại đang xử dụng
 	 * 
@@ -58,9 +60,10 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 	}
 
 	/**
-	 * Thay đổi phím active của pointer (giống như Mouse Left của windows) 
+	 * Thay đổi phím active của pointer (giống như Mouse Left của windows)
 	 * 
-	 * @param activeKeyCode - active code cập nhật
+	 * @param activeKeyCode
+	 *            - active code cập nhật
 	 */
 	public void setActiveKeyCode(int activeKeyCode) {
 		this.activeKeyCode = activeKeyCode;
@@ -74,15 +77,15 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 		this.dx = dx;
 		this.dy = dy;
 	}
-	
+
 	public int getPointerX() {
 		return x + dx;
 	}
-	
+
 	public int getPointerY() {
 		return y + dy;
 	}
-	
+
 	public boolean isAllowUseNumberKey() {
 		return isAllowUseNumberKey;
 	}
@@ -105,10 +108,11 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 
 	public void keyRepeated(Sprite source, int keyCode) {
 		keyCode = Key.getGameKey(keyCode);
-		step = (int)((System.currentTimeMillis() - GameGlobal.systemCanvas.getKeyRepeatHandle().getKeyRepeatStartTime()) >> 4L);
+		step = (int) ((System.currentTimeMillis() - GameGlobal.systemCanvas
+				.getKeyRepeatHandle().getKeyRepeatStartTime()) >> 4L);
 		int x = this.x + dx;
 		int y = this.y + dy;
-		
+
 		switch (keyCode) {
 		case Key.LEFT:
 			if (x > boundX + step) {
@@ -139,7 +143,7 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 			}
 			break;
 		}
-		
+
 		if (isAllowUseNumberKey) {
 			switch (keyCode) {
 			case Key.K_4: // Left
@@ -179,19 +183,21 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 		if (manager != null) {
 			currentMoveOnItem = null;
 			manager.getParent().doMouseMoved(x + dx, y + dy);
-			
-			if ((lastMoveOnItem != null) && (lastMoveOnItem != currentMoveOnItem)) {
-				lastMoveOnItem.mouseMoveListener.mouseMoveOut(lastMoveOnItem, x + dx, y + dy);
+
+			if ((lastMoveOnItem != null)
+					&& (lastMoveOnItem != currentMoveOnItem)) {
+				lastMoveOnItem.mouseMoveListener.mouseMoveOut(lastMoveOnItem, x
+						+ dx, y + dy);
 			}
 			lastMoveOnItem = currentMoveOnItem;
 			currentMoveOnItem = null;
 		}
 	}
-	
+
 	public void setCurrentMoveOnItem(Sprite currentMoveOnItem) {
 		this.currentMoveOnItem = currentMoveOnItem;
 	}
-	
+
 	public Sprite getCurrentMoveOnItem() {
 		return lastMoveOnItem;
 	}
@@ -202,7 +208,7 @@ public class Pointer extends Sprite implements KeySpriteListener, TimerListener 
 		boundWidth = width;
 		boundHeight = height;
 	}
-	
+
 	public void detroy() {
 		super.detroy();
 		lastMoveOnItem = null;

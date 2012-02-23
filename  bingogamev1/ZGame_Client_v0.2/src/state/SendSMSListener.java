@@ -1,6 +1,7 @@
 package state;
 
 public interface SendSMSListener {
-  public void onSendSMSSuccess();
-  public void onSendSMSFail();
+	public void onSendSMSSuccess();
+
+	public void onSendSMSFail();
 }

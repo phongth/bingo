@@ -61,10 +61,10 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 	private Image numberBgImage;
 	private Image leftChatImage;
 	private Image rightChatImage;
-//	private Image tabImage;
+	// private Image tabImage;
 	private Image tabLongImage;
 	private Image tabLongFocusImage;
-//	private Image tabFocusImage;
+	// private Image tabFocusImage;
 	private Image avatarImage;
 	private Image ballImage;
 	private Image popupImage;
@@ -100,7 +100,7 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 	private boolean isSendReady;
 	private boolean isStartGame;
 	private int waitToStartGameTime;
-	
+
 	public void init(Hashtable parameters) {
 		tabIndex = 0;
 		isSendReady = false;
@@ -119,19 +119,27 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		inRoomTime = 0;
 
 		tabStrings = new String[2];
-//		tabStrings[1] = "DS bạn bè";
+		// tabStrings[1] = "DS bạn bè";
 		switch (Global.currentRoom.getType()) {
 		case 0:
-			tabStrings[0] = Global.currentGame.getName() + " - Sơ cấp - Phòng " + Global.currentRoom.getName() + " - Bàn " + Global.currentTable.getName();
+			tabStrings[0] = Global.currentGame.getName() + " - Sơ cấp - Phòng "
+					+ Global.currentRoom.getName() + " - Bàn "
+					+ Global.currentTable.getName();
 			break;
 		case 1:
-			tabStrings[0] = Global.currentGame.getName() + " - Trung cấp - Phòng " + Global.currentRoom.getName() + " - Bàn " + Global.currentTable.getName();
+			tabStrings[0] = Global.currentGame.getName()
+					+ " - Trung cấp - Phòng " + Global.currentRoom.getName()
+					+ " - Bàn " + Global.currentTable.getName();
 			break;
 		case 2:
-			tabStrings[0] = Global.currentGame.getName() + " - VIP - Phòng " + Global.currentRoom.getName() + " - Bàn" + Global.currentTable.getName();
+			tabStrings[0] = Global.currentGame.getName() + " - VIP - Phòng "
+					+ Global.currentRoom.getName() + " - Bàn"
+					+ Global.currentTable.getName();
 			break;
 		default:
-			tabStrings[0] = Global.currentGame.getName() + " - Sơ cấp - Phòng " + Global.currentRoom.getName() + " - Bàn " + Global.currentTable.getName();
+			tabStrings[0] = Global.currentGame.getName() + " - Sơ cấp - Phòng "
+					+ Global.currentRoom.getName() + " - Bàn "
+					+ Global.currentTable.getName();
 			break;
 		}
 		bid = Global.currentRoom.getMinBid();
@@ -143,10 +151,10 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		resetText();
 
 		// tab Image
-//		tabImage = ImageUtil.getImage("tab.png");
+		// tabImage = ImageUtil.getImage("tab.png");
 		tabLongImage = ImageUtil.getImage("tab_320240.png");
 		tabLongFocusImage = ImageUtil.getImage("tab_focus_320240.png");
-//		tabFocusImage = ImageUtil.getImage("tab_focus.png");
+		// tabFocusImage = ImageUtil.getImage("tab_focus.png");
 
 		ballImage = ImageUtil.getImage("datcuoc.png");
 		numberBgImage = ImageUtil.getImage("Nen_So.png");
@@ -158,19 +166,27 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		// ảnh cho popUp
 		Image popUpImage = ImageUtil.getImage("PopUp3.png");
 		bodyFrameImage = ImageUtil.getSubImage(popUpImage, 17, 0, 1, 98, true);
-		bodyFrameImage = ImageUtil.joinAndCreateImages(bodyFrameImage, 157, 98, true);
+		bodyFrameImage = ImageUtil.joinAndCreateImages(bodyFrameImage, 157, 98,
+				true);
 		popupImage = ImageUtil.getImage("bg_popup.png");
 		popUpImage = null;
 		try {
-			buttonImage = Image.createImage(GameConstants.CORE_IMAGE_FOLDER + "/button_nho.png");
-			buttonFocusImage = Image.createImage(GameConstants.CORE_IMAGE_FOLDER + "/button_nho_focus.png");
+			buttonImage = Image.createImage(GameConstants.CORE_IMAGE_FOLDER
+					+ "/button_nho.png");
+			buttonFocusImage = Image
+					.createImage(GameConstants.CORE_IMAGE_FOLDER
+							+ "/button_nho_focus.png");
 		} catch (IOException e1) {
 		}
-		lImage = ImageUtil.getSubImage(ImageUtil.getImage("Nen_chat.png"), 0, 0, 1, 15, true);
+		lImage = ImageUtil.getSubImage(ImageUtil.getImage("Nen_chat.png"), 0,
+				0, 1, 15, true);
 		rightArrowImage = ImageUtil.getImage("Len.png");
-		rightArrowImage = Image.createImage(rightArrowImage, 0, 0, rightArrowImage.getWidth(), rightArrowImage.getHeight(), Sprite.TRANS_ROT90);
+		rightArrowImage = Image.createImage(rightArrowImage, 0, 0,
+				rightArrowImage.getWidth(), rightArrowImage.getHeight(),
+				Sprite.TRANS_ROT90);
 		leftArrowImage = ImageUtil.getImage("Xuong.png");
-		leftArrowImage = Image.createImage(leftArrowImage, 0, 0, leftArrowImage.getWidth(), leftArrowImage.getHeight(), Sprite.TRANS_ROT90);
+		leftArrowImage = Image.createImage(leftArrowImage, 0, 0, leftArrowImage
+				.getWidth(), leftArrowImage.getHeight(), Sprite.TRANS_ROT90);
 
 		messageChats = new String[Global.tableUsers.size()];
 		messageDelayCount = new int[Global.tableUsers.size()];
@@ -179,10 +195,13 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			messageChats[i] = "";
 		}
 
-		MENU = new String[]{"Về menu chính", "Thông tin TK", "Mời chơi"};
-		menu = new Menu(MENU, this, Constants.MENU_STYLE, 0, GameConstants.SCREEN_HEIGHT - 45);
+		MENU = new String[] { "Về menu chính", "Thông tin TK", "Mời chơi" };
+		menu = new Menu(MENU, this, Constants.MENU_STYLE, 0,
+				GameConstants.SCREEN_HEIGHT - 45);
 
-		if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName()) && !isReturnFromGame) {
+		if (Global.currentUser.getName().equals(
+				Global.currentTable.getTableMasterName())
+				&& !isReturnFromGame) {
 			isShowSettingBoard = true;
 			isConfigTableDone = false;
 		}
@@ -192,51 +211,88 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 
 	public void draw(Graphics g) {
 		g.setColor(0x440000);
-		g.fillRect(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+		g.fillRect(0, 0, GameConstants.SCREEN_WIDTH,
+				GameConstants.SCREEN_HEIGHT);
 		g.setColor(0xA53A06);
-		g.fillRect(4, 25, GameConstants.SCREEN_WIDTH - 8, GameConstants.SCREEN_HEIGHT - 50); // Tab background
+		g.fillRect(4, 25, GameConstants.SCREEN_WIDTH - 8,
+				GameConstants.SCREEN_HEIGHT - 50); // Tab background
 
 		// Draw bottom bar
 		g.setColor(0x2B0102);// Màu nền task bar
-		g.fillRect(0, GameConstants.SCREEN_HEIGHT - 25, GameConstants.SCREEN_WIDTH, 25);
+		g.fillRect(0, GameConstants.SCREEN_HEIGHT - 25,
+				GameConstants.SCREEN_WIDTH, 25);
 
 		if (menu.isShowing()) {
-			text8.drawString(g, "Đóng", Color.WHITE_CODE, 5, GameConstants.SCREEN_HEIGHT - 5, GameConstants.BOTTOM_LEFT_ANCHOR);
+			text8.drawString(g, "Đóng", Color.WHITE_CODE, 5,
+					GameConstants.SCREEN_HEIGHT - 5,
+					GameConstants.BOTTOM_LEFT_ANCHOR);
 		} else {
 			if (!isShowSettingBoard) {
 				if (!isInChatState) {
-					text8.drawString(g, "Menu", Color.WHITE_CODE, 5, GameConstants.SCREEN_HEIGHT - 5, GameConstants.BOTTOM_LEFT_ANCHOR);
-					text8.drawString(g, "Trở về", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH - 8, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_RIGHT_ANCHOR);
+					text8.drawString(g, "Menu", Color.WHITE_CODE, 5,
+							GameConstants.SCREEN_HEIGHT - 5,
+							GameConstants.BOTTOM_LEFT_ANCHOR);
+					text8.drawString(g, "Trở về", Color.WHITE_CODE,
+							GameConstants.SCREEN_WIDTH - 8,
+							GameConstants.SCREEN_HEIGHT - 4,
+							GameConstants.BOTTOM_RIGHT_ANCHOR);
 				}
 
 			}
 		}
-		
-		if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName())) {
+
+		if (Global.currentUser.getName().equals(
+				Global.currentTable.getTableMasterName())) {
 			if (isShowSettingBoard) {
-				text8.drawString(g, "Chọn", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_HCENTER_ANCHOR);
+				text8.drawString(g, "Chọn", Color.WHITE_CODE,
+						GameConstants.SCREEN_WIDTH / 2,
+						GameConstants.SCREEN_HEIGHT - 4,
+						GameConstants.BOTTOM_HCENTER_ANCHOR);
 				if (selectItemIndexInBoard == 1 && tablePassword.length() > 0) {
-					text8.drawString(g, "Xóa", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH - 8, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_RIGHT_ANCHOR);
+					text8.drawString(g, "Xóa", Color.WHITE_CODE,
+							GameConstants.SCREEN_WIDTH - 8,
+							GameConstants.SCREEN_HEIGHT - 4,
+							GameConstants.BOTTOM_RIGHT_ANCHOR);
 				} else {
-					text8.drawString(g, "Trở về", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH - 8, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_RIGHT_ANCHOR);
+					text8.drawString(g, "Trở về", Color.WHITE_CODE,
+							GameConstants.SCREEN_WIDTH - 8,
+							GameConstants.SCREEN_HEIGHT - 4,
+							GameConstants.BOTTOM_RIGHT_ANCHOR);
 				}
 			} else {
 				if (isReadyToStart) {
-					text8.drawString(g, "Bắt đầu", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_HCENTER_ANCHOR);
+					text8.drawString(g, "Bắt đầu", Color.WHITE_CODE,
+							GameConstants.SCREEN_WIDTH / 2,
+							GameConstants.SCREEN_HEIGHT - 4,
+							GameConstants.BOTTOM_HCENTER_ANCHOR);
 				} else {
-					text8.drawString(g, "Bắt đầu", 0x969696, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_HCENTER_ANCHOR);
+					text8.drawString(g, "Bắt đầu", 0x969696,
+							GameConstants.SCREEN_WIDTH / 2,
+							GameConstants.SCREEN_HEIGHT - 4,
+							GameConstants.BOTTOM_HCENTER_ANCHOR);
 				}
 			}
 		} else {
 			if (!Global.currentUser.isReady()) {
-				text8.drawString(g, "Sẵn sàng", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT - 4, GameConstants.BOTTOM_HCENTER_ANCHOR);
+				text8.drawString(g, "Sẵn sàng", Color.WHITE_CODE,
+						GameConstants.SCREEN_WIDTH / 2,
+						GameConstants.SCREEN_HEIGHT - 4,
+						GameConstants.BOTTOM_HCENTER_ANCHOR);
 			}
 		}
 
 		// Vẽ ceilling của bàn
-		g.drawImage(ballImage, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2 - 10, GameConstants.CENTER_ANCHOR);
-		text8.drawString(g, "Đặt cược", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2 - 25, GameConstants.TOP_HCENTER_ANCHOR);
-		text8.drawString(g, String.valueOf(Global.currentTable.getBid()), Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT / 2 - 10, GameConstants.TOP_HCENTER_ANCHOR);
+		g.drawImage(ballImage, GameConstants.SCREEN_WIDTH / 2,
+				GameConstants.SCREEN_HEIGHT / 2 - 10,
+				GameConstants.CENTER_ANCHOR);
+		text8.drawString(g, "Đặt cược", Color.WHITE_CODE,
+				GameConstants.SCREEN_WIDTH / 2,
+				GameConstants.SCREEN_HEIGHT / 2 - 25,
+				GameConstants.TOP_HCENTER_ANCHOR);
+		text8.drawString(g, String.valueOf(Global.currentTable.getBid()),
+				Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2,
+				GameConstants.SCREEN_HEIGHT / 2 - 10,
+				GameConstants.TOP_HCENTER_ANCHOR);
 
 		if (GameConstants.IS_240x320_SCREEN) {
 			draw240320(g);
@@ -245,18 +301,23 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			draw320x240(g);
 			drawChat320240(g);
 		}
-		
+
 		g.drawImage(tabLongFocusImage, 4, 4, GameConstants.TOP_LEFT_ANCHOR);
-//		g.drawImage(tabImage, 8 + tabLongImage.getWidth(), 4, GameConstants.TOP_LEFT_ANCHOR);
-//		text8.drawString(g, tabStrings[1], Color.WHITE_CODE, 14 + tabLongImage.getWidth(), 8, GameConstants.TOP_LEFT_ANCHOR);
+		// g.drawImage(tabImage, 8 + tabLongImage.getWidth(), 4,
+		// GameConstants.TOP_LEFT_ANCHOR);
+		// text8.drawString(g, tabStrings[1], Color.WHITE_CODE, 14 +
+		// tabLongImage.getWidth(), 8, GameConstants.TOP_LEFT_ANCHOR);
 		g.setClip(5, 0, tabLongImage.getWidth() - 8, 25);
-		text8.drawString(g, tabStrings[0], Color.WHITE_CODE, 65 + dx, 8, GameConstants.TOP_LEFT_ANCHOR);
+		text8.drawString(g, tabStrings[0], Color.WHITE_CODE, 65 + dx, 8,
+				GameConstants.TOP_LEFT_ANCHOR);
 		dx -= 2;
 		if (dx < 0 - text8.stringWidth(tabStrings[0]) - 40) {
 			dx = 0;
 		}
 
-		g.setClip(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+		g
+				.setClip(0, 0, GameConstants.SCREEN_WIDTH,
+						GameConstants.SCREEN_HEIGHT);
 		menu.draw(g);
 	}
 
@@ -345,125 +406,186 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 
 	public void draw240320(Graphics g) {
 		if (isShowSettingBoard) {
-			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2, 80, GameConstants.TOP_HCENTER_ANCHOR);
-			text8.drawString(g, "Đặt cược", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, 92, GameConstants.TOP_HCENTER_ANCHOR);
+			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2, 80,
+					GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Đặt cược", Color.WHITE_CODE,
+					GameConstants.SCREEN_WIDTH / 2, 92,
+					GameConstants.TOP_HCENTER_ANCHOR);
 			g.setColor(Color.WHITE_CODE);
 			g.fillRect(71, 111, 99, 17);
-			text8.drawString(g, "Đặt mật khẩu", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, 135, GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Đặt mật khẩu", Color.WHITE_CODE,
+					GameConstants.SCREEN_WIDTH / 2, 135,
+					GameConstants.TOP_HCENTER_ANCHOR);
 			g.fillRect(71, 153, 99, 17);
-			g.drawImage(rightArrowImage, 158, 113, GameConstants.TOP_LEFT_ANCHOR);
-			g.drawImage(leftArrowImage, 150, 113, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, tablePassword.toString(), Color.BLACK_CODE, 75, 154, GameConstants.TOP_LEFT_ANCHOR);
+			g.drawImage(rightArrowImage, 158, 113,
+					GameConstants.TOP_LEFT_ANCHOR);
+			g
+					.drawImage(leftArrowImage, 150, 113,
+							GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, tablePassword.toString(), Color.BLACK_CODE, 75,
+					154, GameConstants.TOP_LEFT_ANCHOR);
 			g.setColor(Color.BLACK_CODE);
-			text8.drawString(g, String.valueOf(bid), Color.BLACK_CODE, 75, 110, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, String.valueOf(bid), Color.BLACK_CODE, 75, 110,
+					GameConstants.TOP_LEFT_ANCHOR);
 			g.drawImage(buttonImage, 50, 183, GameConstants.TOP_LEFT_ANCHOR);
 			g.drawImage(buttonImage, 130, 183, GameConstants.TOP_LEFT_ANCHOR);
 			if (selectItemIndexInBoard == 0) {
-				g.drawImage(lImage, 75 + text8.stringWidth(String.valueOf(bid)), 125, GameConstants.BOTTOM_LEFT_ANCHOR);
+				g.drawImage(lImage,
+						75 + text8.stringWidth(String.valueOf(bid)), 125,
+						GameConstants.BOTTOM_LEFT_ANCHOR);
 			} else if (selectItemIndexInBoard == 1) {
-				g.drawImage(lImage, 75 + text8.stringWidth(tablePassword.toString()), 156, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(lImage, 75 + text8.stringWidth(tablePassword
+						.toString()), 156, GameConstants.TOP_LEFT_ANCHOR);
 			} else if (selectItemIndexInBoard == 2) {
-				g.drawImage(buttonFocusImage, 50, 183, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(buttonFocusImage, 50, 183,
+						GameConstants.TOP_LEFT_ANCHOR);
 			}
 			if (selectItemIndexInBoard == 3) {
-				g.drawImage(buttonFocusImage, 130, 183, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(buttonFocusImage, 130, 183,
+						GameConstants.TOP_LEFT_ANCHOR);
 			}
-			text8.drawString(g, "Đồng ý", Color.WHITE_CODE, 57, 185, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, "Hủy", Color.WHITE_CODE, 147, 185, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Đồng ý", Color.WHITE_CODE, 57, 185,
+					GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Hủy", Color.WHITE_CODE, 147, 185,
+					GameConstants.TOP_LEFT_ANCHOR);
 			return;
 		}
 
 		// Draw user
-		drawUser(g, 0, 26,  210, 84,  196, 54,  188, leftChatImage);
-		drawUser(g, 1, 176, 74,  160, 60,  130, 52,  rightChatImage);
+		drawUser(g, 0, 26, 210, 84, 196, 54, 188, leftChatImage);
+		drawUser(g, 1, 176, 74, 160, 60, 130, 52, rightChatImage);
 		drawUser(g, 2, 176, 210, 160, 196, 130, 188, rightChatImage);
-		drawUser(g, 3, 26,  74,  84,  60,  54,  52, leftChatImage);
-		
-		if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName())) {
-			if ((waitToStartGameTime > -1) && (waitToStartGameTime <= MAX_START_TIME)) {
-				g.drawImage(numberBgImage, 77, 219, GameConstants.CENTER_ANCHOR);
-				text8.drawString(g, String.valueOf((MAX_START_TIME - waitToStartGameTime) / 10), Color.WHITE_CODE, 77, 219, GameConstants.CENTER_ANCHOR);
+		drawUser(g, 3, 26, 74, 84, 60, 54, 52, leftChatImage);
+
+		if (Global.currentUser.getName().equals(
+				Global.currentTable.getTableMasterName())) {
+			if ((waitToStartGameTime > -1)
+					&& (waitToStartGameTime <= MAX_START_TIME)) {
+				g
+						.drawImage(numberBgImage, 77, 219,
+								GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, String
+						.valueOf((MAX_START_TIME - waitToStartGameTime) / 10),
+						Color.WHITE_CODE, 77, 219, GameConstants.CENTER_ANCHOR);
 			}
 		} else {
 			if ((inRoomTime <= MAX_WAIT_TIME) && !Global.currentUser.isReady()) {
-				g.drawImage(numberBgImage, 77, 219, GameConstants.CENTER_ANCHOR);
-				text8.drawString(g, String.valueOf((MAX_WAIT_TIME - inRoomTime) / 10), Color.WHITE_CODE, 77, 219, GameConstants.CENTER_ANCHOR);
+				g
+						.drawImage(numberBgImage, 77, 219,
+								GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, String
+						.valueOf((MAX_WAIT_TIME - inRoomTime) / 10),
+						Color.WHITE_CODE, 77, 219, GameConstants.CENTER_ANCHOR);
 			}
 		}
 	}
 
 	public void draw320x240(Graphics g) {
 		if (isShowSettingBoard) {
-			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2, 65, GameConstants.TOP_HCENTER_ANCHOR);
-			text8.drawString(g, "Đặt cược", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, 70, GameConstants.TOP_HCENTER_ANCHOR);
+			g.drawImage(popupImage, GameConstants.SCREEN_WIDTH / 2, 65,
+					GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Đặt cược", Color.WHITE_CODE,
+					GameConstants.SCREEN_WIDTH / 2, 70,
+					GameConstants.TOP_HCENTER_ANCHOR);
 			g.setColor(Color.WHITE_CODE);
 			g.fillRect(111, 86, 99, 17);
-			text8.drawString(g, "Đặt mật khẩu", Color.WHITE_CODE, GameConstants.SCREEN_WIDTH / 2, 110, GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Đặt mật khẩu", Color.WHITE_CODE,
+					GameConstants.SCREEN_WIDTH / 2, 110,
+					GameConstants.TOP_HCENTER_ANCHOR);
 			g.fillRect(111, 128, 99, 17);
-			g.drawImage(rightArrowImage, 198, 88, GameConstants.TOP_LEFT_ANCHOR);
+			g
+					.drawImage(rightArrowImage, 198, 88,
+							GameConstants.TOP_LEFT_ANCHOR);
 			g.drawImage(leftArrowImage, 190, 88, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, tablePassword.toString(), Color.BLACK_CODE, 115, 129, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, tablePassword.toString(), Color.BLACK_CODE,
+					115, 129, GameConstants.TOP_LEFT_ANCHOR);
 			g.setColor(Color.BLACK_CODE);
-			text8.drawString(g, String.valueOf(bid), Color.BLACK_CODE, 115, 85, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, String.valueOf(bid), Color.BLACK_CODE, 115, 85,
+					GameConstants.TOP_LEFT_ANCHOR);
 			g.drawImage(buttonImage, 90, 158, GameConstants.TOP_LEFT_ANCHOR);
 			g.drawImage(buttonImage, 170, 158, GameConstants.TOP_LEFT_ANCHOR);
 			if (selectItemIndexInBoard == 0) {
-				g.drawImage(lImage, 115 + text8.stringWidth(String.valueOf(bid)), 100, GameConstants.BOTTOM_LEFT_ANCHOR);
+				g.drawImage(lImage, 115 + text8
+						.stringWidth(String.valueOf(bid)), 100,
+						GameConstants.BOTTOM_LEFT_ANCHOR);
 			} else if (selectItemIndexInBoard == 1) {
-				g.drawImage(lImage, 115 + text8.stringWidth(tablePassword.toString()), 131, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(lImage, 115 + text8.stringWidth(tablePassword
+						.toString()), 131, GameConstants.TOP_LEFT_ANCHOR);
 			} else if (selectItemIndexInBoard == 2) {
-				g.drawImage(buttonFocusImage, 90, 158, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(buttonFocusImage, 90, 158,
+						GameConstants.TOP_LEFT_ANCHOR);
 			}
 			if (selectItemIndexInBoard == 3) {
-				g.drawImage(buttonFocusImage, 170, 158, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(buttonFocusImage, 170, 158,
+						GameConstants.TOP_LEFT_ANCHOR);
 			}
-			text8.drawString(g, "Đồng ý", Color.WHITE_CODE, 97, 160, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, "Hủy", Color.WHITE_CODE, 187, 160, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Đồng ý", Color.WHITE_CODE, 97, 160,
+					GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Hủy", Color.WHITE_CODE, 187, 160,
+					GameConstants.TOP_LEFT_ANCHOR);
 			return;
 		}
 
 		// Draw user
-		drawUser(g, 0, 34,  154, 92,  140, 63,  133, leftChatImage);
-		drawUser(g, 1, 242, 58,  225, 44,  197, 36,  rightChatImage);
+		drawUser(g, 0, 34, 154, 92, 140, 63, 133, leftChatImage);
+		drawUser(g, 1, 242, 58, 225, 44, 197, 36, rightChatImage);
 		drawUser(g, 2, 242, 154, 225, 140, 197, 133, rightChatImage);
-		drawUser(g, 3, 34,  58,  92,  44,  63,  36,  leftChatImage);
+		drawUser(g, 3, 34, 58, 92, 44, 63, 36, leftChatImage);
 
-		if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName())) {
-			if ((waitToStartGameTime > -1) && (waitToStartGameTime <= MAX_START_TIME)) {
-				g.drawImage(numberBgImage, 80, 160, GameConstants.CENTER_ANCHOR);
-				text8.drawString(g, String.valueOf((MAX_START_TIME - waitToStartGameTime) / 10), Color.WHITE_CODE, 80, 160, GameConstants.CENTER_ANCHOR);
+		if (Global.currentUser.getName().equals(
+				Global.currentTable.getTableMasterName())) {
+			if ((waitToStartGameTime > -1)
+					&& (waitToStartGameTime <= MAX_START_TIME)) {
+				g
+						.drawImage(numberBgImage, 80, 160,
+								GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, String
+						.valueOf((MAX_START_TIME - waitToStartGameTime) / 10),
+						Color.WHITE_CODE, 80, 160, GameConstants.CENTER_ANCHOR);
 			}
 		} else {
 			if ((inRoomTime <= MAX_WAIT_TIME) && !Global.currentUser.isReady()) {
-				g.drawImage(numberBgImage, 80, 160, GameConstants.CENTER_ANCHOR);
-				text8.drawString(g, String.valueOf((MAX_WAIT_TIME - inRoomTime) / 10), Color.WHITE_CODE, 80, 160, GameConstants.CENTER_ANCHOR);
+				g
+						.drawImage(numberBgImage, 80, 160,
+								GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, String
+						.valueOf((MAX_WAIT_TIME - inRoomTime) / 10),
+						Color.WHITE_CODE, 80, 160, GameConstants.CENTER_ANCHOR);
 			}
 		}
 	}
-	
-	private void drawUser(Graphics g, int userIndex, int avatarX, int avatarY, int textX, int textY, int chatX, int chatY, Image chatImage) {
+
+	private void drawUser(Graphics g, int userIndex, int avatarX, int avatarY,
+			int textX, int textY, int chatX, int chatY, Image chatImage) {
 		if (userIndex > Global.tableUsers.size() - 1) {
 			return;
 		}
-		
+
 		User user = ((User) Global.tableUsers.elementAt(userIndex));
 		Image avatar = (Image) Global.getAvatar(user.getName());
 		g.drawImage(chatImage, chatX, chatY, GameConstants.TOP_LEFT_ANCHOR);
-		
+
 		if (user.getName().equals(Global.currentTable.getTableMasterName())) {
-			text8.drawString(g, "Chủ phòng", Color.YELLOW_CODE, textX, textY, GameConstants.CENTER_ANCHOR);
+			text8.drawString(g, "Chủ phòng", Color.YELLOW_CODE, textX, textY,
+					GameConstants.CENTER_ANCHOR);
 		} else {
 			if (user.isReady()) {
-				text8.drawString(g, "Sẵn sàng", Color.WHITE_CODE, textX, textY, GameConstants.CENTER_ANCHOR);
+				text8.drawString(g, "Sẵn sàng", Color.WHITE_CODE, textX, textY,
+						GameConstants.CENTER_ANCHOR);
 			}
 		}
 		if (avatar == null) {
-			g.drawImage(avatarImage, avatarX, avatarY, GameConstants.TOP_LEFT_ANCHOR);
+			g.drawImage(avatarImage, avatarX, avatarY,
+					GameConstants.TOP_LEFT_ANCHOR);
 		} else {
-			g.drawImage(avatar, avatarX, avatarY, GameConstants.TOP_LEFT_ANCHOR);
+			g
+					.drawImage(avatar, avatarX, avatarY,
+							GameConstants.TOP_LEFT_ANCHOR);
 		}
-		text8.drawString(g, user.getName(), Color.WHITE_CODE, avatarX - 2, avatarY + 42, GameConstants.TOP_LEFT_ANCHOR);
-		text8.drawString(g, "Đ:" + user.getMoney(), Color.YELLOW_CODE, avatarX + 1, avatarY + 54, GameConstants.TOP_LEFT_ANCHOR);
+		text8.drawString(g, user.getName(), Color.WHITE_CODE, avatarX - 2,
+				avatarY + 42, GameConstants.TOP_LEFT_ANCHOR);
+		text8.drawString(g, "Đ:" + user.getMoney(), Color.YELLOW_CODE,
+				avatarX + 1, avatarY + 54, GameConstants.TOP_LEFT_ANCHOR);
 	}
 
 	private void drawChat320240(Graphics g) {
@@ -482,21 +604,24 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 				g.fillRect(216, 170, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(217, 171, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 222, 114, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 222,
+						114, GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			case 1:
 				g.setColor(0xffffff);
 				g.fillRect(215, 23, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(216, 24, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 217, 25, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 217, 25,
+						GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			case 3:
 				g.setColor(0xffffff);
 				g.fillRect(11, 170, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(12, 100, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 17, 103, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 17, 103,
+						GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			}
 		}
@@ -506,14 +631,23 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			g.fillRect(98, 192, 95, 25);
 			g.setColor(0x000000);
 			g.fillRect(99, 193, 93, 23);
-			text8.drawString(g, messageChats[myIndex], Color.WHITE_CODE, 104, 196, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, messageChats[myIndex], Color.WHITE_CODE, 104,
+					196, GameConstants.TOP_LEFT_ANCHOR);
 			if (caretBlinkOn && goToNextChar) {
 				g.drawLine(caretLeft, 0, caretLeft, inputHeight);
 			}
 
-			text8.drawString(g, "Quay lại", 0xffffff, 5, GameConstants.SCREEN_HEIGHT - 4, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, "Gửi", 0xffffff, GameConstants.SCREEN_WIDTH / 2, GameConstants.SCREEN_HEIGHT - 4, GameConstants.TOP_HCENTER_ANCHOR);
-			text8.drawString(g, "Xóa", 0xffffff, GameConstants.SCREEN_WIDTH - 5, GameConstants.SCREEN_HEIGHT - 4, GameConstants.TOP_RIGHT_ANCHOR);
+			text8.drawString(g, "Quay lại", 0xffffff, 5,
+					GameConstants.SCREEN_HEIGHT - 4,
+					GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Gửi", 0xffffff,
+					GameConstants.SCREEN_WIDTH / 2,
+					GameConstants.SCREEN_HEIGHT - 4,
+					GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Xóa", 0xffffff,
+					GameConstants.SCREEN_WIDTH - 5,
+					GameConstants.SCREEN_HEIGHT - 4,
+					GameConstants.TOP_RIGHT_ANCHOR);
 		}
 	}
 
@@ -533,21 +667,24 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 				g.fillRect(140, 204, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(141, 205, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 142, 208, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 142,
+						208, GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			case 1:
 				g.setColor(0xffffff);
 				g.fillRect(100, 10, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(101, 11, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 106, 14, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 106, 14,
+						GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			case 3:
 				g.setColor(0xffffff);
 				g.fillRect(5, 75, 95, 25);
 				g.setColor(0x000000);
 				g.fillRect(6, 76, 93, 23);
-				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 7, 79, GameConstants.TOP_LEFT_ANCHOR);
+				text8.drawString(g, messageChats[i], Color.WHITE_CODE, 7, 79,
+						GameConstants.TOP_LEFT_ANCHOR);
 				break;
 			}
 		}
@@ -557,14 +694,20 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			g.fillRect(45, 270, 95, 25);
 			g.setColor(0x000000);
 			g.fillRect(46, 271, 93, 23);
-			text8.drawString(g, messageChats[myIndex], 0xffffff, 51, 275, GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, messageChats[myIndex], 0xffffff, 51, 275,
+					GameConstants.TOP_LEFT_ANCHOR);
 			if (caretBlinkOn && goToNextChar) {
 				g.drawLine(caretLeft, 0, caretLeft, inputHeight);
 			}
 
-			text8.drawString(g, "Quay lại", 0xffffff, 11, 303, GameConstants.TOP_LEFT_ANCHOR);
-			text8.drawString(g, "Gửi", 0xffffff, GameConstants.SCREEN_WIDTH / 2, 303, GameConstants.TOP_HCENTER_ANCHOR);
-			text8.drawString(g, "Xóa", 0xffffff, GameConstants.SCREEN_WIDTH - 10, 303, GameConstants.TOP_RIGHT_ANCHOR);
+			text8.drawString(g, "Quay lại", 0xffffff, 11, 303,
+					GameConstants.TOP_LEFT_ANCHOR);
+			text8.drawString(g, "Gửi", 0xffffff,
+					GameConstants.SCREEN_WIDTH / 2, 303,
+					GameConstants.TOP_HCENTER_ANCHOR);
+			text8.drawString(g, "Xóa", 0xffffff,
+					GameConstants.SCREEN_WIDTH - 10, 303,
+					GameConstants.TOP_RIGHT_ANCHOR);
 		}
 	}
 
@@ -596,10 +739,12 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		keyCode = Key.getGameKey(keyCode);
 
 		if (keyCode == Key.SOFT_LEFT) {
-			if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName()) && !menu.getSubMenu(1).getLabel().equals(DAT_CUOC_LABEL) ) {
+			if (Global.currentUser.getName().equals(
+					Global.currentTable.getTableMasterName())
+					&& !menu.getSubMenu(1).getLabel().equals(DAT_CUOC_LABEL)) {
 				menu.insertItem(DAT_CUOC_LABEL, 1);
 			}
-			
+
 			if (menu.isShowing()) {
 				menu.hide();
 			} else {
@@ -608,9 +753,11 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 					indexFriend = new int[Global.tableUsers.size() - 1];
 					int count = 0;
 					for (int i = 0; i < Global.tableUsers.size(); i++) {
-						if (!((User) Global.tableUsers.elementAt(i)).getName().equals(Global.currentUser.getName())) {
+						if (!((User) Global.tableUsers.elementAt(i)).getName()
+								.equals(Global.currentUser.getName())) {
 							indexFriend[count] = i;
-							nameUsers[count] = ((User) Global.tableUsers.elementAt(i)).getName();
+							nameUsers[count] = ((User) Global.tableUsers
+									.elementAt(i)).getName();
 							count++;
 						}
 					}
@@ -624,7 +771,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			return;
 		}
 
-		if ((keyCode >= Key.K_0) && (keyCode <= Key.K_9) && GameConstants.IS_240x320_SCREEN) {
+		if ((keyCode >= Key.K_0) && (keyCode <= Key.K_9)
+				&& GameConstants.IS_240x320_SCREEN) {
 			if (!isInChatState) {
 				clearChar();
 			}
@@ -669,20 +817,30 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 					clearChar();
 				} else {
 					SocketClientUtil.leaveTableRequest();
-					GameGlobal.nextState(Global.frmListTable, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
+					GameGlobal.nextState(Global.frmListTable, null,
+							Transformer.TRANSFORM_WITH_LOADING_FORM);
 				}
 			}
 			break;
 		case Key.FIRE:
-			if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName())) {
+			if (Global.currentUser.getName().equals(
+					Global.currentTable.getTableMasterName())) {
 				if (isShowSettingBoard) {
 					isInChatState = false;
 					isShowSettingBoard = false;
 					if (selectItemIndexInBoard != 3) {
 						if (bid > Global.currentUser.getMoney()) {
-						  GameGlobal.alert.showAlert(this, Alert.OK_TYPE, new String[]{"Không thể đặt tiền cược", "lớn hơn số tiền bạn đang có"}, 98);
+							GameGlobal.alert
+									.showAlert(
+											this,
+											Alert.OK_TYPE,
+											new String[] {
+													"Không thể đặt tiền cược",
+													"lớn hơn số tiền bạn đang có" },
+											98);
 						} else {
-							SocketClientUtil.configTable(bid, tablePassword.toString());
+							SocketClientUtil.configTable(bid, tablePassword
+									.toString());
 						}
 					} else {
 
@@ -734,8 +892,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			if (!isShowSettingBoard) {
 				tabIndex = (tabIndex + 1) % 2;
 				if (tabIndex == 1) {
-//					Global.selectedIndexForFrmFriend = 0;
-//					XmppUtil.getContactList();
+					// Global.selectedIndexForFrmFriend = 0;
+					// XmppUtil.getContactList();
 				}
 			}
 			break;
@@ -758,8 +916,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 					tabIndex = 1;
 				}
 				if (tabIndex == 1) {
-//					Global.selectedIndexForFrmFriend = 0;
-//					XmppUtil.getContactList();
+					// Global.selectedIndexForFrmFriend = 0;
+					// XmppUtil.getContactList();
 				}
 			}
 			break;
@@ -767,12 +925,12 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 	}
 
 	private void sendMessageToAllUser(String str, String header) {
-//		for (int i = 0; i < Global.tableUsers.size(); i++) {
-//			User user = (User) Global.tableUsers.elementAt(i);
-//			if (!user.getJid().equals(Global.currentUser.getJid())) {
-//				XmppUtil.sendMessage(user.getJid(), header +  str);
-//			}
-//		}
+		// for (int i = 0; i < Global.tableUsers.size(); i++) {
+		// User user = (User) Global.tableUsers.elementAt(i);
+		// if (!user.getJid().equals(Global.currentUser.getJid())) {
+		// XmppUtil.sendMessage(user.getJid(), header + str);
+		// }
+		// }
 	}
 
 	private void writeKey320x240(char charKey) {
@@ -803,7 +961,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 					tablePassword.append(charOfKeys[index[order]]);
 				}
 				index[order] = (index[order] + 1) % (charOfKeys.length);
-				tablePassword.setCharAt(tablePassword.length() - 1, charOfKeys[index[order]]);
+				tablePassword.setCharAt(tablePassword.length() - 1,
+						charOfKeys[index[order]]);
 			}
 			timeDelay = System.currentTimeMillis();
 		}
@@ -848,7 +1007,7 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			if (user.getName().equals(Global.currentTable.getTableMasterName())) {
 				continue;
 			}
-			
+
 			if (!user.isReady()) {
 				isAllUserReady = false;
 				break;
@@ -861,14 +1020,18 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		if (Display.getDisplay(GameGlobal.getMidlet()).getCurrent() == GameGlobal.systemCanvas) {
 			checkTimestamps();
 		}
-		if (Global.currentUser.getName().equals(Global.currentTable.getTableMasterName())) {
+		if (Global.currentUser.getName().equals(
+				Global.currentTable.getTableMasterName())) {
 			isReadyToStart = checkIfAllUserReady();
-			if (isReadyToStart && (!isShowSettingBoard || isConfigTableDone) && !isStartGame) {
+			if (isReadyToStart && (!isShowSettingBoard || isConfigTableDone)
+					&& !isStartGame) {
 				if (waitToStartGameTime == -1) {
 					waitToStartGameTime = 0;
 				}
 
-				if (Global.currentGame.getId().equals("tala") || Global.currentGame.getId().equals("tlmb") || Global.currentGame.getId().equals("tlmn")) {
+				if (Global.currentGame.getId().equals("tala")
+						|| Global.currentGame.getId().equals("tlmb")
+						|| Global.currentGame.getId().equals("tlmn")) {
 					if (Global.tableUsers.size() < 4) {
 						waitToStartGameTime = -1;
 					}
@@ -886,7 +1049,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 			}
 		} else {
 			inRoomTime++;
-			if (inRoomTime > MAX_WAIT_TIME && !Global.currentUser.isReady() && !isSendReady) {
+			if (inRoomTime > MAX_WAIT_TIME && !Global.currentUser.isReady()
+					&& !isSendReady) {
 				isSendReady = true;
 				SocketClientUtil.sendReady(true);
 			}
@@ -910,31 +1074,49 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		// "Về menu chính", "Thông tin TK", "Mời chơi"
 		String action = event.getAction();
 		if (action.equals(MENU[0])) { // "Về menu chính"
-		  GameGlobal.alert.showAlert(this, Alert.YES_NO_TYPE, "Bạn có muốn thoát ra?", 97);
+			GameGlobal.alert.showAlert(this, Alert.YES_NO_TYPE,
+					"Bạn có muốn thoát ra?", 97);
 		} else if (action.equals(MENU[1])) { // Thông tin tài khoản
 		} else if (action.equals(MENU[2])) { // Mời chơi
-		  SocketClientUtil.getUserWantToPlayList();
-		  System.out.println(">>>>>>>Send get user free list");
+			SocketClientUtil.getUserWantToPlayList();
+			System.out.println(">>>>>>>Send get user free list");
 		} else if (action.equals("Thiết lập bàn")) { // Thiết lập bàn
 			isShowSettingBoard = true;
 		}
 	}
-	
+
 	public void alertEventPerform(int alertType, int eventType, int alertId) {
 		if (alertId == 99) { // Trong trường hợp người chơi bị kick ra ngoài
-		  GameGlobal.nextState(Global.frmListTable, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
-		} else if (alertId == 98) { // Khi chủ bàn không đủ tiền để đặt tiền cược
+			GameGlobal.nextState(Global.frmListTable, null,
+					Transformer.TRANSFORM_WITH_LOADING_FORM);
+		} else if (alertId == 98) { // Khi chủ bàn không đủ tiền để đặt tiền
+									// cược
 			isShowSettingBoard = true;
 			isInChatState = false;
-		} else if (alertId == 97 && eventType == Alert.YES_BUTTON) { // Trong trường hợp người chơi thoát ra ngoài
+		} else if (alertId == 97 && eventType == Alert.YES_BUTTON) { // Trong
+																		// trường
+																		// hợp
+																		// người
+																		// chơi
+																		// thoát
+																		// ra
+																		// ngoài
 			SocketClientUtil.leaveTableRequest();
 			SocketClientUtil.leaveRoomRequest();
-			GameGlobal.nextState(Global.frmChooseGame, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
-		} else if (alertId == 55 && alertType == Alert.YES_NO_TYPE && eventType == Alert.YES_BUTTON) { // Nạp tiền bằng SMS
-//			SMSHandler.getInstance().sendMsg(GameConstants.ADD_COIN_NUMBER, null, "MGA " + Global.currentUser.getAcountNumber());
-		} else if (alertId == 10 && eventType == Alert.NO_BUTTON) { // Trường hợp chủ bàn đặt lại điểm cược
+			GameGlobal.nextState(Global.frmChooseGame, null,
+					Transformer.TRANSFORM_WITH_LOADING_FORM);
+		} else if (alertId == 55 && alertType == Alert.YES_NO_TYPE
+				&& eventType == Alert.YES_BUTTON) { // Nạp tiền bằng SMS
+		// SMSHandler.getInstance().sendMsg(GameConstants.ADD_COIN_NUMBER, null,
+		// "MGA " + Global.currentUser.getAcountNumber());
+		} else if (alertId == 10 && eventType == Alert.NO_BUTTON) { // Trường
+																	// hợp chủ
+																	// bàn đặt
+																	// lại điểm
+																	// cược
 			SocketClientUtil.leaveTableRequest();
-			GameGlobal.nextState(Global.frmListTable, null, Transformer.TRANSFORM_WITH_LOADING_FORM);
+			GameGlobal.nextState(Global.frmListTable, null,
+					Transformer.TRANSFORM_WITH_LOADING_FORM);
 		}
 	}
 
@@ -945,8 +1127,8 @@ public class FrmTable extends GameForm implements TimerListener, EventListener {
 		currentText = null;
 		password = null;
 		tabStrings = null;
-//		tabImage = null;
-//		tabFocusImage = null;
+		// tabImage = null;
+		// tabFocusImage = null;
 		popupImage = null;
 		buttonImage = null;
 		buttonFocusImage = null;

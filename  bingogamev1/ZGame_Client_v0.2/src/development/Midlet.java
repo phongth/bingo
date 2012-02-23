@@ -15,7 +15,7 @@ public class Midlet extends MIDlet {
 		} catch (MIDletStateChangeException e) {
 		}
 	}
-	
+
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {
 		if (GameGlobal.systemCanvas != null) {
 			GameGlobal.systemCanvas.destroy();
@@ -27,9 +27,9 @@ public class Midlet extends MIDlet {
 	}
 
 	protected void startApp() throws MIDletStateChangeException {
-	  GameGlobal.init();
-	  Global.init();
-	  GameGlobal.setMidlet(this);
+		GameGlobal.init();
+		Global.init();
+		GameGlobal.setMidlet(this);
 		GameGlobal.nextState(Global.frmLogo, null);
 	}
 }

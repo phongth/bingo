@@ -7,7 +7,7 @@ public class Provider {
 	public Provider(int id) {
 		this.id = id;
 	}
-	
+
 	public String getAccountName() {
 		return accountName;
 	}

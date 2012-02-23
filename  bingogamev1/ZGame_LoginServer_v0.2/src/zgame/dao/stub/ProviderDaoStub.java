@@ -8,11 +8,11 @@ import zgame.dao.ProviderDao;
 
 public class ProviderDaoStub extends ProviderDao {
   private static Map<String, Provider> providerMap = new HashMap<String, Provider>();
-	
+
   static {
     initMockDB();
   }
-  
+
   private static void initMockDB() {
     Provider provider = new Provider(1);
     provider.setAccountName("VinaZip");
@@ -21,11 +21,14 @@ public class ProviderDaoStub extends ProviderDao {
     provider.setJarUrl("http://...ZGame.jar");
     providerMap.put(String.valueOf(provider.getId()), provider);
   }
-  
-	/** Lấy thông tin tương ứng với providerId từ bảng Provider và bảng Update_Version */
-	public Provider getProviderById(int providerId) {
-	  return providerMap.get(String.valueOf(providerId));
-	}
+
+  /**
+   * Lấy thông tin tương ứng với providerId từ bảng Provider và bảng
+   * Update_Version
+   */
+  public Provider getProviderById(int providerId) {
+    return providerMap.get(String.valueOf(providerId));
+  }
 
   @Override
   public void close() {

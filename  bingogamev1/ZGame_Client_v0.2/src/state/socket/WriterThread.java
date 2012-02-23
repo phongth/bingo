@@ -12,32 +12,36 @@ public class WriterThread extends Control {
 	private boolean isRunning = true;
 	private long lastTimeSend;
 	private Client client;
-	
+
 	public WriterThread(DataOutputStream os, Client client) {
 		this.os = os;
 		this.client = client;
 		start();
 		lastTimeSend = System.currentTimeMillis();
 	}
-	
+
 	public void perform() {
-		while(isRunning) {
-			while(dataStack.size() > 0) {
+		while (isRunning) {
+			while (dataStack.size() > 0) {
 				DataPackage dataPackage = (DataPackage) dataStack.elementAt(0);
 				dataStack.removeElementAt(0);
 				try {
 					byte[] data = dataPackage.getAllData();
-//					System.out.println("Send data len: " + data.length);
+					// System.out.println("Send data len: " + data.length);
 					os.writeInt(data.length);
 					os.write(data);
 					os.flush();
 					lastTimeSend = System.currentTimeMillis();
 				} catch (IOException e) {
-					System.out.println("ERROR: WriterThread : IOException when try to write data which has header: " + dataPackage.getHeader());
+					System.out
+							.println("ERROR: WriterThread : IOException when try to write data which has header: "
+									+ dataPackage.getHeader());
 					client.detroy();
 					return;
 				} catch (Throwable ex) {
-					System.out.println("ERROR: WriterThread : faltal exception:" + ex.getClass());
+					System.out
+							.println("ERROR: WriterThread : faltal exception:"
+									+ ex.getClass());
 					ex.printStackTrace();
 				}
 			}
@@ -55,7 +59,7 @@ public class WriterThread extends Control {
 	public void write(DataPackage dataPackage) {
 		dataStack.addElement(dataPackage);
 	}
-	
+
 	public void detroy() {
 		isRunning = false;
 		dataStack = null;

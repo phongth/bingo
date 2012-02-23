@@ -10,7 +10,7 @@ public class AvatarCategory {
 	public AvatarCategory(String categoyName) {
 		this.categoyName = categoyName;
 	}
-	
+
 	public int getNumberOfAvatars() {
 		return numberOfAvatars;
 	}
@@ -23,14 +23,14 @@ public class AvatarCategory {
 	public void putAvatar(Image avatar, int index) {
 		avatars[index] = avatar;
 	}
-	
+
 	public Image getAvatarAt(int index) {
 		if (index < avatars.length) {
 			return avatars[index];
-		} 
+		}
 		return null;
 	}
-	
+
 	public String getCategoyName() {
 		return categoyName;
 	}

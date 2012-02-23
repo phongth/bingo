@@ -13,23 +13,23 @@ import zgame.exception.NotFoundException;
 
 public class AuthenticateDaoImpl extends AuthenticateDao {
   private Connection conn;
-  
+
   public AuthenticateDaoImpl() {
     conn = ConnectionManager.getConnection();
   }
-  
+
   public void changePassword(String username, String passwordMd5) throws NotFoundException, SQLException {
     if (!isExist(username)) {
       throw new NotFoundException();
     }
-    
+
     String sql = "UPDATE " + USER_INFO_TABLE + " SET Password = ? WHERE User_name = ? AND IsDeleted = '0'";
     PreparedStatement ps = null;
     try {
       ps = conn.prepareStatement(sql);
       ps.setString(1, passwordMd5);
       ps.setString(2, username);
-      
+
       ps.executeUpdate();
     } catch (SQLException e) {
       conn.rollback();
@@ -44,9 +44,10 @@ public class AuthenticateDaoImpl extends AuthenticateDao {
     if (isExist(username)) {
       throw new DupplicateException();
     }
-    
+
     // TODO: use BufferString in DAO function
-    String sql = "INSERT INTO " + USER_INFO_TABLE + "(User_name, Password, Avatar_ID, Money, Create_Date, Provider_ID) VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO " + USER_INFO_TABLE
+        + "(User_name, Password, Avatar_ID, Money, Create_Date, Provider_ID) VALUES (?, ?, ?, ?, ?, ?)";
     PreparedStatement ps = null;
     try {
       ps = conn.prepareStatement(sql);
@@ -56,7 +57,7 @@ public class AuthenticateDaoImpl extends AuthenticateDao {
       ps.setInt(4, money);
       ps.setDate(5, new java.sql.Date(new Date().getTime()));
       ps.setInt(6, providerId);
-      
+
       ps.executeUpdate();
     } catch (SQLException e) {
       conn.rollback();
@@ -69,21 +70,17 @@ public class AuthenticateDaoImpl extends AuthenticateDao {
 
   public User getUserInfo(String username) throws SQLException {
     StringBuffer sql = new StringBuffer();
-    sql.append("SELECT ").
-      append(COLUMN_ID + ",").append(COLUMN_PASSWORD + ",").append(COLUMN_AVATAR_ID + ",").
-      append(COLUMN_MONEY + ",").append(COLUMN_PROVIDER_ID + ",").append(COLUMN_IS_BLOCKED);
+    sql.append("SELECT ").append(COLUMN_ID + ",").append(COLUMN_PASSWORD + ",").append(COLUMN_AVATAR_ID + ",").append(
+        COLUMN_MONEY + ",").append(COLUMN_PROVIDER_ID + ",").append(COLUMN_IS_BLOCKED);
     sql.append(" FROM ").append(USER_INFO_TABLE);
-    sql.append(" WHERE ")
-      .append(COLUMN_USERNAME + " = ?")
-      .append(" AND ")
-      .append(COLUMN_IS_DELETED + " = '0'");
-    
+    sql.append(" WHERE ").append(COLUMN_USERNAME + " = ?").append(" AND ").append(COLUMN_IS_DELETED + " = '0'");
+
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
       ps = conn.prepareStatement(sql.toString());
       ps.setString(1, username);
-      
+
       rs = ps.executeQuery();
       if (rs.next()) {
         User user = new User();
@@ -104,25 +101,21 @@ public class AuthenticateDaoImpl extends AuthenticateDao {
       ConnectionManager.closeAll(ps, rs);
     }
   }
-  
+
   @Override
   public User getUserInfo(int userId) throws SQLException {
     StringBuffer sql = new StringBuffer();
-    sql.append("SELECT ").
-      append(COLUMN_USERNAME + ",").append(COLUMN_PASSWORD + ",").append(COLUMN_AVATAR_ID + ",").
-      append(COLUMN_MONEY + ",").append(COLUMN_PROVIDER_ID + ",").append(COLUMN_IS_BLOCKED);
+    sql.append("SELECT ").append(COLUMN_USERNAME + ",").append(COLUMN_PASSWORD + ",").append(COLUMN_AVATAR_ID + ",").append(
+        COLUMN_MONEY + ",").append(COLUMN_PROVIDER_ID + ",").append(COLUMN_IS_BLOCKED);
     sql.append(" FROM ").append(USER_INFO_TABLE);
-    sql.append(" WHERE ")
-      .append(COLUMN_ID + " = ?")
-      .append(" AND ")
-      .append(COLUMN_IS_DELETED + " = '0'");
-    
+    sql.append(" WHERE ").append(COLUMN_ID + " = ?").append(" AND ").append(COLUMN_IS_DELETED + " = '0'");
+
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
       ps = conn.prepareStatement(sql.toString());
       ps.setInt(1, userId);
-      
+
       rs = ps.executeQuery();
       if (rs.next()) {
         User user = new User();
@@ -149,13 +142,13 @@ public class AuthenticateDaoImpl extends AuthenticateDao {
     sql.append("SELECT count(Id) FROM ");
     sql.append(USER_INFO_TABLE);
     sql.append(" WHERE User_name = ? AND IsDeleted = '0'");
-    
+
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
       ps = conn.prepareStatement(sql.toString());
       ps.setString(1, username);
-      
+
       rs = ps.executeQuery();
       if (rs.next()) {
         int count = rs.getInt(1);

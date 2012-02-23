@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public abstract class Job extends Thread {
   private static final Logger log = Logger.getLogger(Job.class);
-  
+
   private boolean isRunning = true;
   private long delay = 100;
 

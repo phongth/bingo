@@ -11,9 +11,9 @@ import zgame.exception.NotFoundException;
 
 public abstract class AuthenticateDao extends AbstractDao {
   public static final Logger log = Logger.getLogger(AuthenticateDao.class);
-  
+
   public static final String USER_INFO_TABLE = "User_Info";
-  
+
   public static final String COLUMN_ID = "Id";
   public static final String COLUMN_USERNAME = "User_name";
   public static final String COLUMN_PASSWORD = "Password";
@@ -35,25 +35,24 @@ public abstract class AuthenticateDao extends AbstractDao {
   public static final String COLUMN_LAST_TIME_LOGIN = "Last_Time_Login";
   public static final String COLUMN_IS_BLOCKED = "IsBlocked";
   public static final String COLUMN_IS_DELETED = "IsDeleted";
-  
-  
-  
-  public static AuthenticateDao createInstance() {
-    //return new AuthenticateDaoImpl();
-	  return new AuthenticateDaoStub();
-  }
-  
-	public abstract User getUserInfo(String username) throws SQLException;
-	
-	public abstract User getUserInfo(int userId) throws SQLException;
-	
-	public abstract void createUser(String username, String passwordMd5, int money, int providerId) throws DupplicateException, SQLException;
-	
-	public abstract void changePassword(String username, String passwordMd5) throws NotFoundException, SQLException;
-	
-	public abstract boolean isExist(String username) throws SQLException;
 
-	public abstract void commit();
-	
+  public static AuthenticateDao createInstance() {
+    // return new AuthenticateDaoImpl();
+    return new AuthenticateDaoStub();
+  }
+
+  public abstract User getUserInfo(String username) throws SQLException;
+
+  public abstract User getUserInfo(int userId) throws SQLException;
+
+  public abstract void createUser(String username, String passwordMd5, int money, int providerId) throws DupplicateException,
+      SQLException;
+
+  public abstract void changePassword(String username, String passwordMd5) throws NotFoundException, SQLException;
+
+  public abstract boolean isExist(String username) throws SQLException;
+
+  public abstract void commit();
+
   public abstract void close();
 }

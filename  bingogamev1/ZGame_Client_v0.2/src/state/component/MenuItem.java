@@ -6,7 +6,6 @@ import java.util.Vector;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-
 import state.GameConstants;
 import state.Manager;
 import state.font.ImageTextForMidp2;
@@ -90,16 +89,17 @@ public class MenuItem extends Component {
 		items.insertElementAt(item, index);
 		isShowUpToDown = checkDrawUpOrDown();
 		for (int i = 0; i < items.size(); i++) {
-			updateChildPosition((MenuItem) items.elementAt(i), i, isShowUpToDown);
+			updateChildPosition((MenuItem) items.elementAt(i), i,
+					isShowUpToDown);
 		}
 	}
-	
+
 	public MenuItem insertItem(String itemLabel, int index) {
 		MenuItem item = new MenuItem(itemLabel);
 		insertItem(item, index);
 		return item;
 	}
-	
+
 	public MenuItem addItem(String itemLabel) {
 		MenuItem item = new MenuItem(itemLabel);
 		addItem(item);
@@ -126,7 +126,7 @@ public class MenuItem extends Component {
 		}
 		return (MenuItem) items.elementAt(index);
 	}
-	
+
 	public MenuItem getSubMenu(String itemLabel) {
 		for (int i = 0; i < items.size(); i++) {
 			MenuItem item = (MenuItem) items.elementAt(i);
@@ -154,7 +154,8 @@ public class MenuItem extends Component {
 			return false;
 		}
 
-		if (items.size() * menu.itemHeight > GameConstants.SCREEN_HEIGHT - menu.menuY) {
+		if (items.size() * menu.itemHeight > GameConstants.SCREEN_HEIGHT
+				- menu.menuY) {
 			return false;
 		} else {
 			return true;
@@ -171,7 +172,8 @@ public class MenuItem extends Component {
 
 	public MenuItem removeItem(int index) {
 		if ((index < 0) || (index > items.size() - 1)) {
-			throw new IllegalArgumentException("MenuItem : removeItem : index is invalid: " + index);
+			throw new IllegalArgumentException(
+					"MenuItem : removeItem : index is invalid: " + index);
 		}
 
 		MenuItem item = (MenuItem) items.elementAt(index);
@@ -228,7 +230,8 @@ public class MenuItem extends Component {
 		}
 	}
 
-	protected void updateChildPosition(MenuItem item, int itemIndex, boolean isShowUpToDown) {
+	protected void updateChildPosition(MenuItem item, int itemIndex,
+			boolean isShowUpToDown) {
 		if (menu == null) {
 			return;
 		}
@@ -242,7 +245,8 @@ public class MenuItem extends Component {
 		if (isShowUpToDown) {
 			y = getMenuY() + itemIndex * (menu.itemHeight - 1) + menu.textDy;
 		} else {
-			y = getMenuY() - (items.size() - itemIndex - 1) * (menu.itemHeight - 1) - menu.textDy;
+			y = getMenuY() - (items.size() - itemIndex - 1)
+					* (menu.itemHeight - 1) - menu.textDy;
 		}
 		item.setPosition(x, y);
 	}
@@ -261,7 +265,8 @@ public class MenuItem extends Component {
 			if (manager == null) {
 				g.fillRect(realX + 3, realY, menu.itemWidth, menu.itemHeight);
 			} else {
-				g.fillRect(realX + 3, realY, menu.itemWidth - 1, menu.itemHeight);
+				g.fillRect(realX + 3, realY, menu.itemWidth - 1,
+						menu.itemHeight);
 			}
 		}
 
@@ -270,41 +275,52 @@ public class MenuItem extends Component {
 			if (manager == null) {
 				g.fillRect(realX + 3, realY, menu.itemWidth, menu.itemHeight);
 			} else {
-				g.fillRect(realX + 3, realY, menu.itemWidth - 1, menu.itemHeight);
+				g.fillRect(realX + 3, realY, menu.itemWidth - 1,
+						menu.itemHeight);
 			}
 		}
 
 		if (menu.hasBorder) {
 			g.setColor(menu.borderColor);
 			if (manager == null) {
-				g.drawRect(realX, realY, menu.itemWidth - 1, menu.itemHeight - 1);
+				g.drawRect(realX, realY, menu.itemWidth - 1,
+						menu.itemHeight - 1);
 			} else {
-				g.drawRect(realX, realY, menu.itemWidth - 2, menu.itemHeight - 1);
+				g.drawRect(realX, realY, menu.itemWidth - 2,
+						menu.itemHeight - 1);
 			}
 		}
 
 		if (isFocused) {
-			getFont().drawString(g, label, menu.focusFgColor, realX + 3 + menu.textDx, realY + menu.itemHeight / 2, GameConstants.VCENTER_LEFT_ANCHOR);
+			getFont().drawString(g, label, menu.focusFgColor,
+					realX + 3 + menu.textDx, realY + menu.itemHeight / 2,
+					GameConstants.VCENTER_LEFT_ANCHOR);
 		} else {
-			getFont().drawString(g, label, menu.forceGroundColor, realX + 3 + menu.textDx, realY + menu.itemHeight / 2, GameConstants.VCENTER_LEFT_ANCHOR);
+			getFont().drawString(g, label, menu.forceGroundColor,
+					realX + 3 + menu.textDx, realY + menu.itemHeight / 2,
+					GameConstants.VCENTER_LEFT_ANCHOR);
 		}
 
 		if (items.size() > 0) {
 			if (arowImage == null) {
 				try {
-					arowImage = Image.createImage(GameConstants.CORE_IMAGE_FOLDER + "/Muiten_trang.png");
+					arowImage = Image
+							.createImage(GameConstants.CORE_IMAGE_FOLDER
+									+ "/Muiten_trang.png");
 				} catch (IOException e) {
 				}
 			}
-			g.drawImage(arowImage, realX + menu.itemWidth - 6, realY + menu.itemHeight / 2, GameConstants.VCENTER_RIGHT_ANCHOR);
+			g.drawImage(arowImage, realX + menu.itemWidth - 6, realY
+					+ menu.itemHeight / 2, GameConstants.VCENTER_RIGHT_ANCHOR);
 		}
-		
+
 		if ((items.size() > 0) && isShowChildrenMenuItem) {
 			// Vẽ ảnh background
 			if ((menu.itemBackgroundImage != null) && isShowChildrenMenuItem) {
-				g.drawImage(menu.itemBackgroundImage, realX, realY, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(menu.itemBackgroundImage, realX, realY,
+						GameConstants.TOP_LEFT_ANCHOR);
 			}
-			
+
 			int menuHeight = items.size() * menu.itemHeight + menu.textDy * 2;
 			if (menuImage == null) {
 				menuImage = createMemuBgImage(menuHeight);
@@ -324,9 +340,11 @@ public class MenuItem extends Component {
 			}
 
 			if (isShowUpToDown) {
-				g.drawImage(menuImage, drawMenuBbX, getMenuY(), GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(menuImage, drawMenuBbX, getMenuY(),
+						GameConstants.TOP_LEFT_ANCHOR);
 			} else {
-				g.drawImage(menuImage, drawMenuBbX, getMenuY() + menu.itemHeight, GameConstants.BOTTOM_LEFT_ANCHOR);
+				g.drawImage(menuImage, drawMenuBbX, getMenuY()
+						+ menu.itemHeight, GameConstants.BOTTOM_LEFT_ANCHOR);
 			}
 
 			for (int i = 0; i < items.size(); i++) {
@@ -349,9 +367,16 @@ public class MenuItem extends Component {
 		Image topImage = ImageUtil.getImage("menu_tren.png");
 		Image bottomImage = ImageUtil.getImage("menu_duoi.png");
 		Image bodyImage = ImageUtil.getImage("menu_giua.png");
-		bodyImage = ImageUtil.joinAndCreateImages(bodyImage, bodyImage.getWidth(), size - topImage.getHeight() - bottomImage.getHeight(), true);
-		return ImageUtil.joinImages(new Image[]{topImage, bodyImage, bottomImage}, new int[]{0, 0, 0}, new int[]{0, topImage.getHeight(), topImage.getHeight() + bodyImage.getHeight()}, new int[]{GameConstants.TOP_LEFT_ANCHOR, GameConstants.TOP_LEFT_ANCHOR,
-				GameConstants.TOP_LEFT_ANCHOR}, bodyImage.getWidth(), size, Color.GREEN_CODE);
+		bodyImage = ImageUtil.joinAndCreateImages(bodyImage, bodyImage
+				.getWidth(), size - topImage.getHeight()
+				- bottomImage.getHeight(), true);
+		return ImageUtil.joinImages(new Image[] { topImage, bodyImage,
+				bottomImage }, new int[] { 0, 0, 0 }, new int[] { 0,
+				topImage.getHeight(),
+				topImage.getHeight() + bodyImage.getHeight() }, new int[] {
+				GameConstants.TOP_LEFT_ANCHOR, GameConstants.TOP_LEFT_ANCHOR,
+				GameConstants.TOP_LEFT_ANCHOR }, bodyImage.getWidth(), size,
+				Color.GREEN_CODE);
 	}
 
 	public void detroy() {

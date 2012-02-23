@@ -15,28 +15,29 @@ import zgame.main.Global;
 public class ConnectionManager {
   private static Logger log = Logger.getLogger(ConnectionManager.class);
   private static Properties connectProp;
-  
+
   public static Vector<Connection> availableConnections = new Vector<Connection>();
   public static Vector<Connection> onUseConnections = new Vector<Connection>();
-  
+
   public static void init() {
     connectProp = new Properties();
     connectProp.setProperty("user", Global.DB_USER);
     connectProp.setProperty("password", Global.DB_PASSWORD);
   }
-  
+
   public static Connection getConnection() {
     Connection conn;
     if (availableConnections.size() > 0) {
       conn = availableConnections.get(0).setStartTransactionTime(System.currentTimeMillis()).increateUseCount();
       availableConnections.remove(0);
     } else {
-      conn = createConnection().setCreateTime(System.currentTimeMillis()).setStartTransactionTime(System.currentTimeMillis()).setUseCount(1);
+      conn = createConnection().setCreateTime(System.currentTimeMillis()).setStartTransactionTime(System.currentTimeMillis())
+          .setUseCount(1);
     }
     onUseConnections.add(conn);
     return conn;
   }
-  
+
   private static Connection createConnection() {
     try {
       Class.forName(Global.DB_DRIVER);
@@ -50,7 +51,7 @@ public class ConnectionManager {
     }
     return null;
   }
-  
+
   private static void checkToStoreConnection(Connection conn) {
     try {
       if (conn != null && !conn.isClosed()) {
@@ -81,7 +82,7 @@ public class ConnectionManager {
       }
     }
   }
-  
+
   public static void closeConnection(Connection conn) {
     checkToStoreConnection(conn);
   }

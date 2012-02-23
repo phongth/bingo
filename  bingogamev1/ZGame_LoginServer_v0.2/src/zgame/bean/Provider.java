@@ -1,49 +1,49 @@
 package zgame.bean;
 
 public class Provider {
-	private int id;
-	private String accountName = "";
-	private String currentVersion = "";
-	private String jarUrl = "";
-	private String jadUrl = "";
+  private int id;
+  private String accountName = "";
+  private String currentVersion = "";
+  private String jarUrl = "";
+  private String jadUrl = "";
 
-	public Provider(int id) {
-		this.id = id;
-	}
-	
-	public String getAccountName() {
-		return accountName;
-	}
+  public Provider(int id) {
+    this.id = id;
+  }
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
-	}
+  public String getAccountName() {
+    return accountName;
+  }
 
-	public int getId() {
-		return id;
-	}
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
+  }
 
-	public String getCurrentVersion() {
-		return currentVersion;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setCurrentVersion(String currentVersion) {
-		this.currentVersion = currentVersion;
-	}
+  public String getCurrentVersion() {
+    return currentVersion;
+  }
 
-	public String getJarUrl() {
-		return jarUrl;
-	}
+  public void setCurrentVersion(String currentVersion) {
+    this.currentVersion = currentVersion;
+  }
 
-	public void setJarUrl(String jarUrl) {
-		this.jarUrl = jarUrl;
-	}
+  public String getJarUrl() {
+    return jarUrl;
+  }
 
-	public String getJadUrl() {
-		return jadUrl;
-	}
+  public void setJarUrl(String jarUrl) {
+    this.jarUrl = jarUrl;
+  }
 
-	public void setJadUrl(String jadUrl) {
-		this.jadUrl = jadUrl;
-	}
+  public String getJadUrl() {
+    return jadUrl;
+  }
+
+  public void setJadUrl(String jadUrl) {
+    this.jadUrl = jadUrl;
+  }
 }

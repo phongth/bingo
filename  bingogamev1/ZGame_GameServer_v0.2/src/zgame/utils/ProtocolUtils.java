@@ -14,70 +14,68 @@ import org.apache.log4j.Logger;
 
 public class ProtocolUtils {
   private static final Logger log = Logger.getLogger(ProtocolUtils.class);
-  
-	public static void toByteArray(Vector<String[]> v, DataOutputStream output)
-			throws IOException {
-		// Write vector's size
-		output.writeInt(v.size());
 
-		// Write String[]'s size
-		output.writeInt(v.get(0).length);
+  public static void toByteArray(Vector<String[]> v, DataOutputStream output) throws IOException {
+    // Write vector's size
+    output.writeInt(v.size());
 
-		Enumeration<String[]> e = v.elements();
-		String[] strArr = null;
-		byte[] data = null;
+    // Write String[]'s size
+    output.writeInt(v.get(0).length);
 
-		while (e.hasMoreElements()) {
-			strArr = e.nextElement();
+    Enumeration<String[]> e = v.elements();
+    String[] strArr = null;
+    byte[] data = null;
 
-			for (int i = 0; i < strArr.length; i++) {
-				data = strArr[i].getBytes(Constants.UTF8);
-				output.writeInt(data.length);
-				output.write(data);
-			}
-		}
+    while (e.hasMoreElements()) {
+      strArr = e.nextElement();
 
-		output.flush();
-	}
+      for (int i = 0; i < strArr.length; i++) {
+        data = strArr[i].getBytes(Constants.UTF8);
+        output.writeInt(data.length);
+        output.write(data);
+      }
+    }
 
-	public static Vector<String[]> getVector(DataInputStream input)
-			throws IOException {
-		int sizeOfVector = input.readInt();
-		int arrayLength = input.readInt();
+    output.flush();
+  }
 
-		Vector<String[]> vector = new Vector<String[]>(sizeOfVector);
+  public static Vector<String[]> getVector(DataInputStream input) throws IOException {
+    int sizeOfVector = input.readInt();
+    int arrayLength = input.readInt();
 
-		String[] str = new String[arrayLength];
-		int sizeOfMessage = 0;
-		byte[] messages = null;
+    Vector<String[]> vector = new Vector<String[]>(sizeOfVector);
 
-		while (sizeOfVector-- > 0) {
-			for (int i = 0; i < arrayLength; i++) {
-				sizeOfMessage = input.readInt();
-				messages = new byte[sizeOfMessage];
-				input.readFully(messages);
-				str[i] = new String(messages, Constants.UTF8);
-			}
+    String[] str = new String[arrayLength];
+    int sizeOfMessage = 0;
+    byte[] messages = null;
 
-			vector.addElement(str);
-		}
+    while (sizeOfVector-- > 0) {
+      for (int i = 0; i < arrayLength; i++) {
+        sizeOfMessage = input.readInt();
+        messages = new byte[sizeOfMessage];
+        input.readFully(messages);
+        str[i] = new String(messages, Constants.UTF8);
+      }
 
-		return vector;
-	}
+      vector.addElement(str);
+    }
 
-	public static String convertDate(String time) {
-		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
-		Date date = null;
-		try {
-			date = sdf.parse(time);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			sdf.applyPattern("dd/MM/yy HH:mm");
-			
-			return sdf.format(cal.getTime()).replace(":", "h");
-		} catch (ParseException e) {
-			log.warn("convertDate : Exception on converting date", e);
-			return "";
-		}
-	}
+    return vector;
+  }
+
+  public static String convertDate(String time) {
+    SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+    Date date = null;
+    try {
+      date = sdf.parse(time);
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(date);
+      sdf.applyPattern("dd/MM/yy HH:mm");
+
+      return sdf.format(cal.getTime()).replace(":", "h");
+    } catch (ParseException e) {
+      log.warn("convertDate : Exception on converting date", e);
+      return "";
+    }
+  }
 }

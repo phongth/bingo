@@ -29,28 +29,43 @@ import javax.microedition.lcdui.Font;
 
 import state.GameConstants;
 
-
 /**
- * <p>BitmapFont allows developers to use his own fonts in mobile applications.</p>
+ * <p>
+ * BitmapFont allows developers to use his own fonts in mobile applications.
+ * </p>
  * 
- * <p>This class includes a mixed set of methods of Graphics and Font classes.
- * It has character measurement methods from Font, such as stringWidth() and charWidth().
- * It also has text drawing methods from Graphics, such as drawString() and drawChar().
- * Text will be drawn by current Graphics color.</p>
+ * <p>
+ * This class includes a mixed set of methods of Graphics and Font classes. It
+ * has character measurement methods from Font, such as stringWidth() and
+ * charWidth(). It also has text drawing methods from Graphics, such as
+ * drawString() and drawChar(). Text will be drawn by current Graphics color.
+ * </p>
  * 
- * <p>You may create your own font using Bitmap Character Editor. This is crossplatform
- * desktop application written on Java using SWT library. It can be downloaded free from project site.</p>
+ * <p>
+ * You may create your own font using Bitmap Character Editor. This is
+ * crossplatform desktop application written on Java using SWT library. It can
+ * be downloaded free from project site.
+ * </p>
  * 
- * <p>Each bitmap font consists of a set of parameters such
- * as height, baseline position etc, of character code map, of array width character widthes
- * and of principal part: one or more images in PNG format store character outlines.</p>
+ * <p>
+ * Each bitmap font consists of a set of parameters such as height, baseline
+ * position etc, of character code map, of array width character widthes and of
+ * principal part: one or more images in PNG format store character outlines.
+ * </p>
  * 
- * <p>By default all fonts are considered normal. Bold, italic and bold italic styles are generated
- * programmaticaly.</p>
+ * <p>
+ * By default all fonts are considered normal. Bold, italic and bold italic
+ * styles are generated programmaticaly.
+ * </p>
  * 
- * <p>This code is a part of the <a href="http://sourceforge.net/projects/mobilefonts">Mobile Fonts Project</a>.</p>
+ * <p>
+ * This code is a part of the <a
+ * href="http://sourceforge.net/projects/mobilefonts">Mobile Fonts Project</a>.
+ * </p>
  * 
- * <p>Note: if this code was useful to you, write me please. I will be proud :)</p>
+ * <p>
+ * Note: if this code was useful to you, write me please. I will be proud :)
+ * </p>
  * 
  * @author Sergey Tkachev <a href="http://sergetk.net">http://sergetk.net</a>
  */
@@ -88,6 +103,7 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Gets the default font
+	 * 
 	 * @return the default font
 	 */
 	public static ImageFontForMidp1 getDefault() {
@@ -96,7 +112,9 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Set a font as default
-	 * @param font the font
+	 * 
+	 * @param font
+	 *            the font
 	 */
 	public static void setDefault(ImageFontForMidp1 font) {
 		defaultFont = font;
@@ -134,24 +152,30 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Creates a new font from the resource.
-	 * @param fontName the resource name
+	 * 
+	 * @param fontName
+	 *            the resource name
 	 */
 	public ImageFontForMidp1(String fontName) {
 		this(fontName, DEFAULT_COLOR_CACHE_CAPACITY);
 	}
 
 	/**
-	 * Creates a new font from the resource. The capacity of the color cache defines
-	 * maximum size of the color cache.
-	 * @param fontName the resource name
-	 * @param colorCacheCapacity the maximum color cache size 
+	 * Creates a new font from the resource. The capacity of the color cache
+	 * defines maximum size of the color cache.
+	 * 
+	 * @param fontName
+	 *            the resource name
+	 * @param colorCacheCapacity
+	 *            the maximum color cache size
 	 */
 	public ImageFontForMidp1(String fontName, int colorCacheCapacity) {
 		this.style = Font.STYLE_PLAIN;
 		this.currentColor = 0;
 
 		try {
-			InputStream input = new Object().getClass().getResourceAsStream(fontName);
+			InputStream input = new Object().getClass().getResourceAsStream(
+					fontName);
 			if (input == null) {
 				throw new IOException();
 			}
@@ -183,7 +207,7 @@ public class ImageFontForMidp1 implements ImageFont {
 
 			// read font images
 			int imagesCount = data.readByte();
-			baseImages = new Image[imagesCount]; 
+			baseImages = new Image[imagesCount];
 
 			for (int i = 0; i < imagesCount; i++) {
 				int imageLength = data.readShort();
@@ -204,7 +228,7 @@ public class ImageFontForMidp1 implements ImageFont {
 			for (int i = 0; i < count; i++) {
 				if (widthes[i] < 0) {
 					// negative width points to another character
-					int sourceIndex =  - widthes[i];
+					int sourceIndex = -widthes[i];
 					widthes[i] = widthes[sourceIndex];
 					x[i] = x[sourceIndex];
 					y[i] = y[sourceIndex];
@@ -233,14 +257,17 @@ public class ImageFontForMidp1 implements ImageFont {
 
 			if (defaultFont == null)
 				defaultFont = this;
-		} catch	(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Creates a new font instance with a new style with minimal memory consumption
-	 * @param style the style of the font
+	 * Creates a new font instance with a new style with minimal memory
+	 * consumption
+	 * 
+	 * @param style
+	 *            the style of the font
 	 * @return the font
 	 */
 	public ImageFontForMidp1 getFont(int style) {
@@ -248,7 +275,7 @@ public class ImageFontForMidp1 implements ImageFont {
 	}
 
 	protected void setColor(int color) {
-		color &= 0x00FFFFFF;  
+		color &= 0x00FFFFFF;
 		if (this.currentColor == color) {
 			return;
 		}
@@ -274,7 +301,8 @@ public class ImageFontForMidp1 implements ImageFont {
 					cacheItemIndex = i;
 				}
 			}
-			Image[] images = getColorizedImages(this.imageName, this.imagesOffset, color);
+			Image[] images = getColorizedImages(this.imageName,
+					this.imagesOffset, color);
 			colorCache[cacheItemIndex] = color;
 			imageCache[cacheItemIndex] = images;
 			colorUsage[cacheItemIndex] = colorUsageCount++;
@@ -284,6 +312,7 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Gets the style of the font.
+	 * 
 	 * @return style
 	 */
 	public int getStyle() {
@@ -291,7 +320,8 @@ public class ImageFontForMidp1 implements ImageFont {
 	}
 
 	/**
-	 * Gets the standard height of a line of a text in this font. 
+	 * Gets the standard height of a line of a text in this font.
+	 * 
 	 * @return the height in pixels
 	 */
 	public byte getHeight() {
@@ -300,21 +330,24 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Gets the index of the character.
-	 * @param c the character
+	 * 
+	 * @param c
+	 *            the character
 	 * @return the index of the character
 	 */
 	protected int charIndex(char c) {
 		try {
-			//System.out.println(String.valueOf(c));
+			// System.out.println(String.valueOf(c));
 			return characterMap.indexOf(c);
-			
+
 		} catch (IndexOutOfBoundsException e) {
 			return -1;
 		}
 	}
 
 	/**
-	 * Gets the distance from the top of the text to the text baseline. 
+	 * Gets the distance from the top of the text to the text baseline.
+	 * 
 	 * @return the baseline position in pixels
 	 */
 	public int getBaselinePosition() {
@@ -323,42 +356,65 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Draws the specified string.
-	 * @param g the graphics context
-	 * @param text the text to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
-	 * @param anchors the anchor point for positioning of the text
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param text
+	 *            the text to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
+	 * @param anchors
+	 *            the anchor point for positioning of the text
 	 * @return the x coordinate for the next string
 	 */
 	public int drawString(Graphics g, String text, int x, int y, int anchors) {
-		return drawSubstring(g,text,0,text.length(),x,y,anchors);
+		return drawSubstring(g, text, 0, text.length(), x, y, anchors);
 	}
-	
+
 	/**
 	 * Draws the specified string.
-	 * @param g the graphics context
-	 * @param text the text to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
-	 * @param anchors the anchor point for positioning of the text
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param text
+	 *            the text to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
+	 * @param anchors
+	 *            the anchor point for positioning of the text
 	 * @return the x coordinate for the next string
 	 */
-	public int drawString(Graphics g, String text, int textColor, int x, int y, int anchors) {
-		return drawSubstring(g,text,textColor, 0,text.length(),x,y,anchors);
+	public int drawString(Graphics g, String text, int textColor, int x, int y,
+			int anchors) {
+		return drawSubstring(g, text, textColor, 0, text.length(), x, y,
+				anchors);
 	}
-	
+
 	/**
 	 * Draws the specified substring.
-	 * @param g the graphics context
-	 * @param text the text to be drawn
-	 * @param offset the index of a first character
-	 * @param length the number of characters
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
-	 * @param anchors the anchor point for positioning the text
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param text
+	 *            the text to be drawn
+	 * @param offset
+	 *            the index of a first character
+	 * @param length
+	 *            the number of characters
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
+	 * @param anchors
+	 *            the anchor point for positioning the text
 	 * @return the x coordinate for the next string
-	 */	
-	public int drawSubstring(Graphics g, String text, int offset, int length, int x, int y, int anchors) {
+	 */
+	public int drawSubstring(Graphics g, String text, int offset, int length,
+			int x, int y, int anchors) {
 		int xx = getX(substringWidth(text, offset, length), x, anchors);
 		int yy = getY(y, anchors);
 		setColor(g.getColor());
@@ -371,19 +427,28 @@ public class ImageFontForMidp1 implements ImageFont {
 		}
 		return xx;
 	}
-	
+
 	/**
 	 * Draws the specified substring.
-	 * @param g the graphics context
-	 * @param text the text to be drawn
-	 * @param offset the index of a first character
-	 * @param length the number of characters
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
-	 * @param anchors the anchor point for positioning the text
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param text
+	 *            the text to be drawn
+	 * @param offset
+	 *            the index of a first character
+	 * @param length
+	 *            the number of characters
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
+	 * @param anchors
+	 *            the anchor point for positioning the text
 	 * @return the x coordinate for the next string
-	 */	
-	public int drawSubstring(Graphics g, String text, int textColor,  int offset, int length, int x, int y, int anchors) {
+	 */
+	public int drawSubstring(Graphics g, String text, int textColor,
+			int offset, int length, int x, int y, int anchors) {
 		int xx = getX(substringWidth(text, offset, length), x, anchors);
 		int yy = getY(y, anchors);
 		setColor(textColor);
@@ -400,32 +465,34 @@ public class ImageFontForMidp1 implements ImageFont {
 	private int getX(int w, int x, int anchors) {
 		if ((anchors & Graphics.RIGHT) != 0) {
 			return x - w;
-		} else
-			if ((anchors & Graphics.HCENTER) != 0) {
-				return x - w / 2;
-			}
+		} else if ((anchors & Graphics.HCENTER) != 0) {
+			return x - w / 2;
+		}
 		return x;
 	}
 
 	private int getY(int y, int anchors) {
 		if ((anchors & Graphics.BOTTOM) != 0) {
 			return y - height;
-		} else
-			if ((anchors & Graphics.VCENTER) != 0) {
-				return y - height/2;
-			} else
-				if ((anchors & Graphics.BASELINE) != 0) {
-					return y - this.getBaselinePosition();
-				}
+		} else if ((anchors & Graphics.VCENTER) != 0) {
+			return y - height / 2;
+		} else if ((anchors & Graphics.BASELINE) != 0) {
+			return y - this.getBaselinePosition();
+		}
 		return y;
 	}
 
 	/**
 	 * Draws the specified character.
-	 * @param g the graphics context
-	 * @param c the character to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param c
+	 *            the character to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
 	 * @return the x coordinate for the next character
 	 */
 	public int drawChar(Graphics g, char c, int x, int y) {
@@ -440,10 +507,15 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Draws the specified character.
-	 * @param g the graphics context
-	 * @param c the character to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param c
+	 *            the character to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
 	 * @return the x coordinate for the next character
 	 */
 	public int drawChar(Graphics g, char c, int charColor, int x, int y) {
@@ -455,13 +527,19 @@ public class ImageFontForMidp1 implements ImageFont {
 		}
 		return nextX;
 	}
-	
+
 	/**
-	 * Draws one character. It called from drawChar(), drawString() and drawSubstrung(). 
-	 * @param g the graphics context
-	 * @param c the character to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
+	 * Draws one character. It called from drawChar(), drawString() and
+	 * drawSubstrung().
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param c
+	 *            the character to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
 	 * @return the x coordinate for the next character
 	 */
 	public int drawOneChar(Graphics g, char c, int x, int y) {
@@ -477,9 +555,9 @@ public class ImageFontForMidp1 implements ImageFont {
 			return x + squareWidth;
 		}
 
-		int charX      = this.x[charIndex];
-		int charY      = this.y[charIndex];
-		int cw         = widthes[charIndex];
+		int charX = this.x[charIndex];
+		int charY = this.y[charIndex];
+		int cw = widthes[charIndex];
 		int imageIndex = idx[charIndex];
 
 		y += yIndent / 2;
@@ -528,16 +606,25 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Draws the specified characters.
-	 * @param g the graphics context
-	 * @param data the array of characters to be drawn
-	 * @param offset the start offset in the data
-	 * @param length the number of characters to be drawn
-	 * @param x the x coordinate of the anchor point
-	 * @param y the y coordinate of the anchor point
-	 * @param anchors the anchor point for positioning the text
+	 * 
+	 * @param g
+	 *            the graphics context
+	 * @param data
+	 *            the array of characters to be drawn
+	 * @param offset
+	 *            the start offset in the data
+	 * @param length
+	 *            the number of characters to be drawn
+	 * @param x
+	 *            the x coordinate of the anchor point
+	 * @param y
+	 *            the y coordinate of the anchor point
+	 * @param anchors
+	 *            the anchor point for positioning the text
 	 * @return the x coordinate for the next character
 	 */
-	public int drawChars(Graphics g, char[] data, int offset, int length, int x, int y, int anchors) {
+	public int drawChars(Graphics g, char[] data, int offset, int length,
+			int x, int y, int anchors) {
 		int xx = getX(charsWidth(data, offset, length), x, anchors);
 		int yy = getY(y, anchors);
 		setColor(g.getColor());
@@ -555,27 +642,33 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Gets the width of the specified character in this font.
-	 * @param c the character to be measured
+	 * 
+	 * @param c
+	 *            the character to be measured
 	 * @return the width of the character
 	 */
 	public int charWidth(char c) {
 		if (c == ' ') {
-			return spaceWidth + xIndent + charWidthIncrement; 
+			return spaceWidth + xIndent + charWidthIncrement;
 		}
-		int index  = charIndex(c);
+		int index = charIndex(c);
 		if (index < 0) {
-			return spaceWidth  + xIndent + charWidthIncrement;
+			return spaceWidth + xIndent + charWidthIncrement;
 		} else {
 			return widthes[index] + xIndent + charWidthIncrement;
 		}
 	}
 
 	/**
-	 * Gets the width of the characters, starting at the specified offset
-	 * and for the specified number of characters (length).
-	 * @param ch the array of characters
-	 * @param offset zero-based index of a first character
-	 * @param length the number of characters to measure
+	 * Gets the width of the characters, starting at the specified offset and
+	 * for the specified number of characters (length).
+	 * 
+	 * @param ch
+	 *            the array of characters
+	 * @param offset
+	 *            zero-based index of a first character
+	 * @param length
+	 *            the number of characters to measure
 	 * @return the width in pixels
 	 */
 	public int charsWidth(char[] ch, int offset, int length) {
@@ -588,7 +681,9 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Gets the width of the string.
-	 * @param str the String to be measured
+	 * 
+	 * @param str
+	 *            the String to be measured
 	 * @return the width in pixels
 	 */
 	public int stringWidth(String str) {
@@ -596,10 +691,14 @@ public class ImageFontForMidp1 implements ImageFont {
 	}
 
 	/**
-	 * Gets the width of the substring. 
-	 * @param str the string to be measured
-	 * @param offset zero-based index of a first character in the substring
-	 * @param length the number of characters to measure
+	 * Gets the width of the substring.
+	 * 
+	 * @param str
+	 *            the string to be measured
+	 * @param offset
+	 *            zero-based index of a first character in the substring
+	 * @param length
+	 *            the number of characters to measure
 	 * @return the length of the substring
 	 */
 	public int substringWidth(String str, int offset, int length) {
@@ -615,9 +714,13 @@ public class ImageFontForMidp1 implements ImageFont {
 	protected static final String PNG_SIGNATURE = "\u0089PNG\r\n\u001A\n";
 
 	/**
-	 * Loads images from the resource and replace palette chunks. 
-	 * @param name the name of the resource containing the image data in the PNG format
-	 * @param color the color
+	 * Loads images from the resource and replace palette chunks.
+	 * 
+	 * @param name
+	 *            the name of the resource containing the image data in the PNG
+	 *            format
+	 * @param color
+	 *            the color
 	 * @return the created image
 	 */
 	private Image[] getColorizedImages(String name, int skip, int color) {
@@ -633,7 +736,7 @@ public class ImageFontForMidp1 implements ImageFont {
 
 			for (int i = 0; i < imagesCount; i++) {
 				int imageLength = dataStream.readShort();
-				byte [] buffer = new byte[imageLength];
+				byte[] buffer = new byte[imageLength];
 				dataStream.read(buffer, 0, imageLength);
 
 				if (!compareBytes(buffer, 0, PNG_SIGNATURE)) {
@@ -650,43 +753,55 @@ public class ImageFontForMidp1 implements ImageFont {
 		} finally {
 			try {
 				inputStream.close();
-			} catch (IOException e) {};
+			} catch (IOException e) {
+			}
+			;
 		}
 
 		return images;
 	}
 
 	/**
-	 * Finds the specified chunk. 
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
-	 * @param chunk the name of chunk (i.e. PLTE)
+	 * Finds the specified chunk.
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
+	 * @param chunk
+	 *            the name of chunk (i.e. PLTE)
 	 * @return the offset of chunk (-1 if chunk isn't present)
 	 */
-	private int getChunk(byte [] buffer, int offset, String chunk) {
+	private int getChunk(byte[] buffer, int offset, String chunk) {
 		try {
 			for (;;) {
 				int dataLenght = getInt(buffer, offset);
-				if (compareBytes(buffer, offset+4, chunk)) {
+				if (compareBytes(buffer, offset + 4, chunk)) {
 					return offset;
 				} else {
 					offset += 4 + 4 + dataLenght + 4;
 				}
 			}
-		} catch (Exception e) {};
+		} catch (Exception e) {
+		}
+		;
 		return -1;
 	}
 
 	/**
 	 * Compare byte sequence with string
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
-	 * @param str the string to compare with bytes in the buffer
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
+	 * @param str
+	 *            the string to compare with bytes in the buffer
 	 * @return true if the buffer contains the string
 	 */
-	private boolean compareBytes(byte [] buffer, int offset, String str) {
+	private boolean compareBytes(byte[] buffer, int offset, String str) {
 		for (int i = 0; i < str.length(); i++) {
-			if ( ((byte) (str.charAt(i))) != buffer[i + offset]) {
+			if (((byte) (str.charAt(i))) != buffer[i + offset]) {
 				return false;
 			}
 		}
@@ -694,15 +809,19 @@ public class ImageFontForMidp1 implements ImageFont {
 	}
 
 	/**
-	 * Get the integer value from the four bytes. The most signified byte go first.
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
+	 * Get the integer value from the four bytes. The most signified byte go
+	 * first.
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
 	 * @return the integer value
 	 */
-	private int getInt(byte [] buffer, int offset) {
+	private int getInt(byte[] buffer, int offset) {
 		int result = buffer[offset++] << 24;
 		result |= (buffer[offset++] << 16) & 0x00FF0000;
-		result |= (buffer[offset++] << 8)  & 0x0000FF00;
+		result |= (buffer[offset++] << 8) & 0x0000FF00;
 		result |= buffer[offset] & 0x000000FF;
 
 		return result;
@@ -710,24 +829,32 @@ public class ImageFontForMidp1 implements ImageFont {
 
 	/**
 	 * Set four bytes to the specified value. The most signified byte go first.
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
-	 * @param value the value to set
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
+	 * @param value
+	 *            the value to set
 	 */
-	private void setInt(byte [] buffer, int offset, int value) {
-		buffer[offset++] = (byte)((value & 0xFF000000) >>> 24);
-		buffer[offset++] = (byte)((value & 0x00FF0000) >>> 16);
-		buffer[offset++] = (byte)((value & 0x0000FF00) >>> 8);
-		buffer[offset]   = (byte)((value & 0x000000FF));
+	private void setInt(byte[] buffer, int offset, int value) {
+		buffer[offset++] = (byte) ((value & 0xFF000000) >>> 24);
+		buffer[offset++] = (byte) ((value & 0x00FF0000) >>> 16);
+		buffer[offset++] = (byte) ((value & 0x0000FF00) >>> 8);
+		buffer[offset] = (byte) ((value & 0x000000FF));
 	}
 
 	/**
 	 * Replaces black color in the palette chunk to the specified color.
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
-	 * @param color the color to replace
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
+	 * @param color
+	 *            the color to replace
 	 */
-	private void colorizePalette(byte [] buffer, int offset, int color) {
+	private void colorizePalette(byte[] buffer, int offset, int color) {
 		int dataLength = getInt(buffer, offset);
 		int dataOffset = offset + 8;
 
@@ -736,15 +863,15 @@ public class ImageFontForMidp1 implements ImageFont {
 		int b = (color & 0x000000FF);
 
 		for (int i = 0; i < dataLength / 3; i++) {
-			int pR = buffer[dataOffset+0] & 0xFF;
-			int pG = buffer[dataOffset+1] & 0xFF;
-			int pB = buffer[dataOffset+2] & 0xFF;
+			int pR = buffer[dataOffset + 0] & 0xFF;
+			int pG = buffer[dataOffset + 1] & 0xFF;
+			int pB = buffer[dataOffset + 2] & 0xFF;
 
 			int brightness = (pR + pG + pB) / 3;
 
-			buffer[dataOffset++] = (byte) (r + (brightness * (255-r)) / 255); // red
-			buffer[dataOffset++] = (byte) (g + (brightness * (255-g)) / 255); // green
-			buffer[dataOffset++] = (byte) (b + (brightness * (255-b)) / 255); // blue
+			buffer[dataOffset++] = (byte) (r + (brightness * (255 - r)) / 255); // red
+			buffer[dataOffset++] = (byte) (g + (brightness * (255 - g)) / 255); // green
+			buffer[dataOffset++] = (byte) (b + (brightness * (255 - b)) / 255); // blue
 		}
 
 		int crc = crc32(buffer, offset + 4, dataLength + 4);
@@ -756,10 +883,15 @@ public class ImageFontForMidp1 implements ImageFont {
 	private static final int CRC32_POLYNOMIAL = 0xEDB88320;
 
 	/**
-	 * Calculates the CRC32 value. This functions doesn't use a table for reasons of memory saving.
-	 * @param buffer the byte array
-	 * @param offset the offset of the start of the data in the array
-	 * @param count the count of bytes
+	 * Calculates the CRC32 value. This functions doesn't use a table for
+	 * reasons of memory saving.
+	 * 
+	 * @param buffer
+	 *            the byte array
+	 * @param offset
+	 *            the offset of the start of the data in the array
+	 * @param count
+	 *            the count of bytes
 	 * @return the CRC32 value
 	 */
 	protected static int crc32(byte buffer[], int offset, int count) {
@@ -775,7 +907,7 @@ public class ImageFontForMidp1 implements ImageFont {
 			}
 			crc = (crc >>> 8) ^ t;
 		}
-		return crc  ^ 0xFFFFFFFF;
+		return crc ^ 0xFFFFFFFF;
 	}
 
 	public int drawOneChar(Graphics g, char c, int color, int x, int y) {
@@ -786,10 +918,12 @@ public class ImageFontForMidp1 implements ImageFont {
 		return drawString(g, text, x, y, GameConstants.TOP_LEFT_ANCHOR);
 	}
 
-	public int drawSubstring(Graphics g, String text, int offset, int length, int x, int y) {
-		return drawSubstring(g, text, offset, length, x, y, GameConstants.TOP_LEFT_ANCHOR);
+	public int drawSubstring(Graphics g, String text, int offset, int length,
+			int x, int y) {
+		return drawSubstring(g, text, offset, length, x, y,
+				GameConstants.TOP_LEFT_ANCHOR);
 	}
-	
+
 	public void detroy() {
 		baseImages = null;
 		currentImages = null;

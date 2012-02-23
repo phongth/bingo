@@ -18,15 +18,16 @@ public class AuthenticateHandle implements DataReceiveListener, AlertListener {
 
 	public int waitingAction = -1;
 	private AuthenticateBussiness authenticateBussiness;
-	
+
 	public AuthenticateHandle() {
-	  authenticateBussiness = new AuthenticateBussiness();
+		authenticateBussiness = new AuthenticateBussiness();
 	}
 
 	public void onConnectDone() {
 		switch (waitingAction) {
 		case START_AUTHENTICATE_ACTION:
-			SocketClientUtil.startAuthenticateRequest(Global.loginInfo.getUserName());
+			SocketClientUtil.startAuthenticateRequest(Global.loginInfo
+					.getUserName());
 			break;
 		case SIGN_OUT_ACTION:
 			SocketClientUtil.signOut();
@@ -35,16 +36,17 @@ public class AuthenticateHandle implements DataReceiveListener, AlertListener {
 			SocketClientUtil.gameServiceListRequest();
 			break;
 		default:
-		  if (Global.loginInfo.isAutoLogin()) {
-        SocketClientUtil.login(false);
-      } else {
-        Global.isAutoLoginDone = true;
-         SocketClientUtil.privateLogin();
-      }
-		  
-			SocketClientUtil.checkForUpdate(Constants.VERSION, Global.provider.getId());
+			if (Global.loginInfo.isAutoLogin()) {
+				SocketClientUtil.login(false);
+			} else {
+				Global.isAutoLoginDone = true;
+				SocketClientUtil.privateLogin();
+			}
+
+			SocketClientUtil.checkForUpdate(Constants.VERSION, Global.provider
+					.getId());
 			SocketClientUtil.checkForDownloadResource();
-			
+
 			Global.frmLogo.message = "Đang kiểm tra phiên bản...";
 			break;
 		}
@@ -52,16 +54,17 @@ public class AuthenticateHandle implements DataReceiveListener, AlertListener {
 	}
 
 	public void onConnectFail() {
-		GameGlobal.alert.showAlert(this, Alert.OK_TYPE, "Kết nối đến server thất bại", 99);
+		GameGlobal.alert.showAlert(this, Alert.OK_TYPE,
+				"Kết nối đến server thất bại", 99);
 	}
 
 	public void onDisconnect() {
 	}
 
 	public void alertEventPerform(int alertType, int eventType, int alertId) {
-	  if (alertId == 99) {
-      GameGlobal.nextState(Global.frmLogin, null);
-    }
+		if (alertId == 99) {
+			GameGlobal.nextState(Global.frmLogin, null);
+		}
 	}
 
 	public void onRecieveData(DataPackage dataPackage) {
@@ -74,10 +77,10 @@ public class AuthenticateHandle implements DataReceiveListener, AlertListener {
 			Rms.saveProvider(Global.provider);
 			break;
 		case ProtocolConstants.ResponseHeader.UPDATE_CLIENT_RESPONSE:
-		  authenticateBussiness.onUpdateClienResponse(dataPackage);
+			authenticateBussiness.onUpdateClienResponse(dataPackage);
 			break;
 		case ProtocolConstants.ResponseHeader.NO_UPDATE_RESPONSE:
-		  authenticateBussiness.onNoUpdateResponse(dataPackage);
+			authenticateBussiness.onNoUpdateResponse(dataPackage);
 			break;
 
 		/** Download resource */
@@ -94,21 +97,22 @@ public class AuthenticateHandle implements DataReceiveListener, AlertListener {
 		/** Authenticate */
 		case ProtocolConstants.ResponseHeader.SALT_REPONSE:
 			String salt = dataPackage.nextString();
-			SocketClientUtil.authenticateByPassword(Global.currentUser.getName(), Global.currentUser.getPasswordMd5(), salt);
+			SocketClientUtil.authenticateByPassword(Global.currentUser
+					.getName(), Global.currentUser.getPasswordMd5(), salt);
 			break;
 		case ProtocolConstants.ResponseHeader.AUTHENTICATE_SUCCESS_RESPONSE:
-		  authenticateBussiness.onAuthenticateSuccess(dataPackage);
+			authenticateBussiness.onAuthenticateSuccess(dataPackage);
 			break;
 		case ProtocolConstants.ResponseHeader.AUTHENTICATE_FAIL_RESPONSE:
-		  authenticateBussiness.onAuthenticateFail(dataPackage);
+			authenticateBussiness.onAuthenticateFail(dataPackage);
 			break;
 		case ProtocolConstants.ResponseHeader.REGISTER_SUCCESS_RESPONSE:
-		  authenticateBussiness.onRegisterSuccess(dataPackage);
-		  break;
+			authenticateBussiness.onRegisterSuccess(dataPackage);
+			break;
 		case ProtocolConstants.ResponseHeader.REGISTER_FAIL_RESPONSE:
-		  authenticateBussiness.onRegisterFail(dataPackage);
-      break;
-			
+			authenticateBussiness.onRegisterFail(dataPackage);
+			break;
+
 		/** Update GameService list */
 		case ProtocolConstants.ResponseHeader.GAME_SERVICE_LIST_RESPONSE:
 			authenticateBussiness.onGameServiceList(dataPackage);

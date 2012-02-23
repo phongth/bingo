@@ -9,14 +9,14 @@ public class Connection {
   private long startTransactionTime;
   private long lastTimeUse;
   private int useCount;
-  
+
   public Connection() {
   }
-  
+
   public Connection(java.sql.Connection conn) {
     this.conn = conn;
   }
-  
+
   public long getCreateTime() {
     return createTime;
   }
@@ -38,12 +38,12 @@ public class Connection {
   public int getUseCount() {
     return useCount;
   }
-  
+
   public Connection setUseCount(int useCount) {
     this.useCount = useCount;
     return this;
   }
-  
+
   public Connection increateUseCount() {
     this.useCount++;
     return this;
@@ -83,7 +83,7 @@ public class Connection {
     }
     return null;
   }
-  
+
   public Connection rollback() throws SQLException {
     lastTimeUse = System.currentTimeMillis();
     if (conn != null) {

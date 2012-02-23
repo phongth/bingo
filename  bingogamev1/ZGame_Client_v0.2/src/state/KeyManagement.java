@@ -21,9 +21,10 @@ public class KeyManagement implements KeyListener {
 				break;
 			}
 		}
-		
+
 		if (isNotEnoughSpace) {
-			throw new IllegalArgumentException("KeyManagement : addTarget : Not enoungh space in game timer");
+			throw new IllegalArgumentException(
+					"KeyManagement : addTarget : Not enoungh space in game timer");
 		}
 	}
 

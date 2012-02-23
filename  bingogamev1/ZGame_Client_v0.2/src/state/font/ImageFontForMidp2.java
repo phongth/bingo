@@ -24,7 +24,8 @@ public class ImageFontForMidp2 implements ImageFont {
 
 	protected ImageFontForMidp2(String fontName) {
 		try {
-			InputStream input = new Object().getClass().getResourceAsStream(fontName);
+			InputStream input = new Object().getClass().getResourceAsStream(
+					fontName);
 			DataInputStream data = new DataInputStream(input);
 
 			data.readByte(); // Bỏ qua trường version
@@ -81,7 +82,7 @@ public class ImageFontForMidp2 implements ImageFont {
 				}
 			}
 		} catch (IOException ex) {
-//			ex.printStackTrace();
+			// ex.printStackTrace();
 		}
 		System.gc();
 	}
@@ -95,7 +96,8 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @return Vị trí kết thúc của chuỗi
 	 */
 	public int drawString(Graphics g, String text, int x, int y) {
-		return drawSubstring(g, text, 0xFF000000, 0, text.length(), x, y, Graphics.TOP | Graphics.LEFT);
+		return drawSubstring(g, text, 0xFF000000, 0, text.length(), x, y,
+				Graphics.TOP | Graphics.LEFT);
 	}
 
 	/**
@@ -108,7 +110,8 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @return Vị trí kết thúc của chuỗi
 	 */
 	public int drawString(Graphics g, String text, int x, int y, int anchors) {
-		return drawSubstring(g, text, 0xFF000000, 0, text.length(), x, y, anchors);
+		return drawSubstring(g, text, 0xFF000000, 0, text.length(), x, y,
+				anchors);
 	}
 
 	/**
@@ -121,7 +124,8 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @param anchors
 	 * @return Vị trí kết thúc của chuỗi
 	 */
-	public int drawString(Graphics g, String text, int color, int x, int y, int anchors) {
+	public int drawString(Graphics g, String text, int color, int x, int y,
+			int anchors) {
 		return drawSubstring(g, text, color, 0, text.length(), x, y, anchors);
 	}
 
@@ -135,8 +139,10 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @param y
 	 * @return Vị trí kết thúc của chuỗi
 	 */
-	public int drawSubstring(Graphics g, String text, int offset, int length, int x, int y) {
-		return drawSubstring(g, text, 0xFF000000, offset, length, x, y, Graphics.TOP | Graphics.LEFT);
+	public int drawSubstring(Graphics g, String text, int offset, int length,
+			int x, int y) {
+		return drawSubstring(g, text, 0xFF000000, offset, length, x, y,
+				Graphics.TOP | Graphics.LEFT);
 	}
 
 	/**
@@ -150,7 +156,8 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @param anchors
 	 * @return Vị trí kết thúc của chuỗi
 	 */
-	public int drawSubstring(Graphics g, String text, int offset, int length, int x, int y, int anchors) {
+	public int drawSubstring(Graphics g, String text, int offset, int length,
+			int x, int y, int anchors) {
 		return drawSubstring(g, text, 0xFF000000, offset, length, x, y, anchors);
 	}
 
@@ -166,7 +173,8 @@ public class ImageFontForMidp2 implements ImageFont {
 	 * @param anchors
 	 * @return Vị trí kết thúc của chuỗi
 	 */
-	public int drawSubstring(Graphics g, String text, int color, int offset, int length, int x, int y, int anchors) {
+	public int drawSubstring(Graphics g, String text, int color, int offset,
+			int length, int x, int y, int anchors) {
 		color = color | 0xFF000000;
 		int xx = getX(substringWidth(text, offset, length), x, anchors);
 		int yy = getY(y, anchors);
@@ -228,7 +236,7 @@ public class ImageFontForMidp2 implements ImageFont {
 	public int drawOneChar(Graphics g, char c, int x, int y) {
 		return drawOneChar(g, c, Color.BLACK_CODE, x, y);
 	}
-	
+
 	/**
 	 * 
 	 * @param g

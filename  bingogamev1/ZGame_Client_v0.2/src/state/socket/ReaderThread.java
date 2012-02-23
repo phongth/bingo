@@ -12,7 +12,8 @@ public class ReaderThread extends Control {
 	private DataReceiveListener listener;
 	private Client client;
 
-	public ReaderThread(DataInputStream is, DataReceiveListener listener, Client client) {
+	public ReaderThread(DataInputStream is, DataReceiveListener listener,
+			Client client) {
 		this.is = is;
 		this.listener = listener;
 		this.client = client;
@@ -24,9 +25,10 @@ public class ReaderThread extends Control {
 			try {
 				int len = is.readInt();
 				if ((len < 0) || (len > 1000000)) {
-					throw new IllegalArgumentException("ReaderThread: len is not valid: " + len);
+					throw new IllegalArgumentException(
+							"ReaderThread: len is not valid: " + len);
 				}
-//				System.out.println("Read data len: " + len);
+				// System.out.println("Read data len: " + len);
 
 				byte[] data = new byte[len];
 				is.readFully(data);
@@ -36,11 +38,13 @@ public class ReaderThread extends Control {
 				if (isRunning) {
 					listener.onDisconnect();
 				}
-				System.out.println("WARNING: ReaderThread : connection close on IOException");
+				System.out
+						.println("WARNING: ReaderThread : connection close on IOException");
 				client.detroy();
 				return;
 			} catch (Throwable ex) {
-				System.out.println("ERROR: ReaderThread : faltal exception:" + ex.getClass());
+				System.out.println("ERROR: ReaderThread : faltal exception:"
+						+ ex.getClass());
 				ex.printStackTrace();
 			}
 		}

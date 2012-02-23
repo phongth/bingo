@@ -3,59 +3,59 @@ package zgame.bean;
 import java.util.UUID;
 
 public class Session {
-	private String id;
-	private int userId;
-	private String username;
-	private GameService currentGameService = null;
-	private boolean isOnline = true;
-	private long loginStartTime;
-	private long lastTimeActive;
-	
-	public Session(int userId, String username) {
-		this.id = UUID.randomUUID().toString();
-		this.userId = userId;
-		this.username = username;
-		loginStartTime = System.currentTimeMillis();
-	}
+  private String id;
+  private int userId;
+  private String username;
+  private GameService currentGameService = null;
+  private boolean isOnline = true;
+  private long loginStartTime;
+  private long lastTimeActive;
 
-	public String getId() {
-		return id;
-	}
+  public Session(int userId, String username) {
+    this.id = UUID.randomUUID().toString();
+    this.userId = userId;
+    this.username = username;
+    loginStartTime = System.currentTimeMillis();
+  }
 
-	public int getUserId() {
-		return userId;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public int getUserId() {
+    return userId;
+  }
 
-	public GameService getCurrentGameService() {
-		return currentGameService;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public Session setCurrentGameService(GameService currentGameService) {
-		this.currentGameService = currentGameService;
-		return this;
-	}
-	
-	public long getLoginTime() {
+  public GameService getCurrentGameService() {
+    return currentGameService;
+  }
+
+  public Session setCurrentGameService(GameService currentGameService) {
+    this.currentGameService = currentGameService;
+    return this;
+  }
+
+  public long getLoginTime() {
     return loginStartTime;
   }
 
   public boolean isOnline() {
-		return isOnline;
-	}
-  
-	public long getLastTimeActive() {
+    return isOnline;
+  }
+
+  public long getLastTimeActive() {
     return lastTimeActive;
   }
 
   public Session setOnline(boolean isOnline) {
-	  if (this.isOnline && !isOnline) {
-	    lastTimeActive = System.currentTimeMillis();
-	  }
-		this.isOnline = isOnline;
-		return this;
-	}
+    if (this.isOnline && !isOnline) {
+      lastTimeActive = System.currentTimeMillis();
+    }
+    this.isOnline = isOnline;
+    return this;
+  }
 }

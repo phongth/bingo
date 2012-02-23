@@ -11,20 +11,25 @@ import zgame.exception.NotFoundException;
 import zgame.utils.MD5;
 
 public class AuthenticateDaoStub extends AuthenticateDao {
-	private static Map<String, User> userMockMap = new HashMap<String, User>(); // Map dùng để làm giả DB
-	private static int idCreater = 0;
-	
-	public static int getNextId() {
-	  idCreater++;
-	  return idCreater;
-	}
-	
-	static {
-	  initMockDB();
-	}
-	
-	private static void initMockDB() {
-	  for (int i = 1; i <= 99; i++) {
+  private static Map<String, User> userMockMap = new HashMap<String, User>(); // Map
+                                                                              // dùng
+                                                                              // để
+                                                                              // làm
+                                                                              // giả
+                                                                              // DB
+  private static int idCreater = 0;
+
+  public static int getNextId() {
+    idCreater++;
+    return idCreater;
+  }
+
+  static {
+    initMockDB();
+  }
+
+  private static void initMockDB() {
+    for (int i = 1; i <= 99; i++) {
       User user = new User();
       user.setUserId(getNextId());
       user.setUsername("w" + i);
@@ -34,7 +39,7 @@ public class AuthenticateDaoStub extends AuthenticateDao {
       user.setAvatarId(i);
       userMockMap.put(user.getUsername(), user);
     }
-    
+
     for (int i = 1; i <= 99; i++) {
       User user = new User();
       user.setUserId(getNextId());
@@ -45,22 +50,22 @@ public class AuthenticateDaoStub extends AuthenticateDao {
       user.setAvatarId(i);
       userMockMap.put(user.getUsername(), user);
     }
-	}
-	
-	public User getUserInfo(String username) {
-	  return userMockMap.get(username);
-	}
-	
-	@Override
+  }
+
+  public User getUserInfo(String username) {
+    return userMockMap.get(username);
+  }
+
+  @Override
   public User getUserInfo(int userId) throws SQLException {
     throw new UnsupportedOperationException("The method getUserInfo of class AuthenticateDao is not supported");
   }
-	
+
   public void changePassword(String username, String passwordMd5) throws NotFoundException, SQLException {
     if (!isExist(username)) {
       throw new NotFoundException();
     }
-    
+
     User user = getUserInfo(username);
     if (user == null) {
       throw new NotFoundException();
@@ -72,7 +77,7 @@ public class AuthenticateDaoStub extends AuthenticateDao {
     if (isExist(username)) {
       throw new DupplicateException();
     }
-    
+
     User user = new User();
     user.setUserId(getNextId());
     user.setUsername(username);
@@ -80,7 +85,7 @@ public class AuthenticateDaoStub extends AuthenticateDao {
     user.setProviderId(providerId);
     userMockMap.put(user.getUsername(), user);
   }
-  
+
   @Override
   public boolean isExist(String username) throws SQLException {
     return (userMockMap.get(username) != null);

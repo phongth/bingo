@@ -15,7 +15,7 @@ import zgame.main.Global;
 public class CommitPaymentDataJob extends Job {
   private static final Logger log = Logger.getLogger(CommitPaymentDataJob.class);
   private Hashtable<String, String> userToCommitQueue = new Hashtable<String, String>();
-  
+
   @Override
   protected void init() {
     log.info("CommitPaymentDataJob is started");
@@ -24,17 +24,17 @@ public class CommitPaymentDataJob extends Job {
   @Override
   public void loop() {
     Set<String> keys = userToCommitQueue.keySet();
-    
+
     if (keys.size() == 0) {
       return;
     }
-    
+
     Vector<String> toCommitList = new Vector<String>();
     for (String username : keys) {
       toCommitList.add(username);
       userToCommitQueue.remove(username);
     }
-    
+
     log.info("Start commit payment loopId: " + loopCount);
     PaymentDao paymentDao = PaymentDao.createInstance();
     for (String username : toCommitList) {
@@ -51,7 +51,7 @@ public class CommitPaymentDataJob extends Job {
     paymentDao.close();
     log.info("End commit payment loopId: " + loopCount);
   }
-  
+
   public void putUserToCommit(String username) {
     userToCommitQueue.put(username, username);
   }

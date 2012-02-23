@@ -5,14 +5,14 @@ import java.util.Hashtable;
 public class Table extends Entity {
 	private Game game;
 	private Room room;
-	
+
 	private int bid = 0;
 	private boolean isLocked;
 	private boolean isPlaying;
 	private String tableMasterName = "";
-	
+
 	private Hashtable viewUsers = new Hashtable();
-	
+
 	public Table(String id) {
 		super(id);
 	}
@@ -20,11 +20,11 @@ public class Table extends Entity {
 	public void addViewUser(User user) {
 		viewUsers.put(user.getName(), user);
 	}
-	
+
 	public void getViewUser(String username) {
 		viewUsers.get(username);
 	}
-	
+
 	public void removeViewUser(String username) {
 		viewUsers.remove(username);
 	}
@@ -48,7 +48,7 @@ public class Table extends Entity {
 			this.game = room.getGame();
 		}
 	}
-	
+
 	public int getBid() {
 		return bid;
 	}

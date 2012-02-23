@@ -12,11 +12,11 @@ import zgame.exception.NotFoundException;
 
 public class PaymentDaoImpl extends PaymentDao {
   private Connection conn;
-  
+
   public PaymentDaoImpl() {
     conn = ConnectionManager.getConnection();
   }
-  
+
   @Override
   public int getUserMoneyFromDB(String username) throws SQLException, NotFoundException {
     AuthenticateDao authenticateDao = AuthenticateDao.createInstance();
@@ -24,22 +24,19 @@ public class PaymentDaoImpl extends PaymentDao {
       throw new NotFoundException();
     }
     authenticateDao.close();
-    
+
     StringBuffer sql = new StringBuffer();
-    sql.append("SELECT ").
-      append(AuthenticateDao.COLUMN_MONEY);
+    sql.append("SELECT ").append(AuthenticateDao.COLUMN_MONEY);
     sql.append(" FROM ").append(AuthenticateDao.USER_INFO_TABLE);
-    sql.append(" WHERE ")
-      .append(AuthenticateDao.COLUMN_USERNAME + " = ?");
-    sql.append(" AND ")
-      .append(AuthenticateDao.COLUMN_IS_DELETED + " = '0'");
-    
+    sql.append(" WHERE ").append(AuthenticateDao.COLUMN_USERNAME + " = ?");
+    sql.append(" AND ").append(AuthenticateDao.COLUMN_IS_DELETED + " = '0'");
+
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
       ps = conn.prepareStatement(sql.toString());
       ps.setString(1, username);
-      
+
       rs = ps.executeQuery();
       if (!rs.next()) {
         throw new NotFoundException();
@@ -60,21 +57,19 @@ public class PaymentDaoImpl extends PaymentDao {
       throw new NotFoundException();
     }
     authenticateDao.close();
-    
+
     StringBuffer sql = new StringBuffer();
     sql.append("UPDATE ").append(AuthenticateDao.USER_INFO_TABLE);
     sql.append(" SET ").append(AuthenticateDao.COLUMN_MONEY + " = ? ");
-    sql.append(" WHERE ")
-      .append(AuthenticateDao.COLUMN_USERNAME + " = ?");
-    sql.append(" AND ")
-      .append(AuthenticateDao.COLUMN_IS_DELETED + " = '0'");
-    
+    sql.append(" WHERE ").append(AuthenticateDao.COLUMN_USERNAME + " = ?");
+    sql.append(" AND ").append(AuthenticateDao.COLUMN_IS_DELETED + " = '0'");
+
     PreparedStatement ps = null;
     try {
       ps = conn.prepareStatement(sql.toString());
       ps.setInt(1, user.getMoney());
       ps.setString(2, user.getUsername());
-      
+
       ps.executeUpdate();
     } catch (SQLException e) {
       conn.rollback();
@@ -84,7 +79,7 @@ public class PaymentDaoImpl extends PaymentDao {
       ConnectionManager.closeAll(ps, null);
     }
   }
-  
+
   @Override
   public void close() {
     ConnectionManager.closeConnection(conn);

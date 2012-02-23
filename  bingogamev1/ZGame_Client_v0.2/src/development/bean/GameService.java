@@ -8,10 +8,10 @@ public class GameService {
 	private int cocurrentUser;
 	private int maxUser;
 	private boolean isValidate = false;
-	
+
 	public GameService() {
 	}
-	
+
 	public GameService(String id, String name, String url, int port, int maxUser) {
 		this.id = id;
 		this.name = name;
@@ -19,7 +19,7 @@ public class GameService {
 		this.port = port;
 		this.maxUser = maxUser;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -71,12 +71,13 @@ public class GameService {
 	public boolean isValidate() {
 		return isValidate;
 	}
-	
+
 	public void setValidate(boolean isValidate) {
 		this.isValidate = isValidate;
 	}
 
 	public String toString() {
-		return "GameService [id=" + id + ", name=" + name + ", url=" + url + ", port=" + port  + "]";
+		return "GameService [id=" + id + ", name=" + name + ", url=" + url
+				+ ", port=" + port + "]";
 	}
 }

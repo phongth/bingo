@@ -11,7 +11,7 @@ import state.Sprite;
 
 public class Menu extends MenuItem {
 	public static final double ANIMED_STEP = 5.0;
-	
+
 	protected EventListener listener;
 	protected MenuItem currentMenuItem;
 	protected Image itemBackgroundImage;
@@ -25,9 +25,9 @@ public class Menu extends MenuItem {
 	protected int menuY = 0;
 	protected int textDx = 0;
 	protected int textDy = 0;
-	
+
 	private int animedCount;
-	
+
 	public Menu() {
 	}
 
@@ -45,20 +45,23 @@ public class Menu extends MenuItem {
 		}
 	}
 
-	public Menu(Manager manager, String[] menuItems, EventListener listener, Style style) {
+	public Menu(Manager manager, String[] menuItems, EventListener listener,
+			Style style) {
 		this(menuItems, listener, style);
 		if (manager != null) {
 			setManager(manager);
 		}
 	}
 
-	public Menu(Manager manager, String[] menuItems, EventListener listener, Style style, int x, int y) {
+	public Menu(Manager manager, String[] menuItems, EventListener listener,
+			Style style, int x, int y) {
 		this(manager, menuItems, listener, style);
 		menuX = x;
 		menuY = y;
 	}
 
-	public Menu(String[] menuItems, EventListener listener, Style style, int x, int y) {
+	public Menu(String[] menuItems, EventListener listener, Style style, int x,
+			int y) {
 		this(menuItems, listener, style);
 		menuX = x;
 		menuY = y;
@@ -130,12 +133,15 @@ public class Menu extends MenuItem {
 		if ((menuImage == null) || (animedCount == -1)) {
 			return menuY;
 		}
-		
+
 		if (isShowUpToDown) {
-			return menuY - menuImage.getWidth() + (int) (menuImage.getWidth() * (animedCount / ANIMED_STEP));
+			return menuY
+					- menuImage.getWidth()
+					+ (int) (menuImage.getWidth() * (animedCount / ANIMED_STEP));
 		}
-		
-		return menuY + menuImage.getWidth() - (int) (menuImage.getWidth() * (animedCount / ANIMED_STEP));
+
+		return menuY + menuImage.getWidth()
+				- (int) (menuImage.getWidth() * (animedCount / ANIMED_STEP));
 	}
 
 	public int getTextDx() {
@@ -210,10 +216,10 @@ public class Menu extends MenuItem {
 	}
 
 	public void draw(Graphics g) {
-	  if (!isVisible()) {
-	    return;
-	  }
-	  
+		if (!isVisible()) {
+			return;
+		}
+
 		if (isShowChildrenMenuItem && (items.size() > 0)) {
 			int menuHeight = items.size() * menu.itemHeight + menu.textDy * 2;
 			if (menuImage == null) {
@@ -224,7 +230,7 @@ public class Menu extends MenuItem {
 				}
 			}
 			isShowUpToDown = checkDrawUpOrDown();
-			
+
 			int drawMenuBbX = getMenuX();
 			if (!(this instanceof Menu)) {
 				drawMenuBbX = getMenuX() + menu.itemWidth + 2;
@@ -235,17 +241,22 @@ public class Menu extends MenuItem {
 
 			if (animedCount > -1) {
 				if (isShowUpToDown) {
-					g.setClip(drawMenuBbX, menuY, menuImage.getWidth(), menuImage.getHeight());
+					g.setClip(drawMenuBbX, menuY, menuImage.getWidth(),
+							menuImage.getHeight());
 				} else {
-					g.setClip(drawMenuBbX, menuY - menuImage.getHeight() + menu.itemHeight, menuImage.getWidth(), menuImage.getHeight());
+					g.setClip(drawMenuBbX, menuY - menuImage.getHeight()
+							+ menu.itemHeight, menuImage.getWidth(), menuImage
+							.getHeight());
 				}
 			}
-			
+
 			int y = getMenuY();
 			if (isShowUpToDown) {
-				g.drawImage(menuImage, drawMenuBbX, y + 2, GameConstants.TOP_LEFT_ANCHOR);
+				g.drawImage(menuImage, drawMenuBbX, y + 2,
+						GameConstants.TOP_LEFT_ANCHOR);
 			} else {
-				g.drawImage(menuImage, drawMenuBbX, y + 2 + menu.itemHeight, GameConstants.BOTTOM_LEFT_ANCHOR);
+				g.drawImage(menuImage, drawMenuBbX, y + 2 + menu.itemHeight,
+						GameConstants.BOTTOM_LEFT_ANCHOR);
 			}
 
 			for (int i = 0; i < items.size(); i++) {
@@ -253,9 +264,10 @@ public class Menu extends MenuItem {
 				updateChildPosition(item, i, isShowUpToDown);
 				item.draw(g);
 			}
-			
+
 			if (animedCount > -1) {
-				g.setClip(0, 0, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+				g.setClip(0, 0, GameConstants.SCREEN_WIDTH,
+						GameConstants.SCREEN_HEIGHT);
 				animedCount++;
 				if (animedCount > ANIMED_STEP) {
 					animedCount = -1;
@@ -263,7 +275,7 @@ public class Menu extends MenuItem {
 			}
 		}
 	}
-	
+
 	public void keyReleased(int keyCode) {
 		if (!isShowing()) {
 			return;
@@ -281,7 +293,8 @@ public class Menu extends MenuItem {
 				menu.currentMenuItem.showChildMenu();
 			} else {
 				if (menu.listener != null) {
-					menu.listener.onActionPerform(new Event(menu.currentMenuItem, menu.currentMenuItem.label));
+					menu.listener.onActionPerform(new Event(
+							menu.currentMenuItem, menu.currentMenuItem.label));
 					hide();
 				}
 			}
@@ -309,9 +322,11 @@ public class Menu extends MenuItem {
 				menu.currentMenuItem.setFocused(false);
 				currentParent.currentChooseIndex--;
 				if (currentParent.currentChooseIndex < 0) {
-					currentParent.currentChooseIndex = currentParent.items.size() - 1;
+					currentParent.currentChooseIndex = currentParent.items
+							.size() - 1;
 				}
-				menu.currentMenuItem = ((MenuItem) currentParent.items.elementAt(currentParent.currentChooseIndex));
+				menu.currentMenuItem = ((MenuItem) currentParent.items
+						.elementAt(currentParent.currentChooseIndex));
 				menu.currentMenuItem.setFocused(true);
 			}
 			break;
@@ -319,23 +334,27 @@ public class Menu extends MenuItem {
 			if (currentParent.items.size() > 0) {
 				menu.currentMenuItem.setFocused(false);
 				currentParent.currentChooseIndex++;
-				if (currentParent.currentChooseIndex > currentParent.items.size() - 1) {
+				if (currentParent.currentChooseIndex > currentParent.items
+						.size() - 1) {
 					currentParent.currentChooseIndex = 0;
 				}
-				menu.currentMenuItem = ((MenuItem) currentParent.items.elementAt(currentParent.currentChooseIndex));
+				menu.currentMenuItem = ((MenuItem) currentParent.items
+						.elementAt(currentParent.currentChooseIndex));
 				menu.currentMenuItem.setFocused(true);
 			}
 			break;
 		}
 	}
 
-	protected void updateChildPosition(MenuItem item, int itemIndex, boolean isShowUpToDown) {
+	protected void updateChildPosition(MenuItem item, int itemIndex,
+			boolean isShowUpToDown) {
 		int x = menuX;
 		int y = getMenuY();
 		if (isShowUpToDown) {
 			y = y + itemIndex * (menu.itemHeight - 1) + textDy;
 		} else {
-			y = y - (items.size() - itemIndex - 1) * (menu.itemHeight - 1) - textDy;
+			y = y - (items.size() - itemIndex - 1) * (menu.itemHeight - 1)
+					- textDy;
 		}
 		item.setPosition(x, y);
 	}
