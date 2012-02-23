@@ -44,10 +44,9 @@ public class Global {
   public static int PASSWORD_MIN_LEN;
   
   // Constant for RequestManager
-  public static int REQUEST_MANAGER_CORE_POLL_SIZE = 10;
-  public static int REQUEST_MANAGER_MAX_POLL_SIZE = 20;
-  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME = 15; // Minutes
-  public static int REQUEST_MANAGER_INTERVAL = 10;
+  public static int REQUEST_MANAGER_CORE_POLL_SIZE;
+  public static int REQUEST_MANAGER_MAX_POLL_SIZE;
+  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME; // Minutes
   
   public static CommitPaymentDataJob commitPaymentDataJob = new CommitPaymentDataJob();
   public static CheckToReleaseTimeOutDBConnectionJob checkToReleaseTimeOutDBConnectionJob = new CheckToReleaseTimeOutDBConnectionJob();

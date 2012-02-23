@@ -30,10 +30,9 @@ public class Global {
   public static int MAX_POOL;
   
   //Constant for RequestManager
-  public static int REQUEST_MANAGER_CORE_POLL_SIZE = 10;
-  public static int REQUEST_MANAGER_MAX_POLL_SIZE = 20;
-  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME = 15; // Minutes
-  public static int REQUEST_MANAGER_INTERVAL = 10;
+  public static int REQUEST_MANAGER_CORE_POLL_SIZE;
+  public static int REQUEST_MANAGER_MAX_POLL_SIZE;
+  public static int REQUEST_MANAGER_KEEP_ALIVE_TIME; // Minutes
   
   //Danh sách các connection chưa xác nhận user
   public static List<ServerConnection> notAuthenConnectionList = new ArrayList<ServerConnection>();

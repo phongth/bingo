@@ -42,6 +42,10 @@ public class Initialize {
     Global.DEFAULT_SERVICE_PORT = Integer.parseInt(get("DEFAULT_SERVICE_PORT"));
     Global.DEFAULT_SERVICE_URL = get("DEFAULT_SERVICE_URL");
     Global.MAX_POOL = Integer.parseInt(get("MAX_POOL"));
+    
+    Global.REQUEST_MANAGER_CORE_POLL_SIZE = Integer.parseInt(get("REQUEST_MANAGER_CORE_POLL_SIZE"));
+    Global.REQUEST_MANAGER_MAX_POLL_SIZE = Integer.parseInt(get("REQUEST_MANAGER_MAX_POLL_SIZE"));
+    Global.REQUEST_MANAGER_KEEP_ALIVE_TIME = Integer.parseInt(get("REQUEST_MANAGER_KEEP_ALIVE_TIME"));
 
     // Lấy thông tin để khởi tạo game
     String gameIds = get("GAME_ID").trim(); // GAME_ID = tala : tlmb : cotuong :

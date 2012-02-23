@@ -58,6 +58,10 @@ public class Initialize {
 
     Global.PASSWORD_MIN_LEN = Integer.parseInt(get("PASSWORD_MIN_LEN"));
     Global.PASSWORD_MAX_LEN = Integer.parseInt(get("PASSWORD_MAX_LEN"));
+    
+    Global.REQUEST_MANAGER_CORE_POLL_SIZE = Integer.parseInt(get("REQUEST_MANAGER_CORE_POLL_SIZE"));
+    Global.REQUEST_MANAGER_MAX_POLL_SIZE = Integer.parseInt(get("REQUEST_MANAGER_MAX_POLL_SIZE"));
+    Global.REQUEST_MANAGER_KEEP_ALIVE_TIME = Integer.parseInt(get("REQUEST_MANAGER_KEEP_ALIVE_TIME"));
 
     properties = null;
   }
