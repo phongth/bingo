@@ -12,6 +12,9 @@
     <module>bingo-login</module>
     <module>bingo-client</module>
   </modules>
+  <properties>
+  <wtk.path>C:\WTK2.5.2_01</wtk.path>
+  </properties>
 
   <dependencies>
     <dependency>

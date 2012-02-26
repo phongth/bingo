@@ -19,7 +19,7 @@
       <artifactId>microemu-jsr-75</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:\WTK2.5.2_01\lib\jsr75.jar</systemPath>
+      <systemPath>${wtk.path}/lib/jsr75.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -27,7 +27,7 @@
       <artifactId>microemu-cldcapi11</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:\WTK2.5.2_01\lib\cldcapi11.jar</systemPath>
+      <systemPath>${wtk.path}/lib/cldcapi11.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -35,7 +35,7 @@
       <artifactId>microemu-midpapi21</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:\WTK2.5.2_01\lib\midpapi21.jar</systemPath>
+      <systemPath>${wtk.path}/lib/midpapi21.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -43,7 +43,7 @@
       <artifactId>microemu-wma20</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:\WTK2.5.2_01\lib\wma20.jar</systemPath>
+      <systemPath>${wtk.path}/lib/wma20.jar</systemPath>
     </dependency>
 
   </dependencies>
