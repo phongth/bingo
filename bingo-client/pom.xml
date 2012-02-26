@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>bingo</artifactId>
+    <groupId>com.bingo</groupId>
+    <version>1</version>
+  </parent>
+  <groupId>org.bingo</groupId>
+  <artifactId>bingo-client</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Bingo client</name>
+  <dependencies>
+
+    <dependency>
+      <groupId>com.sun.wtk</groupId>
+      <artifactId>microemu-jsr-75</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:\WTK2.5.2_01\lib\jsr75.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.wtk</groupId>
+      <artifactId>microemu-cldcapi11</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:\WTK2.5.2_01\lib\cldcapi11.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.wtk</groupId>
+      <artifactId>microemu-midpapi21</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:\WTK2.5.2_01\lib\midpapi21.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.wtk</groupId>
+      <artifactId>microemu-wma20</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:\WTK2.5.2_01\lib\wma20.jar</systemPath>
+    </dependency>
+
+  </dependencies>
+  <build>
+  </build>
+</project>
